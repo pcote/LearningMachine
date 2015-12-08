@@ -77,8 +77,9 @@
 
 var controller = function($scope, $http){
     $scope.current_tag = "Untagged"
-    $scope.topics = ["jQuery Events", "Javascript properties", "Angular Services"]
-    $scope.tags = "jQuery angularjs python mysql".split(" ")
+    $scope.topics = []
+    $scope.tags = []
+
     $http.get("/userinfo").then(function(res){
         $scope.displayName = res.data.display_name
     })
@@ -96,7 +97,12 @@ var controller = function($scope, $http){
     refreshTags()
 
     $scope.add_topic_click = function(){
-        alert("name: " + $scope.new_topic_name + " tags: " + $scope.new_topic_tags)
+        var new_tags = []
+        if($scope.new_topic_tags){
+            new_tags = $scope.new_topic_tags.split(" ")
+        }
+
+
         var req = {
             url: "/addtopic",
             method: "post",
@@ -105,12 +111,11 @@ var controller = function($scope, $http){
             },
             data: {
                 "topic":$scope.new_topic_name,
-                "tags":$scope.new_topic_tags.split(" ")
+                "tags": new_tags
             }
         }
 
         var successCallback = function(res){
-            alert("successful call to the add_topic thing....")
             refreshTags()
             refreshTopics()
         }

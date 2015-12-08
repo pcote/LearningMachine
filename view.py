@@ -4,6 +4,7 @@ import logging
 from login import LoginHandler
 import model
 from pdb import set_trace
+import re
 
 parser = ConfigParser()
 parser.read("config.ini")
@@ -67,9 +68,13 @@ def get_user_info():
 @app.route("/addtag", methods=["POST"])
 def add_tag():
     json_data = request.get_json()
-    new_tag = json_data.get("new_tag")
+    new_tags = json_data.get("new_tag")
     user_id = session.get("email")
-    model.add_tag(new_tag, user_id)
+
+    # sanitize tags
+    new_tags = [tag.trim() for tag in new_tags if re.search(r"\w+", tag)]
+
+    # model.add_tag(new_tags, user_id)
     return "success"
 
 
@@ -83,8 +88,14 @@ def get_tags():
 @app.route("/addtopic", methods=["POST"])
 def add_topic():
     json_data = request.get_json()
-    print(json_data)
-    return jsonify({})
+    topic = json_data.get("topic")
+    tags = json_data.get("tags")
+    email = session.get("email")
+    topic = topic.strip()
+    tags = [tag.strip() for tag in tags if re.search(r"\w+", tag)]
+    model.add_topic(topic, email, tags)
+
+    return jsonify({"result":"task completed"})
 
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]
