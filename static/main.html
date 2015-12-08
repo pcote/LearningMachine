@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sample Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+        .topbar {
+            background-color: blue;
+            text-align: right;
+            color: White;
+            font-weight: Bolder;
+            text-decoration: underline
+        }
+
+        .taglist {
+            list-style: None;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" ng-app="app" ng-controller="controller">
+    <!-- Top row section-->
+    <div class="row">
+        <div class="col-xs-12 topbar">
+            {{displayName}}
+        </div>
+    </div>
+
+    <!-- Main body  -->
+    <div class="row">
+
+        <!-- tag section -->
+        <div class="col-xs-3 tagarea">
+            <b>Tags</b>
+            <ul class="taglist">
+                <li>Untagged</li>
+                <li ng-repeat="tag in tags">{{tag}}</li>
+            </ul>
+        </div>
+        <div class="col-xs-9 topicarea">
+            <h3><u>{{ current_tag }} Topics</u></h3>
+            <br />
+            <ul>
+                <li ng-repeat="topic in topics"><a href="#">{{topic}}</a></li>
+            </ul>
+            <br />
+            <table>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><b><u>Add a topic</u></b></td>
+                </tr>
+                <tr>
+                    <td>name:</td>
+                    <td><input type="text" ng-model="new_topic_name" /></td>
+                </tr>
+                <tr>
+                    <td>tags:</td>
+                    <td><input type="text" ng-model="new_topic_tags" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><button ng-click="add_topic_click()" class="btn btn-primary">Add</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+
+
+var controller = function($scope, $http){
+    $scope.current_tag = "Untagged"
+    $scope.topics = ["jQuery Events", "Javascript properties", "Angular Services"]
+    $scope.tags = "jQuery angularjs python mysql".split(" ")
+    $http.get("/userinfo").then(function(res){
+        $scope.displayName = res.data.display_name
+    })
+
+    var refreshTags = function(){
+        $http.get("/tags").then(function(res){
+            $scope.tags = res.data.tags
+        }, function(res){})
+    }
+
+    var refreshTopics = function(){
+        alert("todo: please refresh the topics....")
+    }
+
+    refreshTags()
+
+    $scope.add_topic_click = function(){
+        alert("name: " + $scope.new_topic_name + " tags: " + $scope.new_topic_tags)
+        var req = {
+            url: "/addtopic",
+            method: "post",
+            headers: {
+                "Content-type":"application/json"
+            },
+            data: {
+                "topic":$scope.new_topic_name,
+                "tags":$scope.new_topic_tags.split(" ")
+            }
+        }
+
+        var successCallback = function(res){
+            alert("successful call to the add_topic thing....")
+            refreshTags()
+            refreshTopics()
+        }
+
+        var failCallback = function(res){
+            alert("bombed on the attempt to add topics and tags.  sorry!!!")
+        }
+
+        $http(req).then(successCallback, failCallback)
+    }
+
+
+
+}
+
+var app = angular.module("app", [])
+app.controller("controller", controller)
+
+</script>
+</body>
+</html>
