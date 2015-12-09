@@ -74,34 +74,13 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <script>
 
+var CategoryService = function($http){
 
-var controller = function($scope, $http){
-    $scope.current_tag = "Untagged"
-    $scope.topics = []
-    $scope.tags = []
-
-    $http.get("/userinfo").then(function(res){
-        $scope.displayName = res.data.display_name
-    })
-
-    var refreshTags = function(){
-        $http.get("/tags").then(function(res){
-            $scope.tags = res.data.tags
-        }, function(res){})
-    }
-
-    var refreshTopics = function(){
-        alert("todo: please refresh the topics....")
-    }
-
-    refreshTags()
-
-    $scope.add_topic_click = function(){
-        var new_tags = []
-        if($scope.new_topic_tags){
-            new_tags = $scope.new_topic_tags.split(" ")
+    this.addTopicInfo = function(topic, stringOfTags){
+        var tagList = []
+        if(stringOfTags){
+            tagList = stringOfTags.split(" ")
         }
-
 
         var req = {
             url: "/addtopic",
@@ -110,29 +89,55 @@ var controller = function($scope, $http){
                 "Content-type":"application/json"
             },
             data: {
-                "topic":$scope.new_topic_name,
-                "tags": new_tags
+                "topic": topic,
+                "tags": tagList
             }
         }
 
-        var successCallback = function(res){
-            refreshTags()
-            refreshTopics()
-        }
-
-        var failCallback = function(res){
-            alert("bombed on the attempt to add topics and tags.  sorry!!!")
-        }
-
-        $http(req).then(successCallback, failCallback)
+        $http(req).then(function(res){}, function(res){})
     }
 
+    this.refreshTagList = function(scope){
+        $http.get("/tags").then(function(res){
+            scope.tags = res.data.tags
+        }, function(res){
+            alert("referesh of tag list failed")
+        })
+    }
 
+    this.refreshTopicList = function(scope){
+        // todo: implement this.
+    }
+
+}
+
+var UserService = function($http){
+        this.showUserName = function(scope){
+            $http.get("/userinfo").then(function(res){
+            scope.displayName = res.data.display_name
+        })
+    }
+}
+
+var controller = function($scope, categoryService, userService){
+    $scope.current_tag = "Untagged"
+    $scope.topics = []
+    $scope.tags = []
+
+    userService.showUserName($scope)
+    categoryService.refreshTagList($scope)
+
+    $scope.add_topic_click = function(){
+        categoryService.addTopicInfo($scope.new_topic_name, $scope.new_topic_tags)
+        categoryService.refreshTagList($scope)
+    }
 
 }
 
 var app = angular.module("app", [])
 app.controller("controller", controller)
+app.service("categoryService", CategoryService)
+app.service("userService", UserService)
 
 </script>
 </body>
