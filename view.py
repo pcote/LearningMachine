@@ -97,7 +97,14 @@ def add_topic():
 
     return jsonify({"result":"task completed"})
 
+
+@app.route("/topics/<tag_id>")
+def get_topics_by_tag(tag_id):
+    user_id = session.get("email")
+    topics = model.get_topics_by_tag(tag_id, user_id)
+    return jsonify({"topics":topics})
+
+
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]
     app.run(debug=True)
-

@@ -29,8 +29,10 @@ var CategoryService = function($http){
         })
     }
 
-    this.refreshTopicList = function(scope){
-        // todo: implement this.
+    this.updateTopicsList = function(scope, tag_id){
+        $http.get("/topics/" + tag_id).then(function(res){
+            scope.topics = res.data.topics
+        }, function(res){})
     }
 
 }
