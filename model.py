@@ -101,6 +101,12 @@ def get_tags(user_id):
 
 
 def get_tag_id(tag_name, user_id):
+    """
+    Utility function to map tag names to tag id numbers.  Specific to a given user.
+    :param tag_name: Name of the tag in question (case sensitve)
+    :param user_id: Identifier for the user
+    :return: Record number id associated with the tag in question for this user.
+    """
     conn = eng.connect()
     query = select([tag_table.c.id]).where(and_(tag_table.c.name==tag_name, tag_table.c.user_id==user_id))
     result, *_ = conn.execute(query).fetchone()
@@ -108,6 +114,12 @@ def get_tag_id(tag_name, user_id):
 
 
 def get_topic_id(topic_name, user_id):
+    """
+    Utility function to map topic names to topic id numbers.  Specific to a given user.
+    :param topic_name: Name of the topic in queestion. (case sensitive)
+    :param user_id: Identifier for the user
+    :return: Record number id associated with the topic name for the specified user.
+    """
     conn = eng.connect()
     query = select([topic_table.c.id]).where(and_(topic_table.c.name==topic_name, topic_table.c.user_id==user_id))
     result, *_ = conn.execute(query).fetchone()
@@ -189,6 +201,12 @@ def add_topic(topic_name, user_id, tags=None):
 
 
 def get_topics_by_tag(tag_id, user_id):
+    """
+    Get topics connected to a given tag as pertains to a specific user
+    :param tag_id: ID number of the tag
+    :param user_id: identifier for the user
+    :return: A list of topics that are connected with a certain tag and user
+    """
     conn = eng.connect()
     query = select([topic_table.c.id, topic_table.c.name])\
         .select_from(topic_table.join(tag_by_topic_table))\

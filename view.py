@@ -19,6 +19,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def welcome_page():
+    """
+    Simple redirect to a basic welcome page where the user will press a button
+    to start the login process.
+    :return: Nothing.
+    """
     return redirect("/static/welcome.html")
 
 @app.route("/login")
@@ -67,6 +72,11 @@ def get_user_info():
 
 @app.route("/addtag", methods=["POST"])
 def add_tag():
+    """
+    Simple addition of a single tag to the sytem for a given user
+    TODO: Not used.  Need to determine whether or not to keep this around.
+    :return: Nothing
+    """
     json_data = request.get_json()
     new_tags = json_data.get("new_tag")
     user_id = session.get("email")
@@ -80,6 +90,10 @@ def add_tag():
 
 @app.route("/tags")
 def get_tags():
+    """
+    Get a simple list of associated with the logged in user
+    :return: List of tags as JSON data.
+    """
     user_id = session["email"]
     tags = model.get_tags(user_id)
     return jsonify({"tags":tags})
@@ -87,6 +101,10 @@ def get_tags():
 
 @app.route("/addtopic", methods=["POST"])
 def add_topic():
+    """
+    Add a topic along with any associated tags for a given user.
+    :return: Just a notification in JSON format that the data was added to the db.
+    """
     json_data = request.get_json()
     topic = json_data.get("topic")
     tags = json_data.get("tags")
@@ -100,6 +118,11 @@ def add_topic():
 
 @app.route("/topics/<tag_id>")
 def get_topics_by_tag(tag_id):
+    """
+    Get a list of topics associated with a specific tag and user
+    :param tag_id:
+    :return: A list of topics in JSON format.
+    """
     user_id = session.get("email")
     topics = model.get_topics_by_tag(tag_id, user_id)
     return jsonify({"topics":topics})
