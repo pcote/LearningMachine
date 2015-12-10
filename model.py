@@ -188,5 +188,16 @@ def add_topic(topic_name, user_id, tags=None):
             __add_assoc(conn, tag_id, topic_id)
 
 
+def get_topics_by_tag(tag_id, user_id):
+    conn = eng.connect()
+    query = select([topic_table.c.id, topic_table.c.name])\
+        .select_from(topic_table.join(tag_by_topic_table))\
+        .where(and_(topic_table.c.user_id == user_id,
+                 tag_by_topic_table.c.tag_id == tag_id))
+
+    results = conn.execute(query).fetchall()
+    topics = [dict(id=topic_id, name=topic_name) for topic_id, topic_name in results]
+    return topics
+
 if __name__ == '__main__':
     pass
