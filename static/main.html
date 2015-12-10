@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sample Page</title>
+    <title>Learning Machine - Main Application Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -19,6 +19,10 @@
         .taglist {
             list-style: None;
             text-align: left;
+        }
+
+        .topiclinks, .taglinks {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -40,14 +44,14 @@
             <b>Tags</b>
             <ul class="taglist">
                 <li>Untagged</li>
-                <li ng-repeat="tag in tags"><a ng-click="tag_click(tag.id)">{{tag.name}}</a></li>
+                <li ng-repeat="tag in tags"><a class="taglinks" ng-click="tag_click(tag.id)">{{tag.name}}</a></li>
             </ul>
         </div>
         <div class="col-xs-9 topicarea">
             <h3><u>{{ current_tag }} Topics</u></h3>
             <br />
             <ul>
-                <li ng-repeat="topic in topics"><a href="#">{{topic}}</a></li>
+                <li ng-repeat="topic in topics"><a class="topiclinks" ng-click="topic_click(topic.id)">{{topic.name}}</a></li>
             </ul>
             <br />
             <table>
@@ -91,6 +95,10 @@ var controller = function($scope, categoryService, userService){
 
     $scope.tag_click = function(tag_id){
         categoryService.updateTopicsList($scope, tag_id)
+    }
+
+    $scope.topic_click = function(topic_id){
+        alert("topic click stub for topic id: " + topic_id)
     }
 
 }
