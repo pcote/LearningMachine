@@ -256,6 +256,25 @@ def get_exercises(topic_id, user_id):
     return exercise_list
 
 
+def get_resources(topic_id, user_id):
+    """
+    Get resources associated with a gtiven topic and user
+    :param topic_id: Database ID for the topic
+    :param user_id: ID for the user
+    :return: LIst of resources complete with id, name, and url
+    """
+    conn = eng.connect()
+    query = select([resource_table.c.id, resource_table.c.name, resource_table.c.url])\
+                    .select_from(resource_table.join(resource_by_topic_table))\
+                        .where(and_(
+                            resource_by_topic_table.c.topic_id == topic_id,
+                            resource_table.c.user_id == user_id))
+
+    result_set = conn.execute(query).fetchall()
+    resource_list = [dict(id=id, name=name, url=url) for id, name, url in result_set]
+    return resource_list
+
+
 def add_resource(name, url, user_id, topic_id):
     """
     Add a resource for a given user topic
