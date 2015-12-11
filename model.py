@@ -292,5 +292,19 @@ def add_resource(name, url, user_id, topic_id):
     conn.execute(assoc_query)
 
 
+def add_attempt(exercise_id, score):
+    """
+    Record how well the user did in attempting an exercise
+    :param exercise_id: The ID of the exercise being attempted
+    :param score: Score the user gave themselves
+    :return: Nothing
+    """
+    conn = eng.connect()
+    from datetime import datetime
+    now = datetime.now()
+    query = attempt_table.insert().values(exercise_id=exercise_id, score=score, when_attempted=now)
+    conn.execute(query)
+
+
 if __name__ == '__main__':
     pass
