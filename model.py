@@ -217,5 +217,24 @@ def get_topics_by_tag(tag_id, user_id):
     topics = [dict(id=topic_id, name=topic_name) for topic_id, topic_name in results]
     return topics
 
+
+def add_exercise(question, answer, topic_id, user_id):
+    """
+    Add a question / answer pair for a given user's topic
+    :param question: Text of the question
+    :param answer: Text of the answer
+    :param topic_id: id number for the topic to associate with this question.
+    :param user_id: user id string
+    :return: json based message confirming the exercise was added.
+    """
+    conn = eng.connect()
+    query = exercise_table.insert().values(question=question, answer=answer, user_id=user_id)
+    result = conn.execute(query)
+    exercise_id = result.inserted_primary_key[0]
+
+    assoc_query = exercise_by_topic_table.insert().values(exercise_id=exercise_id, topic_id=topic_id)
+    conn.execute(assoc_query)
+
+
 if __name__ == '__main__':
     pass
