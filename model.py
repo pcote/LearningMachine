@@ -225,7 +225,7 @@ def add_exercise(question, answer, topic_id, user_id):
     :param answer: Text of the answer
     :param topic_id: id number for the topic to associate with this question.
     :param user_id: user id string
-    :return: json based message confirming the exercise was added.
+    :return: Nothing
     """
     conn = eng.connect()
     query = exercise_table.insert().values(question=question, answer=answer, user_id=user_id)
@@ -234,6 +234,7 @@ def add_exercise(question, answer, topic_id, user_id):
 
     assoc_query = exercise_by_topic_table.insert().values(exercise_id=exercise_id, topic_id=topic_id)
     conn.execute(assoc_query)
+    return
 
 
 def get_exercises(topic_id, user_id):
@@ -255,7 +256,21 @@ def get_exercises(topic_id, user_id):
     return exercise_list
 
 
+def add_resource(name, url, user_id, topic_id):
+    """
+    Add a resource for a given user topic
+    :param resource_name: Title given to a resource
+    :param url: URL where the resource can be found on the interenet.
+    :param topic_id: ID number for the topic.
+    :return: Nothing
+    """
+    conn = eng.connect()
+    new_resource_query = resource_table.insert().values(name=name, url=url, user_id=user_id)
+    result = conn.execute(new_resource_query)
 
+    resource_id = result.inserted_primary_key[0]
+    assoc_query = resource_by_topic_table.insert().values(resource_id=resource_id, topic_id=topic_id)
+    conn.execute(assoc_query)
 
 
 if __name__ == '__main__':
