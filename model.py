@@ -236,5 +236,27 @@ def add_exercise(question, answer, topic_id, user_id):
     conn.execute(assoc_query)
 
 
+def get_exercises(topic_id, user_id):
+    """
+    Get exercises that are setup for a given topic and user
+    :param topic_id: Database id for the topic
+    :param user_id: ID for the user
+    :return: List of exercises complete with exercise id, question, and answer.
+    """
+    conn = eng.connect()
+    query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
+                    .select_from(exercise_table.join(exercise_by_topic_table))\
+                        .where(and_(
+                            exercise_by_topic_table.c.topic_id == topic_id,
+                            exercise_table.c.user_id == user_id))
+
+    result_set = conn.execute(query).fetchall()
+    exercise_list = [dict(id=id, question=question, answer=answer) for id, question, answer in result_set]
+    return exercise_list
+
+
+
+
+
 if __name__ == '__main__':
     pass
