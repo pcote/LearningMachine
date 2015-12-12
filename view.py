@@ -147,6 +147,14 @@ def get_resources(topic_id):
     resources = model.get_resources(topic_id, email)
     return jsonify(dict(resources=resources))
 
+@app.route("/addscore", methods=["POST"])
+def add_score():
+    json_data = request.get_json()
+    exercise_id = json_data.get("exercise_id")
+    score = json_data.get("score")
+    model.add_attempt(exercise_id, score)
+    return jsonify(dict(result="success"))
+
 
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]

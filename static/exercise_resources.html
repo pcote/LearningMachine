@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-xs-12" align="center">
+        <b><u><h3>Topic: {{currentTopic}}</h3></u></b>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <b><u>Exercises</u></b>
+        <br />
+        <ul>
+            <li ng-repeat="exercise in exercises">
+                <a ng-click="exerciseClick(exercise)">{{exercise.question}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-6">
+        <b><u>Resources</u></b>
+        <br />
+        <ul>
+            <li ng-repeat="resource in resources">
+                <a href="{{resource.url}}"">{{resource.name}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="modal fade" id="questionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <u><b>Question</b></u>
+            </div>
+            <div class="modal-body">
+                {{currentExercise.question}}
+            </div>
+            <div class="modal-footer" align="center">
+                <button class="btn btn-lg btn-primary" ng-click="showAnswerClick()">
+                    Click for Answer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="questionAnswerModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <u><b>Question</b></u>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12"><b><u>{{currentExercise.question}}</u></b></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12"><b>{{currentExercise.answer}}</b></div>
+                </div>
+            </div>
+            <div class="modal-footer" align="center">
+                <div class="row">
+                    <div class="col-xs-12" align="center">
+                        <button class="btn btn-lg btn-danger" ng-click="scoreClick(1)">
+                            bad
+                        </button>
+                        <button class="btn btn-lg"  ng-click="scoreClick(2)">
+                            okay
+                        </button>
+                        <button class="btn btn-lg btn-primary"  ng-click="scoreClick(3)">
+                            good
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

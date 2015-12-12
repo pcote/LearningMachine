@@ -51,7 +51,9 @@
             <h3><u>{{ current_tag }} Topics</u></h3>
             <br />
             <ul>
-                <li ng-repeat="topic in topics"><a class="topiclinks" ng-click="topic_click(topic.id)">{{topic.name}}</a></li>
+                <li ng-repeat="topic in topics">
+                    <a class="topiclinks" ng-click="topic_click(topic.id)">{{topic.name}}</a>
+                </li>
             </ul>
             <br />
             <table>
@@ -90,6 +92,10 @@ var controller = function($scope, categoryService, userService, exerciseService)
     $scope.tags = []
     $scope.resources = []
     $scope.exercises = []
+    $scope.currentExercise = {}
+    $scope.currentExercise.question = "blank question"
+    $scope.currentExercise.answer = "blank answer"
+    $scope.currentExercise.id = 0
 
     userService.showUserName($scope)
     categoryService.refreshTagList($scope)
@@ -111,10 +117,20 @@ var controller = function($scope, categoryService, userService, exerciseService)
     }
 
 
-    $scope.exerciseClick = function(exerciseId){
-        alert("stub function for exercise clicking for exercise: " + exerciseId)
+    $scope.exerciseClick = function(exercise){
+        $scope.currentExercise = exercise
+        $("#questionModal").modal()
     }
 
+    $scope.showAnswerClick = function(){
+        $("#questionModal").modal("hide")
+        $("#questionAnswerModal").modal()
+    }
+
+    $scope.scoreClick = function(score){
+        exerciseService.submitScore($scope.currentExercise, score)
+        $("#questionAnswerModal").modal("hide")
+    }
 
 }
 

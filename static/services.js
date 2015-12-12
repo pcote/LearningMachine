@@ -56,7 +56,24 @@ var ExerciseService = function($http){
             scope.resources = res.data.resources
         }, function(res){})
     }
+
+    this.submitScore = function(exercise, score){
+        var req = {
+            url: "/addscore",
+            method: "post",
+            headers: {
+                "Content-type": "application/json"
+            },
+            data: {
+                "exercise_id": exercise.id,
+                "score": score
+            }
+        }
+
+        $http(req).then(function(res){}, function(res){})
+    }
 }
+
 
 var UserService = function($http){
         this.showUserName = function(scope){
