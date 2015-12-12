@@ -34,7 +34,17 @@ var CategoryService = function($http){
             scope.topics = res.data.topics
         }, function(res){})
     }
+}
 
+var ExerciseService = function($http){
+    this.setupExerciseDisplay = function(scope, topicId){
+        $http.get("/topicname/" + topicId).then(function(res){
+            scope.currentTopic = res.data.topic_name
+            scope.showTopics = false
+            scope.showExercises = true
+
+        }, function(res){})
+    }
 }
 
 var UserService = function($http){

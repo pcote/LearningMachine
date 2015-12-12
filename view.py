@@ -127,6 +127,12 @@ def get_topics_by_tag(tag_id):
     topics = model.get_topics_by_tag(tag_id, user_id)
     return jsonify({"topics":topics})
 
+@app.route("/topicname/<topic_id>")
+def get_topic_name(topic_id):
+    email = session.get("email")
+    topic_name = model.get_topic_name(topic_id, email)
+    return jsonify(dict(topic_name=topic_name))
+
 
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]

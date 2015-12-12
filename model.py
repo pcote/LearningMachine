@@ -305,6 +305,23 @@ def add_attempt(exercise_id, score):
     query = attempt_table.insert().values(exercise_id=exercise_id, score=score, when_attempted=now)
     conn.execute(query)
 
+def get_topic_name(topic_id, user_id):
+    """
+    Get the name of the topic connected to the topic id for that user
+    :param topic_id: id number of the topic
+    :param user_id: id for the user. (there to ensure the user owns this topic)
+    :return: topic name as a simple string
+    """
+    conn = eng.connect()
+    query = select([topic_table.c.name]).where(and_(
+                topic_table.c.id == topic_id,
+                topic_table.c.user_id == user_id
+    ))
+
+    results = conn.execute(query).fetchone()
+    topic_name = list(results)[0]
+    return topic_name
+
 
 if __name__ == '__main__':
     pass
