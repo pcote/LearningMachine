@@ -134,6 +134,20 @@ def get_topic_name(topic_id):
     return jsonify(dict(topic_name=topic_name))
 
 
+@app.route("/exercises/<topic_id>")
+def get_exercises(topic_id):
+    email = session.get("email")
+    exercises = model.get_exercises(topic_id, email)
+    return jsonify(dict(exercises=exercises))
+
+
+@app.route("/resources/<topic_id>")
+def get_resources(topic_id):
+    email = session.get("email")
+    resources = model.get_resources(topic_id, email)
+    return jsonify(dict(resources=resources))
+
+
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]
     app.run(debug=True)

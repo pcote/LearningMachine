@@ -88,6 +88,8 @@ var controller = function($scope, categoryService, userService, exerciseService)
     $scope.currentTopic = ""
     $scope.topics = []
     $scope.tags = []
+    $scope.resources = []
+    $scope.exercises = []
 
     userService.showUserName($scope)
     categoryService.refreshTagList($scope)
@@ -107,6 +109,12 @@ var controller = function($scope, categoryService, userService, exerciseService)
     $scope.topic_click = function(topicId){
         exerciseService.setupExerciseDisplay($scope, topicId)
     }
+
+
+    $scope.exerciseClick = function(exerciseId){
+        alert("stub function for exercise clicking for exercise: " + exerciseId)
+    }
+
 
 }
 

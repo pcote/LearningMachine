@@ -38,11 +38,22 @@ var CategoryService = function($http){
 
 var ExerciseService = function($http){
     this.setupExerciseDisplay = function(scope, topicId){
+        // get the topic name first.
         $http.get("/topicname/" + topicId).then(function(res){
             scope.currentTopic = res.data.topic_name
             scope.showTopics = false
             scope.showExercises = true
 
+        }, function(res){})
+
+        // grab the exercises
+        $http.get("/exercises/" + topicId).then(function(res){
+            scope.exercises = res.data.exercises
+        }, function(res){})
+
+        // grab the resources
+        $http.get("/resources/" + topicId).then(function(res){
+            scope.resources = res.data.resources
         }, function(res){})
     }
 }
