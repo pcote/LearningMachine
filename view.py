@@ -129,6 +129,11 @@ def get_topics_by_tag(tag_id):
 
 @app.route("/topicname/<topic_id>")
 def get_topic_name(topic_id):
+    """
+    Get the name of the topic for it's respective topic id
+    :param topic_id: ID of the topic in question
+    :return: JSON containing the actual topic name string.
+    """
     email = session.get("email")
     topic_name = model.get_topic_name(topic_id, email)
     return jsonify(dict(topic_name=topic_name))
@@ -136,6 +141,11 @@ def get_topic_name(topic_id):
 
 @app.route("/exercises/<topic_id>")
 def get_exercises(topic_id):
+    """
+    Get a list of exercises pertaining to a topic for a specific user.
+    :param topic_id: Topic ID for the topic we're looking for exercises on.
+    :return: A JSON list of the exercises for this topic and user.
+    """
     email = session.get("email")
     exercises = model.get_exercises(topic_id, email)
     return jsonify(dict(exercises=exercises))
@@ -143,12 +153,22 @@ def get_exercises(topic_id):
 
 @app.route("/resources/<topic_id>")
 def get_resources(topic_id):
+    """
+    Pull a list of all resources specific to a given topic.
+    :param topic_id: ID of the topic for which we're getting resources for.
+    :return: A json list of resources retrieved for this particular topic.
+    """
     email = session.get("email")
     resources = model.get_resources(topic_id, email)
     return jsonify(dict(resources=resources))
 
 @app.route("/addscore", methods=["POST"])
 def add_score():
+    """
+    Add the score for an attempt at an exercise.
+    Expects a json structure arg with an exercise id and score for that exercise
+    :return: success signal to let you know that adding the attempt to the db worked out.
+    """
     json_data = request.get_json()
     exercise_id = json_data.get("exercise_id")
     score = json_data.get("score")
