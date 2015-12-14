@@ -17,6 +17,7 @@ logger.setLevel(logging.DEBUG)
 nudir = lambda mod: [x for x in dir(mod) if not x.startswith("_")]
 app = Flask(__name__)
 
+
 @app.route("/")
 def welcome_page():
     """
@@ -25,6 +26,7 @@ def welcome_page():
     :return: Nothing.
     """
     return redirect("/static/welcome.html")
+
 
 @app.route("/login")
 def login():
@@ -96,7 +98,7 @@ def get_tags():
     """
     user_id = session["email"]
     tags = model.get_tags(user_id)
-    return jsonify({"tags":tags})
+    return jsonify({"tags": tags})
 
 
 @app.route("/addtopic", methods=["POST"])
@@ -113,7 +115,7 @@ def add_topic():
     tags = [tag.strip() for tag in tags if re.search(r"\w+", tag)]
     model.add_topic(topic, email, tags)
 
-    return jsonify({"result":"task completed"})
+    return jsonify({"result": "task completed"})
 
 
 @app.route("/topics/<tag_id>")
@@ -125,7 +127,8 @@ def get_topics_by_tag(tag_id):
     """
     user_id = session.get("email")
     topics = model.get_topics_by_tag(tag_id, user_id)
-    return jsonify({"topics":topics})
+    return jsonify({"topics": topics})
+
 
 @app.route("/topicname/<topic_id>")
 def get_topic_name(topic_id):
@@ -161,6 +164,7 @@ def get_resources(topic_id):
     email = session.get("email")
     resources = model.get_resources(topic_id, email)
     return jsonify(dict(resources=resources))
+
 
 @app.route("/addscore", methods=["POST"])
 def add_score():

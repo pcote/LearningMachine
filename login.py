@@ -8,7 +8,6 @@ class LoginHandler(object):
     Also assumes that permission scope and redirects are registered there as well.
     """
 
-
     def __init__(self, secrets_file, scope, redirect_uri):
         self.secrets_file = secrets_file
         self.scope = scope
@@ -25,7 +24,6 @@ class LoginHandler(object):
         """
         url = self.flow.step1_get_authorize_url()
         return url
-
 
     def setup_user_info(self, code):
         """
@@ -45,7 +43,6 @@ class LoginHandler(object):
         res = service.people().get(userId="me").execute()
         self.__email = res.get("emails")[0].get("value")
         self.__display_name = res.get("displayName")
-
 
     @property
     def email(self):

@@ -42,8 +42,7 @@ attempt_table = Table("attempts", meta,
                       Column("id", Integer, primary_key=True, autoincrement=True),
                       Column("score", Integer),
                       Column("when_attempted", TIMESTAMP),
-                      Column("exercise_id", ForeignKey("exercises.id"))
-                    )
+                      Column("exercise_id", ForeignKey("exercises.id")))
 
 
 tag_by_topic_table = Table("tags_by_topic", meta,
@@ -51,12 +50,12 @@ tag_by_topic_table = Table("tags_by_topic", meta,
                            Column("topic_id", ForeignKey("topics.id"), primary_key=True))
 
 resource_by_topic_table = Table("resources_by_topic", meta,
-                           Column("resource_id", ForeignKey("resources.id"), primary_key=True),
-                           Column("topic_id", ForeignKey("topics.id"), primary_key=True))
+                                Column("resource_id", ForeignKey("resources.id"), primary_key=True),
+                                Column("topic_id", ForeignKey("topics.id"), primary_key=True))
 
 exercise_by_topic_table = Table("exercises_by_topic", meta,
-                           Column("exercise_id", ForeignKey("exercises.id"), primary_key=True),
-                           Column("topic_id", ForeignKey("topics.id"), primary_key=True))
+                                Column("exercise_id", ForeignKey("exercises.id"), primary_key=True),
+                                Column("topic_id", ForeignKey("topics.id"), primary_key=True))
 
 
 meta.create_all(bind=eng)
@@ -108,7 +107,7 @@ def get_tag_id(tag_name, user_id):
     :return: Record number id associated with the tag in question for this user.
     """
     conn = eng.connect()
-    query = select([tag_table.c.id]).where(and_(tag_table.c.name==tag_name, tag_table.c.user_id==user_id))
+    query = select([tag_table.c.id]).where(and_(tag_table.c.name == tag_name, tag_table.c.user_id == user_id))
     result, *_ = conn.execute(query).fetchone()
     return result
 
@@ -121,7 +120,7 @@ def get_topic_id(topic_name, user_id):
     :return: Record number id associated with the topic name for the specified user.
     """
     conn = eng.connect()
-    query = select([topic_table.c.id]).where(and_(topic_table.c.name==topic_name, topic_table.c.user_id==user_id))
+    query = select([topic_table.c.id]).where(and_(topic_table.c.name == topic_name, topic_table.c.user_id == user_id))
     result, *_ = conn.execute(query).fetchone()
     return result
 
@@ -134,31 +133,26 @@ def add_topic(topic_name, user_id, tags=None):
     :return: Nothing.
     """
 
-
     def __tag_in_system(conn, tag, user_id):
         query = select([tag_table])\
             .where(and_(tag_table.c.name == tag, tag_table.c.user_id == user_id))
 
         return True if conn.execute(query).fetchall() else False
 
-
     def __add_tag(conn, tag, user_id):
         query = tag_table.insert().values(name=tag, user_id=user_id)
         conn.execute(query)
 
-
-    def  __assoc_exists(conn, tag, topic):
+    def __assoc_exists(conn, tag, topic):
         tag_id = get_tag_id(tag, user_id)
         topic_id = get_topic_id(topic, user_id)
         assoc_query = select([tag_by_topic_table.c.tag_id])\
                 .where(and_(
-                    tag_by_topic_table.c.tag_id == tag_id,
-                    tag_by_topic_table.c.topic_id == topic_id
-        ))
+                       tag_by_topic_table.c.tag_id == tag_id,
+                       tag_by_topic_table.c.topic_id == topic_id))
 
         result = conn.execute(assoc_query).fetchall()
         return True if result else False
-
 
     def __add_assoc(conn, tag_id, topic_id):
         query = tag_by_topic_table.insert().values(tag_id=tag_id, topic_id=topic_id)
@@ -168,7 +162,7 @@ def add_topic(topic_name, user_id, tags=None):
         # find out if the topic is in the table already.
         query = select([topic_table])\
             .where(and_(topic_table.c.name == topic_name,
-                        topic_table.c.user_id == user_id) )
+                        topic_table.c.user_id == user_id))
 
         topics_in_system = conn.execute(query).fetchall()
         return True if topics_in_system else False
@@ -177,7 +171,6 @@ def add_topic(topic_name, user_id, tags=None):
         query = topic_table.insert().values(name=topic_name, user_id=user_id)
         conn.execute(query)
 
-
     tags = [] if None else tags
     conn = eng.connect()
 
@@ -185,12 +178,10 @@ def add_topic(topic_name, user_id, tags=None):
     if not __topic_exists(conn, topic_name, user_id):
         __add_topic(topic_name, user_id)
 
-
     # Put tags that AREN'T already in the tag table into the tag table.
     for tag in tags:
         if not __tag_in_system(conn, tag, user_id):
             __add_tag(conn, tag, user_id)
-
 
     # Enter the association into the system for cases where the association doesn't already exist.
     for tag in tags:
@@ -267,8 +258,8 @@ def get_resources(topic_id, user_id):
     query = select([resource_table.c.id, resource_table.c.name, resource_table.c.url])\
                     .select_from(resource_table.join(resource_by_topic_table))\
                         .where(and_(
-                            resource_by_topic_table.c.topic_id == topic_id,
-                            resource_table.c.user_id == user_id))
+                                resource_by_topic_table.c.topic_id == topic_id,
+                                resource_table.c.user_id == user_id))
 
     result_set = conn.execute(query).fetchall()
     resource_list = [dict(id=id, name=name, url=url) for id, name, url in result_set]
@@ -305,6 +296,7 @@ def add_attempt(exercise_id, score):
     query = attempt_table.insert().values(exercise_id=exercise_id, score=score, when_attempted=now)
     conn.execute(query)
 
+
 def get_topic_name(topic_id, user_id):
     """
     Get the name of the topic connected to the topic id for that user
@@ -313,10 +305,9 @@ def get_topic_name(topic_id, user_id):
     :return: topic name as a simple string
     """
     conn = eng.connect()
-    query = select([topic_table.c.name]).where(and_(
-                topic_table.c.id == topic_id,
-                topic_table.c.user_id == user_id
-    ))
+    query = select([topic_table.c.name])\
+            .where(and_(topic_table.c.id == topic_id,
+                        topic_table.c.user_id == user_id))
 
     results = conn.execute(query).fetchone()
     topic_name = list(results)[0]
