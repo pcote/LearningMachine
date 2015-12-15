@@ -1,9 +1,9 @@
-from flask import Flask, session, request, redirect, jsonify
+from flask import Flask, session, request, redirect, jsonify, abort
 from configparser import ConfigParser
 import logging
 from login import LoginHandler
 import model
-from pdb import set_trace
+from functools import wraps
 import re
 
 parser = ConfigParser()
@@ -16,6 +16,20 @@ logger.setLevel(logging.DEBUG)
 
 nudir = lambda mod: [x for x in dir(mod) if not x.startswith("_")]
 app = Flask(__name__)
+
+
+def validate_json(*expected_args):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print("decorator view of the json object")
+            json_ob = request.get_json()
+            for expected_arg in expected_args:
+                if expected_arg not in json_ob or json_ob.get(expected_arg) is None:
+                    abort(400)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 
 @app.route("/")
@@ -73,6 +87,7 @@ def get_user_info():
 
 
 @app.route("/addtag", methods=["POST"])
+@validate_json("new_tag")
 def add_tag():
     """
     Simple addition of a single tag to the sytem for a given user
@@ -102,6 +117,7 @@ def get_tags():
 
 
 @app.route("/addtopic", methods=["POST"])
+@validate_json("topic", "tags")
 def add_topic():
     """
     Add a topic along with any associated tags for a given user.
@@ -167,6 +183,7 @@ def get_resources(topic_id):
 
 
 @app.route("/addscore", methods=["POST"])
+@validate_json("exercise_id", "score")
 def add_score():
     """
     Add the score for an attempt at an exercise.
