@@ -19,10 +19,15 @@ app = Flask(__name__)
 
 
 def validate_json(*expected_args):
+    """
+    Decorator function to validate
+    :param expected_args: Individual strings representing keys that are expected to exist and turn up values for the
+    passed in JSON object.
+    :return: Ultimately, a wrapped function that can validate json requests and spit 400 errors if things aren't there.
+    """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            print("decorator view of the json object")
             json_ob = request.get_json()
             for expected_arg in expected_args:
                 if expected_arg not in json_ob or json_ob.get(expected_arg) is None:
@@ -195,6 +200,7 @@ def add_score():
     score = json_data.get("score")
     model.add_attempt(exercise_id, score)
     return jsonify(dict(result="success"))
+
 
 
 if __name__ == '__main__':
