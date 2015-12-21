@@ -105,7 +105,8 @@ var controller = function($scope, categoryService, userService, exerciseService)
     }
 
     $scope.addExerciseClick = function(){
-        alert("adding exercise stub....")
+        scope = $scopeId(9) // UGLY HACK: Temporary solution til better scoping solution comes up.
+        exerciseService.addExercise(scope.newQuestion, scope.newAnswer, scope.currentTopicId)
     }
 
 }

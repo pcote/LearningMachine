@@ -41,6 +41,7 @@ var ExerciseService = function($http){
         // get the topic name first.
         $http.get("/topicname/" + topicId).then(function(res){
             scope.currentTopic = res.data.topic_name
+            scope.currentTopicId = topicId
             scope.showTopics = false
             scope.showExercises = true
 
@@ -71,6 +72,10 @@ var ExerciseService = function($http){
         }
 
         $http(req).then(function(res){}, function(res){})
+    }
+
+    this.addExercise = function(newQuestion, newAnswer, topic){
+        alert("add exercise service stub... question: " + newQuestion + " Anwer: " + newAnswer + " topic: " + topic)
     }
 }
 
