@@ -1,0 +1,28 @@
+<h3><u>{{ current_tag }} Topics</u></h3>
+<br />
+
+<lm-related-tags topic_id="currentTopicId"></lm-related-tags>
+<ul>
+    <li ng-repeat="topic in topics">
+        <a class="topiclinks" ng-click="topic_click(topic.id)">{{topic.name}}</a>
+    </li>
+</ul>
+<br />
+<table>
+    <tr>
+        <td>&nbsp;</td>
+        <td><b><u>Add a topic</u></b></td>
+    </tr>
+    <tr>
+        <td>name:</td>
+        <td><input type="text" ng-model="new_topic_name" /></td>
+    </tr>
+    <tr>
+        <td>tags:</td>
+        <td><input type="text" ng-model="new_topic_tags" /></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><button ng-click="add_topic_click()" class="btn btn-primary">Add</button></td>
+    </tr>
+</table>

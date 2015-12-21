@@ -47,12 +47,16 @@
             </ul>
         </div>
 
-        <div class="col-xs-9 topicarea" ng-show="showTopics" ng-include="'topics_body.html'"></div>
-        <div class="col-xs-9" ng-include="'exercise_body.html'" ng-show="showExercises"></div>
+        <div class="col-xs-9 topicarea" ng-show="showTopics" ng-include="'category/topics_body.html'"></div>
+        <div class="col-xs-9" ng-include="'exercise/exercise_body.html'" ng-show="showExercises"></div>
     </div>
 </div>
+
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-<script src="services.js"></script>
+<script src="user/services.js"></script>
+<script src="category/services.js"></script>
+<script src="exercise/services.js"></script>
+
 <script>
 
 
