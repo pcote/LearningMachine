@@ -42,7 +42,9 @@
         <!-- tag section -->
         <div class="col-xs-3 tagarea">
             <b>Tags</b>
-            <lm-tag-list></lm-tag-list>
+            <ul class="taglist">
+                <li ng-repeat="tag in tags"><a class="taglinks" ng-click="tag_click(tag.id)">{{tag.name}}</a></li>
+            </ul>
         </div>
 
         <div class="col-xs-9 topicarea" ng-show="showTopics" ng-include="'category/topics_body.html'"></div>
@@ -55,9 +57,8 @@
 <script src="category/services.js"></script>
 <script src="exercise/services.js"></script>
 
-<script src="category/directives.js"></script>
-
 <script>
+
 
 var controller = function($scope, categoryService, userService, exerciseService){
     $scope.current_tag = "Untagged"
@@ -120,8 +121,6 @@ app.controller("controller", controller)
 app.service("categoryService", CategoryService)
 app.service("userService", UserService)
 app.service("exerciseService", ExerciseService)
-
-app.directive("lmTagList", lmTagList)
 
 </script>
 </body>
