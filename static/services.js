@@ -74,8 +74,21 @@ var ExerciseService = function($http){
         $http(req).then(function(res){}, function(res){})
     }
 
-    this.addExercise = function(newQuestion, newAnswer, topic){
-        alert("add exercise service stub... question: " + newQuestion + " Anwer: " + newAnswer + " topic: " + topic)
+    this.addExercise = function(newQuestion, newAnswer, topicId){
+        var req = {
+            url: "/addexercise",
+            method: "post",
+            headers: {
+                "Content-type": "application/json"
+            },
+            data: {
+                    "new_question": newQuestion,
+                    "new_answer": newAnswer,
+                    "topic_id": topicId
+            }
+        }
+
+        $http(req).then(function(res){}, function(res){})
     }
 }
 

@@ -202,6 +202,16 @@ def add_score():
     return jsonify(dict(result="success"))
 
 
+@app.route("/addexercise", methods=["POST"])
+@validate_json("new_question", "new_answer", "topic_id")
+def add_exercise():
+    json_data = request.get_json()
+    new_question = json_data.get("new_question")
+    new_answer = json_data.get("new_answer")
+    topic_id = json_data.get("topic_id")
+    user_id = session.get("email")
+    model.add_exercise(new_question, new_answer, topic_id, user_id)
+    return jsonify({"message": "add exercise call completed"})
 
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]
