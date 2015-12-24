@@ -81,11 +81,6 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     userService.showUserName($scope)
     categoryService.refreshTagList($scope)
 
-    $scope.add_topic_click = function(){
-        categoryService.addTopicInfo($scope.new_topic_name, $scope.new_topic_tags)
-        categoryService.refreshTagList($scope)
-    }
-
     $scope.tag_click = function(tag_id){
         categoryService.updateTopicsList($scope, tag_id)
         $scope.showTopics = true
@@ -120,8 +115,17 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
 }
 
+var addTopicController = function($scope, categoryService){
+    $scope.add_topic_click = function(){
+        categoryService.addTopicInfo($scope.new_topic_name, $scope.new_topic_tags)
+        categoryService.refreshTagList($scope)
+    }
+}
+
 var app = angular.module("app", [])
 app.controller("controller", controller)
+app.controller("addTopicController", addTopicController)
+
 app.service("categoryService", CategoryService)
 app.service("userService", UserService)
 app.service("exerciseService", ExerciseService)
