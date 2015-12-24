@@ -60,19 +60,23 @@
 <script>
 
 
-var controller = function($scope, categoryService, userService, exerciseService){
-    $scope.current_tag = "Untagged"
-    $scope.showTopics = true
-    $scope.showExercises = false
+var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
+    $scope.currentTag = "Untagged"
     $scope.currentTopic = ""
-    $scope.topics = []
-    $scope.tags = []
-    $scope.resources = []
-    $scope.exercises = []
     $scope.currentExercise = {}
     $scope.currentExercise.question = "blank question"
     $scope.currentExercise.answer = "blank answer"
     $scope.currentExercise.id = 0
+
+    $scope.showTopics = true
+    $scope.showExercises = false
+
+    $scope.topics = []
+    $scope.tags = []
+    $scope.resources = []
+    $scope.exercises = []
+
+
 
     userService.showUserName($scope)
     categoryService.refreshTagList($scope)
