@@ -1,7 +1,6 @@
 <h3><u>{{ activeTagObject.name }} Topics</u></h3>
 <br />
 
-<lm-related-tags topic_id="activeTopicObject.id"></lm-related-tags>
 <ul>
     <li ng-repeat="topic in topics">
         <a class="topiclinks" ng-click="topic_click(topic.id)">{{topic.name}}</a>
