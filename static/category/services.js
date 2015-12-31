@@ -1,4 +1,4 @@
-var CategoryService = function($http){
+var CategoryService = function($http, $rootScope){
 
     this.addTopicInfo = function(topic, stringOfTags){
         var tagList = []
@@ -33,5 +33,10 @@ var CategoryService = function($http){
         $http.get("/topics/" + tag_id).then(function(res){
             scope.topics = res.data.topics
         }, function(res){})
+
+        $http.get("/taginfo/" + tag_id).then(function(res){
+            $rootScope.activeTagObject = res.data
+        }, function(res){})
+
     }
 }

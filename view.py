@@ -121,6 +121,12 @@ def get_tags():
     return jsonify({"tags": tags})
 
 
+@app.route("/taginfo/<tag_id>")
+def tag_info(tag_id):
+    user_id = session["email"]
+    tag_info = model.get_tag_info(tag_id, user_id)
+    return jsonify(tag_info)
+
 @app.route("/addtopic", methods=["POST"])
 @validate_json("topic", "tags")
 def add_topic():

@@ -112,6 +112,13 @@ def get_tag_id(tag_name, user_id):
     return result
 
 
+def get_tag_info(tag_id, user_id):
+    conn = eng.connect()
+    query = select([tag_table.c.id, tag_table.c.name]).where(and_(tag_table.c.id == tag_id, tag_table.c.user_id == user_id))
+    id, name = conn.execute(query).fetchone()
+    return dict(id=id, name=name)
+
+
 def get_topic_id(topic_name, user_id):
     """
     Utility function to map topic names to topic id numbers.  Specific to a given user.
