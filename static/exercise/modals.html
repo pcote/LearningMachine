@@ -5,7 +5,7 @@
                 <u><b>Question</b></u>
             </div>
             <div class="modal-body">
-                {{currentExercise.question}}
+                {{activeExerciseObject.question}}
             </div>
             <div class="modal-footer" align="center">
                 <button class="btn btn-lg btn-primary" ng-click="showAnswerClick()">
@@ -24,13 +24,13 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xs-12"><b><u>{{currentExercise.question}}</u></b></div>
+                    <div class="col-xs-12"><b><u>{{activeExerciseObject.question}}</u></b></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">&nbsp;</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12"><b>{{currentExercise.answer}}</b></div>
+                    <div class="col-xs-12"><b>{{activeExerciseObject.answer}}</b></div>
                 </div>
             </div>
             <div class="modal-footer" align="center">

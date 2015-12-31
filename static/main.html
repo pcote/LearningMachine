@@ -63,10 +63,7 @@
 var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
     $rootScope.activeTagObject = {"name":"Untagged", "id": 0}
     $rootScope.activeTopicObject = {}
-    $scope.currentExercise = {}
-    $scope.currentExercise.question = "blank question"
-    $scope.currentExercise.answer = "blank answer"
-    $scope.currentExercise.id = 0
+    $rootScope.activeExerciseObject = {"id": 0, "question": "blank question", "answer": "blank answer"}
 
     $scope.showTopics = true
     $scope.showExercises = false
@@ -93,7 +90,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
 
     $scope.exerciseClick = function(exercise){
-        $scope.currentExercise = exercise
+        $rootScope.activeExerciseObject = exercise
         $("#questionModal").modal()
     }
 
@@ -103,7 +100,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     }
 
     $scope.scoreClick = function(score){
-        exerciseService.submitScore($scope.currentExercise, score)
+        exerciseService.submitScore($rootScope.activeExerciseObject, score)
         $("#questionAnswerModal").modal("hide")
     }
 
