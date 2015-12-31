@@ -1,7 +1,7 @@
-var UserService = function($http){
+var UserService = function($http, $rootScope){
         this.showUserName = function(scope){
             $http.get("/userinfo").then(function(res){
-            scope.displayName = res.data.display_name
+            $rootScope.activeUserObject = res.data
         })
     }
 }

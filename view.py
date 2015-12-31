@@ -84,7 +84,7 @@ def get_user_info():
     if session and session.get("email") and session.get("display_name"):
         email = session.get("email")
         display_name = session.get("display_name")
-        data = dict(email=email, display_name=display_name)
+        data = dict(email=email, displayName=display_name)
         logger.debug("Success in getting log information on user: {} at email: {}".format(display_name, email))
         return jsonify(data)
     else:
