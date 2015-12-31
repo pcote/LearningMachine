@@ -1,11 +1,10 @@
 
 
-var ExerciseService = function($http){
+var ExerciseService = function($http, $rootScope){
     this.setupExerciseDisplay = function(scope, topicId){
         // get the topic name first.
         $http.get("/topicname/" + topicId).then(function(res){
-            scope.currentTopic = res.data.topic_name
-            scope.currentTopicId = topicId
+            $rootScope.activeTopicObject = {"id": topicId, "name": res.data.topic_name}
             scope.showTopics = false
             scope.showExercises = true
 
