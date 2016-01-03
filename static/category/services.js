@@ -1,6 +1,6 @@
 var CategoryService = function($http, $rootScope){
 
-    this.addTopicInfo = function(topic, stringOfTags){
+    this.addTopicInfo = function(scope, topic, stringOfTags){
         var tagList = []
         if(stringOfTags){
             tagList = stringOfTags.split(" ")
@@ -18,7 +18,11 @@ var CategoryService = function($http, $rootScope){
             }
         }
 
-        $http(req).then(function(res){}, function(res){})
+        $http(req).then(function(res){
+            $http.get("/topics/" + $rootScope.activeObject.tag.id).then(function(res){
+                scope.dataList.topics = res.data.topics
+            }, function(res){})
+        }, function(res){})
     }
 
     this.refreshTagList = function(scope){

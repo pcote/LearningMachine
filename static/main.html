@@ -118,7 +118,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
 var addTopicController = function($scope, categoryService){
     $scope.add_topic_click = function(){
-        categoryService.addTopicInfo($scope.new_topic_name, $scope.new_topic_tags)
+        categoryService.addTopicInfo($scope, $scope.new_topic_name, $scope.new_topic_tags)
         categoryService.refreshTagList($scope)
     }
 }
