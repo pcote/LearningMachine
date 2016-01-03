@@ -43,7 +43,7 @@
         <div class="col-xs-3 tagarea">
             <b>Tags</b>
             <ul class="taglist">
-                <li ng-repeat="tag in tags"><a class="taglinks" ng-click="tag_click(tag.id)">{{tag.name}}</a></li>
+                <li ng-repeat="tag in dataList.tags"><a class="taglinks" ng-click="tag_click(tag.id)">{{tag.name}}</a></li>
             </ul>
         </div>
 
@@ -71,10 +71,11 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.showStatus.topics = true
     $scope.showStatus.exercises = false
 
-    $scope.topics = []
-    $scope.tags = []
-    $scope.resources = []
-    $scope.exercises = []
+    $scope.dataList = {}
+    $scope.dataList.topics = []
+    $scope.dataList.tags = []
+    $scope.dataList.resources = []
+    $scope.dataList.exercises = []
 
 
 

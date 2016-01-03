@@ -8,7 +8,7 @@
         <b><u>Exercises</u></b>
         <br />
         <ul>
-            <li ng-repeat="exercise in exercises">
+            <li ng-repeat="exercise in dataList.exercises">
                 <a ng-click="exerciseClick(exercise)">{{exercise.question}}</a>
             </li>
         </ul>
@@ -19,7 +19,7 @@
         <b><u>Resources</u></b>
         <br />
         <ul>
-            <li ng-repeat="resource in resources">
+            <li ng-repeat="resource in dataList.resources">
                 <a href="{{resource.url}}"">{{resource.name}}</a>
             </li>
         </ul>

@@ -12,12 +12,12 @@ var ExerciseService = function($http, $rootScope){
 
         // grab the exercises
         $http.get("/exercises/" + topicId).then(function(res){
-            scope.exercises = res.data.exercises
+            scope.dataList.exercises = res.data.exercises
         }, function(res){})
 
         // grab the resources
         $http.get("/resources/" + topicId).then(function(res){
-            scope.resources = res.data.resources
+            scope.dataList.resources = res.data.resources
         }, function(res){})
     }
 

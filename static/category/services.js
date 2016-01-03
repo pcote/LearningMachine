@@ -23,7 +23,7 @@ var CategoryService = function($http, $rootScope){
 
     this.refreshTagList = function(scope){
         $http.get("/tags").then(function(res){
-            scope.tags = res.data.tags
+            scope.dataList.tags = res.data.tags
         }, function(res){
             alert("referesh of tag list failed")
         })
@@ -31,7 +31,7 @@ var CategoryService = function($http, $rootScope){
 
     this.updateTopicsList = function(scope, tag_id){
         $http.get("/topics/" + tag_id).then(function(res){
-            scope.topics = res.data.topics
+            scope.dataList.topics = res.data.topics
         }, function(res){})
 
         $http.get("/taginfo/" + tag_id).then(function(res){
