@@ -47,8 +47,8 @@
             </ul>
         </div>
 
-        <div class="col-xs-9 topicarea" ng-show="showTopics" ng-include="'category/topics_body.html'"></div>
-        <div class="col-xs-9" ng-include="'exercise/exercise_body.html'" ng-show="showExercises"></div>
+        <div class="col-xs-9 topicarea" ng-show="showStatus.topics" ng-include="'category/topics_body.html'"></div>
+        <div class="col-xs-9" ng-include="'exercise/exercise_body.html'" ng-show="showStatus.exercises"></div>
     </div>
 </div>
 
@@ -67,8 +67,9 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"}
     $rootScope.activeObject.user = {}
 
-    $scope.showTopics = true
-    $scope.showExercises = false
+    $scope.showStatus = {}
+    $scope.showStatus.topics = true
+    $scope.showStatus.exercises = false
 
     $scope.topics = []
     $scope.tags = []
@@ -82,8 +83,8 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
     $scope.tag_click = function(tag_id){
         categoryService.updateTopicsList($scope, tag_id)
-        $scope.showTopics = true
-        $scope.showExercises = false
+        $scope.showStatus.topics = true
+        $scope.showStatus.exercises = false
     }
 
     $scope.topic_click = function(topicId){
