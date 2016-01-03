@@ -32,7 +32,7 @@
     <!-- Top row section-->
     <div class="row">
         <div class="col-xs-12 topbar">
-            {{activeUserObject.displayName}}
+            {{activeObject.user.displayName}}
         </div>
     </div>
 
@@ -61,9 +61,11 @@
 
 
 var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
-    $rootScope.activeTagObject = {"name":"Untagged", "id": 0}
-    $rootScope.activeTopicObject = {}
-    $rootScope.activeExerciseObject = {"id": 0, "question": "blank question", "answer": "blank answer"}
+    $rootScope.activeObject = {}
+    $rootScope.activeObject.tag = {"name":"Untagged", "id": 0}
+    $rootScope.activeObject.topic = {}
+    $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"}
+    $rootScope.activeObject.user = {}
 
     $scope.showTopics = true
     $scope.showExercises = false
@@ -90,7 +92,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
 
     $scope.exerciseClick = function(exercise){
-        $rootScope.activeExerciseObject = exercise
+        $rootScope.activeObject.exercise = exercise
         $("#questionModal").modal()
     }
 
@@ -100,7 +102,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     }
 
     $scope.scoreClick = function(score){
-        exerciseService.submitScore($rootScope.activeExerciseObject, score)
+        exerciseService.submitScore($rootScope.activeObject.exercise, score)
         $("#questionAnswerModal").modal("hide")
     }
 

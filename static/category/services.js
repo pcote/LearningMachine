@@ -35,7 +35,7 @@ var CategoryService = function($http, $rootScope){
         }, function(res){})
 
         $http.get("/taginfo/" + tag_id).then(function(res){
-            $rootScope.activeTagObject = res.data
+            $rootScope.activeObject.tag = res.data
         }, function(res){})
 
     }
