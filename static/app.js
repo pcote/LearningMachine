@@ -1,3 +1,5 @@
+
+(function(){
 var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
     <!-- The currently "active" variables used to help set up lists, add new info, ect.  -->
     $rootScope.activeObject = {}
@@ -66,10 +68,10 @@ var addTopicController = function($scope, categoryService){
 }
 
 <!-- Core Angular app initialization -->
-var app = angular.module("app", [])
-app.controller("controller", controller)
-app.controller("addTopicController", addTopicController)
-
-app.service("categoryService", CategoryService)
-app.service("userService", UserService)
-app.service("exerciseService", ExerciseService)
+angular.module("app", [])
+    .controller("controller", controller)
+    .controller("addTopicController", addTopicController)
+    .service("categoryService", CategoryService)
+    .service("userService", UserService)
+    .service("exerciseService", ExerciseService)
+})()
