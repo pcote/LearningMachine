@@ -5,6 +5,7 @@ from login import LoginHandler
 import model
 from functools import wraps
 import re
+from pdb import set_trace
 
 parser = ConfigParser()
 parser.read("config.ini")
@@ -31,6 +32,7 @@ def validate_json(*expected_args):
             json_ob = request.get_json()
             for expected_arg in expected_args:
                 if expected_arg not in json_ob or json_ob.get(expected_arg) is None:
+                    print("{} expected the JSON argument {} and didn't find it.".format(func.__name__, expected_arg))
                     abort(400)
             return func(*args, **kwargs)
         return wrapper
