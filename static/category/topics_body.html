@@ -1,12 +1,16 @@
+<!-- Tag title for the topics area -->
 <h3><u>{{ activeObject.tag.name }} Topics</u></h3>
 <br />
 
+<!-- Display for list of topics -->
 <ul>
     <li ng-repeat="topic in dataList.topics">
         <a class="topiclinks" ng-click="topic_click(topic.id)">{{topic.name}}</a>
     </li>
 </ul>
 <br />
+
+<!-- Form for adding a new topic -->
 <table ng-controller="addTopicController">
     <tr>
         <td>&nbsp;</td>

@@ -61,16 +61,19 @@
 
 
 var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
+    <!-- The currently "active" variables used to help set up lists, add new info, ect.  -->
     $rootScope.activeObject = {}
     $rootScope.activeObject.tag = {"name":"Untagged", "id": 0}
     $rootScope.activeObject.topic = {}
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"}
     $rootScope.activeObject.user = {}
 
+    <!-- Controls the visibility of the topics and exercise sections -->
     $scope.showStatus = {}
     $scope.showStatus.topics = true
     $scope.showStatus.exercises = false
 
+    <!-- Item lists to display on different parts of the page -->
     $scope.dataList = {}
     $scope.dataList.topics = []
     $scope.dataList.tags = []
@@ -78,10 +81,12 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.dataList.exercises = []
 
 
-
+    <!-- Initial setup upon the user having logged in and arrived at the main page.-->
     userService.showUserName($scope)
     categoryService.refreshTagList($scope)
 
+
+    <!-- Mouse click handling event functions -->
     $scope.tag_click = function(tag_id){
         categoryService.updateTopicsList($scope, tag_id)
         $scope.showStatus.topics = true
@@ -122,6 +127,7 @@ var addTopicController = function($scope, categoryService){
     }
 }
 
+<!-- Core Angular app initialization -->
 var app = angular.module("app", [])
 app.controller("controller", controller)
 app.controller("addTopicController", addTopicController)
