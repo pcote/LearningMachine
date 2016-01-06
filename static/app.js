@@ -59,8 +59,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     }
 
     $scope.addResourceClick = function(newResourceName, newResourceUrl){
-        alert(newResourceName + " " + newResourceUrl)
-        resourceService.addResource(newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
+        resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
     }
 
 }

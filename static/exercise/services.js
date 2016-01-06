@@ -56,7 +56,8 @@ var ExerciseService = function($http, $rootScope){
 }
 
 var ResourceService = function($http, $rootScope){
-    this.addResource = function(name, url, topic_id){
+
+    this.addResource = function(scope, name, url, topic_id){
         var req = {
             url: "/addresource",
             method: "post",
@@ -71,7 +72,11 @@ var ResourceService = function($http, $rootScope){
         }
 
         var cbAddResourceSuccess = function(res){
-            alert("CHECK THE DATABASE for the resource you just added!!!")
+            // grab the resources
+            $http.get("/resources/" + topic_id).then(function(res){
+                scope.dataList.resources = res.data.resources
+            }, function(res){})
+
         }
 
         var cbAddResourceFail = function(res){
