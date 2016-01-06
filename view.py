@@ -221,6 +221,22 @@ def add_exercise():
     model.add_exercise(new_question, new_answer, topic_id, user_id)
     return jsonify({"message": "add exercise call completed"})
 
+
+@app.route("/addresource", methods=["POST"])
+@validate_json("new_resource_name", "new_resource_url", "topic_id")
+def add_resource():
+    json_data = request.get_json()
+    new_resource_name = json_data.get("new_resource_name")
+    new_resource_url = json_data.get("new_resource_url")
+    topic_id = json_data.get("topic_id")
+    user_id = session.get("email")
+    print("RESOURCE TO ADD: {}".format(new_resource_name))
+    print("URL OF RESOURCE TO ADD: {}".format(new_resource_url))
+    print("TOPIC ID OF RESOURCE TO ADD: {}".format(topic_id))
+    model.add_resource(new_resource_name, new_resource_url, user_id, topic_id)
+    return "okay so far so good i guess...."
+
+
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]
     app.run(debug=True)

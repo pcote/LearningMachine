@@ -45,6 +45,28 @@
                 <a href="{{resource.url}}"">{{resource.name}}</a>
             </li>
         </ul>
+        <br />
+
+        <!--
+        Form section for adding a new resource
+        -->
+        <table class="table">
+            <tr>
+                <td align="center" colspan="2"><b><u>New Resource</u></b></td>
+            </tr>
+            <tr>
+                <td><b>Resource Name</b></td>
+                <td><input type="text" ng-model="newResourceName" /></td>
+            </tr>
+                <tr>
+                <td><b>URL</b></td>
+                <td><input type="text" ng-model="newResourceUrl" /></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2"><button class="btn btn-primary" ng-click="addResourceClick(newResourceName, newResourceUrl)">Add Resource</button></td>
+            </tr>
+        </table>
+
     </div>
 </div>
 

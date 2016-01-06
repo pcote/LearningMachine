@@ -1,6 +1,6 @@
 
 (function(){
-var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
+var controller = function($scope, $rootScope, categoryService, userService, exerciseService, resourceService){
     <!-- The currently "active" variables used to help set up lists, add new info, ect.  -->
     $rootScope.activeObject = {}
     $rootScope.activeObject.tag = {"name":"Untagged", "id": 0}
@@ -58,6 +58,11 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
         exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
     }
 
+    $scope.addResourceClick = function(newResourceName, newResourceUrl){
+        alert(newResourceName + " " + newResourceUrl)
+        resourceService.addResource(newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
+    }
+
 }
 
 var addTopicController = function($scope, categoryService){
@@ -74,4 +79,5 @@ angular.module("app", [])
     .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
+    .service("resourceService", ResourceService)
 })()

@@ -55,5 +55,32 @@ var ExerciseService = function($http, $rootScope){
     }
 }
 
+var ResourceService = function($http, $rootScope){
+    this.addResource = function(name, url, topic_id){
+        var req = {
+            url: "/addresource",
+            method: "post",
+            headers: {
+                "Content-type": "application/json"
+            },
+            data: {
+                "new_resource_name": name,
+                "new_resource_url": url,
+                "topic_id": topic_id
+            }
+        }
+
+        var cbAddResourceSuccess = function(res){
+            alert("CHECK THE DATABASE for the resource you just added!!!")
+        }
+
+        var cbAddResourceFail = function(res){
+            alert("attempt to add resource bombed.  check the stacktrace")
+        }
+
+        $http(req).then(cbAddResourceSuccess, cbAddResourceFail)
+    }
+}
+
 
 
