@@ -321,5 +321,27 @@ def get_topic_name(topic_id, user_id):
     return topic_name
 
 
+def get_attempts(exercise_id):
+    conn = eng.connect()
+    query = select([attempt_table.c.score, attempt_table.c.when_attempted]).where(attempt_table.c.exercise_id == exercise_id)
+    result_records = conn.execute(query).fetchall()
+    attempts = [{"score": score, "when_attempted":when_attempted} for score, when_attempted in result_records]
+    return attempts
+
+def full_attempt_history(user_id):
+    conn = eng.connect()
+    query = select([topic_table.c.id, topic_table.c.name]).where(topic_table.c.user_id == user_id)
+    topic_records = conn.execute(query).fetchall()
+    topic_exercises = [{"topic": t_name, "exercises": get_exercises(t_id, user_id)}
+                            for t_id, t_name in topic_records]
+
+    topic_exercises_with_attempts = []
+    for topic_exercise in topic_exercises:
+        for exercise in topic_exercise.get("exercises"):
+            attempts = get_attempts(exercise.get("id"))
+            exercise.update({"attempts": attempts})
+
+    return topic_exercises
+
 if __name__ == '__main__':
     pass

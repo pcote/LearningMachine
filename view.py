@@ -236,6 +236,12 @@ def add_resource():
     model.add_resource(new_resource_name, new_resource_url, user_id, topic_id)
     return "okay so far so good i guess...."
 
+@app.route("/exercisehistory")
+def get_exercise_history():
+    #user_id = session.get("email")
+    user_id = "cotejrp@gmail.com"
+    history = model.full_attempt_history(user_id)
+    return jsonify({"history":history})
 
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]
