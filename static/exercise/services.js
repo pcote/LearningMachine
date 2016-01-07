@@ -53,6 +53,22 @@ var ExerciseService = function($http, $rootScope){
 
         $http(req).then(function(res){}, function(res){})
     }
+
+    this.getAttemptsReport = function(scope){
+
+        var cbSuccess = function(res){
+            scope.report.attempts = res.data.history
+            scope.showStatus.topics = false
+            scope.showStatus.exercises = false
+            scope.showStatus.attempts = true
+        }
+
+        var cbFailure = function(res){
+            alert("attempt to get the attempt report failed")
+        }
+
+        $http.get("/exercisehistory").then(cbSuccess, cbFailure)
+    }
 }
 
 var ResourceService = function($http, $rootScope){

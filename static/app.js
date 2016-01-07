@@ -12,6 +12,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.showStatus = {}
     $scope.showStatus.topics = true
     $scope.showStatus.exercises = false
+    $scope.showStatus.attempts = false
 
     <!-- Item lists to display on different parts of the page -->
     $scope.dataList = {}
@@ -19,6 +20,10 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.dataList.tags = []
     $scope.dataList.resources = []
     $scope.dataList.exercises = []
+
+    <!-- Exercise attempts report data.  -->
+    $scope.report = {}
+    $scope.report.attempts = []
 
 
     <!-- Initial setup upon the user having logged in and arrived at the main page.-->
@@ -60,6 +65,10 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
     $scope.addResourceClick = function(newResourceName, newResourceUrl){
         resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
+    }
+
+    $scope.viewAttemptsClick = function(){
+        exerciseService.getAttemptsReport($scope)
     }
 
 }
