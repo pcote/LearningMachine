@@ -36,6 +36,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
         categoryService.updateTopicsList($scope, tag_id)
         $scope.showStatus.topics = true
         $scope.showStatus.exercises = false
+        $scope.showStatus.attempts = false
     }
 
     $scope.topic_click = function(topicId){

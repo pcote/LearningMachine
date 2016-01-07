@@ -6,6 +6,7 @@ var ExerciseService = function($http, $rootScope){
         $http.get("/topicname/" + topicId).then(function(res){
             $rootScope.activeObject.topic = {"id": topicId, "name": res.data.topic_name}
             scope.showStatus.topics = false
+            scope.showStatus.attempts = false
             scope.showStatus.exercises = true
 
         }, function(res){})
