@@ -62,10 +62,20 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.addExerciseClick = function(newQuestion, newAnswer){
         exerciseService.addExercise(newQuestion, newAnswer, $rootScope.activeObject.topic.id)
         exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
+        $scope.newQuestion = ""
+        $scope.newAnswer = ""
+        // HACK: jQuery workaround due  to question and answer fields falling out of sync with model
+        $("#newQuestionId").val("")
+        $("#newAnswerId").val("")
     }
 
     $scope.addResourceClick = function(newResourceName, newResourceUrl){
         resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
+        $scope.newResourceName = ""
+        $scope.newResourceUrl = ""
+        // HACK: jQuery workaround due  to resource name and url fields falling out of sync with model
+        $("#newResourceNameId").val("")
+        $("#newResourceUrlId").val("")
     }
 
     $scope.viewAttemptsClick = function(){
@@ -78,6 +88,8 @@ var addTopicController = function($scope, categoryService){
     $scope.add_topic_click = function(){
         categoryService.addTopicInfo($scope, $scope.new_topic_name, $scope.new_topic_tags)
         categoryService.refreshTagList($scope)
+        $scope.new_topic_name = ""
+        $scope.new_topic_tags = ""
     }
 }
 

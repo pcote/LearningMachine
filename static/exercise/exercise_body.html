@@ -26,11 +26,11 @@
             </tr>
             <tr>
                 <td><b>Question</b></td>
-                <td><input type="text" ng-model="newQuestion" /></td>
+                <td><input type="text" id="newQuestionId" ng-model="newQuestion" /></td>
             </tr>
                 <tr>
                 <td><b>Answer</b></td>
-                <td><input type="text" ng-model="newAnswer" /></td>
+                <td><input type="text" id="newAnswerId" ng-model="newAnswer" /></td>
             </tr>
             <tr>
                 <td align="center" colspan="2"><button class="btn btn-primary" ng-click="addExerciseClick(newQuestion, newAnswer)">Add Exercise</button></td>
@@ -57,11 +57,11 @@
             </tr>
             <tr>
                 <td><b>Resource Name</b></td>
-                <td><input type="text" ng-model="newResourceName" /></td>
+                <td><input type="text" ng-model="newResourceName" id="newResourceNameId"/></td>
             </tr>
                 <tr>
                 <td><b>URL</b></td>
-                <td><input type="text" ng-model="newResourceUrl" /></td>
+                <td><input type="text" ng-model="newResourceUrl" id="newResourceUrlId" /></td>
             </tr>
             <tr>
                 <td align="center" colspan="2"><button class="btn btn-primary" ng-click="addResourceClick(newResourceName, newResourceUrl)">Add Resource</button></td>
