@@ -59,21 +59,22 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
         $("#questionAnswerModal").modal("hide")
     }
 
-    $scope.addExerciseClick = function(newQuestion, newAnswer){
-        exerciseService.addExercise(newQuestion, newAnswer, $rootScope.activeObject.topic.id)
-        exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
-        $scope.newQuestion = ""
-        $scope.newAnswer = ""
-        // HACK: jQuery workaround due  to question and answer fields falling out of sync with model
-        $("#newQuestionId").val("")
-        $("#newAnswerId").val("")
-    }
+
 
 
     $scope.viewAttemptsClick = function(){
         exerciseService.getAttemptsReport($scope)
     }
 
+}
+
+var addExerciseController = function($scope, $rootScope, exerciseService){
+    $scope.addExerciseClick = function(newQuestion, newAnswer){
+        exerciseService.addExercise(newQuestion, newAnswer, $rootScope.activeObject.topic.id)
+        exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
+        $scope.newQuestion = ""
+        $scope.newAnswer = ""
+    }
 }
 
 var addResourceController = function($scope, $rootScope, resourceService){
@@ -99,6 +100,7 @@ angular.module("app", [])
     .controller("controller", controller)
     .controller("addTopicController", addTopicController)
     .controller("addResourceController", addResourceController)
+    .controller("addExerciseController", addExerciseController)
     .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
