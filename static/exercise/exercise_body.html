@@ -10,7 +10,7 @@
         <b><u>Exercises</u></b>
         <br />
         <!-- Exercise list display -->
-        <ul>
+        <ul ng-controller="ExerciseController">
             <li ng-repeat="exercise in dataList.exercises">
                 <a ng-click="exerciseClick(exercise)">{{exercise.question}}</a>
             </li>
@@ -75,7 +75,7 @@
 <!--
 Modal dialogs for asking questions, seeing answers, and sending score submissions
 -->
-<div class="modal fade" id="questionModal">
+<div class="modal fade" id="questionModal" ng-controller="ExerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,7 +93,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
     </div>
 </div>
 
-<div class="modal fade" id="questionAnswerModal">
+<div class="modal fade" id="questionAnswerModal" ng-controller="ExerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

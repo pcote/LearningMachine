@@ -34,20 +34,6 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     }
 
 
-    $scope.exerciseClick = function(exercise){
-        $rootScope.activeObject.exercise = exercise
-        $("#questionModal").modal()
-    }
-
-    $scope.showAnswerClick = function(){
-        $("#questionModal").modal("hide")
-        $("#questionAnswerModal").modal()
-    }
-
-    $scope.scoreClick = function(score){
-        exerciseService.submitScore($rootScope.activeObject.exercise, score)
-        $("#questionAnswerModal").modal("hide")
-    }
 
 
     $scope.viewAttemptsClick = function(){
@@ -80,6 +66,22 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         $scope.newQuestion = ""
         $scope.newAnswer = ""
     }
+
+    $scope.exerciseClick = function(exercise){
+        $rootScope.activeObject.exercise = exercise
+        $("#questionModal").modal()
+    }
+
+    $scope.showAnswerClick = function(){
+        $("#questionModal").modal("hide")
+        $("#questionAnswerModal").modal()
+    }
+
+    $scope.scoreClick = function(score){
+        exerciseService.submitScore($rootScope.activeObject.exercise, score)
+        $("#questionAnswerModal").modal("hide")
+    }
+
 }
 
 var ResourceController = function($scope, $rootScope, resourceService){
