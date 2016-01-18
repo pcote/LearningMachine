@@ -57,7 +57,7 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 }
 
 
-var tagDisplayController = function($scope, $rootScope, categoryService){
+var TagController = function($scope, $rootScope, categoryService){
     // display of tags
     categoryService.refreshTagList($scope)
 
@@ -73,7 +73,7 @@ var tagDisplayController = function($scope, $rootScope, categoryService){
 
 }
 
-var addExerciseController = function($scope, $rootScope, exerciseService){
+var ExerciseController = function($scope, $rootScope, exerciseService){
     $scope.addExerciseClick = function(newQuestion, newAnswer){
         exerciseService.addExercise(newQuestion, newAnswer, $rootScope.activeObject.topic.id)
         exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
@@ -82,7 +82,7 @@ var addExerciseController = function($scope, $rootScope, exerciseService){
     }
 }
 
-var addResourceController = function($scope, $rootScope, resourceService){
+var ResourceController = function($scope, $rootScope, resourceService){
         $scope.addResourceClick = function(newResourceName, newResourceUrl){
         resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
         $scope.newResourceName = ""
@@ -91,7 +91,7 @@ var addResourceController = function($scope, $rootScope, resourceService){
 
 }
 
-var addTopicController = function($scope, categoryService){
+var TopicController = function($scope, categoryService){
     $scope.add_topic_click = function(){
         categoryService.addTopicInfo($scope, $scope.new_topic_name, $scope.new_topic_tags)
         categoryService.refreshTagList($scope)
@@ -103,10 +103,10 @@ var addTopicController = function($scope, categoryService){
 <!-- Core Angular app initialization -->
 angular.module("app", [])
     .controller("controller", controller)
-    .controller("addTopicController", addTopicController)
-    .controller("addResourceController", addResourceController)
-    .controller("addExerciseController", addExerciseController)
-    .controller("tagDisplayController", tagDisplayController)
+    .controller("TopicController", TopicController)
+    .controller("ResourceController", ResourceController)
+    .controller("ExerciseController", ExerciseController)
+    .controller("TagController", TagController)
     .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
