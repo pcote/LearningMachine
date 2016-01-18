@@ -28,16 +28,6 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
     <!-- Initial setup upon the user having logged in and arrived at the main page.-->
     userService.showUserName($scope)
-    categoryService.refreshTagList($scope)
-
-
-    <!-- Mouse click handling event functions -->
-    $scope.tag_click = function(tag_id){
-        categoryService.updateTopicsList($scope, tag_id)
-        $scope.showStatus.topics = true
-        $scope.showStatus.exercises = false
-        $scope.showStatus.attempts = false
-    }
 
     $scope.topic_click = function(topicId){
         exerciseService.setupExerciseDisplay($scope, topicId)
@@ -60,11 +50,26 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     }
 
 
-
-
     $scope.viewAttemptsClick = function(){
         exerciseService.getAttemptsReport($scope)
     }
+
+}
+
+
+var tagDisplayController = function($scope, $rootScope, categoryService){
+    // display of tags
+    categoryService.refreshTagList($scope)
+
+    // response to clicks on tags
+    <!-- Mouse click handling event functions -->
+    $scope.tag_click = function(tag_id){
+        categoryService.updateTopicsList($scope, tag_id)
+        $scope.showStatus.topics = true
+        $scope.showStatus.exercises = false
+        $scope.showStatus.attempts = false
+    }
+
 
 }
 
@@ -101,6 +106,7 @@ angular.module("app", [])
     .controller("addTopicController", addTopicController)
     .controller("addResourceController", addResourceController)
     .controller("addExerciseController", addExerciseController)
+    .controller("tagDisplayController", tagDisplayController)
     .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)

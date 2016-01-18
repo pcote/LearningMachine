@@ -40,7 +40,7 @@
     <div class="row">
 
         <!-- tag section -->
-        <div class="col-xs-3 tagarea">
+        <div class="col-xs-3 tagarea" ng-controller="tagDisplayController">
             <b>Tags</b>
             <ul class="taglist">
                 <li ng-repeat="tag in dataList.tags"><a class="taglinks" ng-click="tag_click(tag.id)">{{tag.name}}</a></li>
