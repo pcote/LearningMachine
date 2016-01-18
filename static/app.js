@@ -69,17 +69,18 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
         $("#newAnswerId").val("")
     }
 
-    $scope.addResourceClick = function(newResourceName, newResourceUrl){
-        resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
-        $scope.newResourceName = ""
-        $scope.newResourceUrl = ""
-        // HACK: jQuery workaround due  to resource name and url fields falling out of sync with model
-        $("#newResourceNameId").val("")
-        $("#newResourceUrlId").val("")
-    }
 
     $scope.viewAttemptsClick = function(){
         exerciseService.getAttemptsReport($scope)
+    }
+
+}
+
+var addResourceController = function($scope, $rootScope, resourceService){
+        $scope.addResourceClick = function(newResourceName, newResourceUrl){
+        resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
+        $scope.newResourceName = ""
+        $scope.newResourceUrl = ""
     }
 
 }
@@ -97,6 +98,7 @@ var addTopicController = function($scope, categoryService){
 angular.module("app", [])
     .controller("controller", controller)
     .controller("addTopicController", addTopicController)
+    .controller("addResourceController", addResourceController)
     .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
