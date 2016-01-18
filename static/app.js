@@ -29,10 +29,6 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     <!-- Initial setup upon the user having logged in and arrived at the main page.-->
     userService.showUserName($scope)
 
-    $scope.topic_click = function(topicId){
-        exerciseService.setupExerciseDisplay($scope, topicId)
-    }
-
 
 
 
@@ -93,13 +89,20 @@ var ResourceController = function($scope, $rootScope, resourceService){
 
 }
 
-var TopicController = function($scope, categoryService){
+var TopicController = function($scope, categoryService, exerciseService){
+
     $scope.add_topic_click = function(){
         categoryService.addTopicInfo($scope, $scope.new_topic_name, $scope.new_topic_tags)
         categoryService.refreshTagList($scope)
         $scope.new_topic_name = ""
         $scope.new_topic_tags = ""
     }
+
+    $scope.topic_click = function(topicId){
+        exerciseService.setupExerciseDisplay($scope, topicId)
+    }
+
+
 }
 
 <!-- Core Angular app initialization -->
