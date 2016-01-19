@@ -26,18 +26,22 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.report.attempts = []
 
 
-    <!-- Initial setup upon the user having logged in and arrived at the main page.-->
-    userService.showUserName($scope)
 
 
 
-
-    $scope.viewAttemptsClick = function(){
-        exerciseService.getAttemptsReport($scope)
-    }
 
 }
 
+var UserController = function($scope, userService){
+    <!-- Initial setup upon the user having logged in and arrived at the main page.-->
+    userService.showUserName($scope)
+}
+
+var AttemptsReportController = function($scope, exerciseService){
+    $scope.viewAttemptsClick = function(){
+        exerciseService.getAttemptsReport($scope)
+    }
+}
 
 var TagController = function($scope, $rootScope, categoryService){
     // display of tags
@@ -112,6 +116,8 @@ angular.module("app", [])
     .controller("ResourceController", ResourceController)
     .controller("ExerciseController", ExerciseController)
     .controller("TagController", TagController)
+    .controller("AttemptsReportController", AttemptsReportController)
+    .controller("UserController", UserController)
     .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
