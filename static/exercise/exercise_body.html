@@ -1,14 +1,19 @@
 <div class="row">
     <div class="col-xs-12" align="center" ng-controller="AttemptsReportController">
+
+        <!-- Link to take the user over to a report on their attempts on different exercises -->
         <a href="#" ng-click="viewAttemptsClick()">Exercise Attempts Report</a><br />
+
         <!-- Topic title area for exercise related stuff -->
         <b><u><h3>Topic: {{activeObject.topic.name}}</h3></u></b>
     </div>
 </div>
 <div class="row">
+
     <div class="col-xs-6">
         <b><u>Exercises</u></b>
         <br />
+
         <!-- Exercise list display -->
         <ul ng-controller="ExerciseController">
             <li ng-repeat="exercise in dataList.exercises">
@@ -37,9 +42,11 @@
             </tr>
         </table>
     </div>
+
     <div class="col-xs-6">
         <b><u>Resources</u></b>
         <br />
+
         <!-- Resource list display -->
         <ul>
             <li ng-repeat="resource in dataList.resources">
@@ -69,12 +76,15 @@
         </table>
 
     </div>
+
 </div>
 
 
 <!--
 Modal dialogs for asking questions, seeing answers, and sending score submissions
 -->
+
+<!-- Dialog showing the user a question -->
 <div class="modal fade" id="questionModal" ng-controller="ExerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -93,6 +103,10 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
     </div>
 </div>
 
+ <!--
+ The dialog that follows the question dialog.  Shows question, answer,
+ and buttons the user can select to submit on how well they feel they did.
+ -->
 <div class="modal fade" id="questionAnswerModal" ng-controller="ExerciseController">
     <div class="modal-dialog">
         <div class="modal-content">

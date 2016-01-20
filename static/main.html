@@ -28,15 +28,17 @@
 </head>
 <body>
 
+<!-- The main overall page template for the main app. -->
 <div class="container" ng-app="app" ng-controller="controller">
-    <!-- Top row section-->
+
+    <!-- Top row section showing user name-->
     <div class="row">
         <div class="col-xs-12 topbar" ng-controller="UserController">
             {{activeObject.user.displayName}}
         </div>
     </div>
 
-    <!-- Main body  -->
+    <!-- Main body template -->
     <div class="row">
 
         <!-- tag section -->
@@ -47,6 +49,12 @@
             </ul>
         </div>
 
+        <!--
+         The three types of content that can show up in the central part of the application itself.
+         * topics_body - A list of topics the user can choose from as well as an option for adding new topics
+         * exercise_body - Exercises and resources pertaining to a user specified topic.
+         * attempt_report - A report displaying the user's history regarding how they graded themselves on different exercises.
+        -->
         <div class="col-xs-9 topicarea" ng-show="showStatus.topics" ng-include="'category/topics_body.html'"></div>
         <div class="col-xs-9" ng-include="'exercise/exercise_body.html'" ng-show="showStatus.exercises"></div>
         <div class="col-xs-9" ng-include="'exercise/attempt_report.html'" ng-show="showStatus.attempts"></div>
