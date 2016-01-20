@@ -201,7 +201,7 @@ def add_score():
     """
     Add the score for an attempt at an exercise.
     Expects a json structure arg with an exercise id and score for that exercise
-    :return: success signal to let you know that adding the attempt to the db worked out.
+    :return: success message to let you know that adding the attempt to the db worked out.
     """
     json_data = request.get_json()
     exercise_id = json_data.get("exercise_id")
@@ -213,6 +213,11 @@ def add_score():
 @app.route("/addexercise", methods=["POST"])
 @validate_json("new_question", "new_answer", "topic_id")
 def add_exercise():
+    """
+    Add a new exercise to the system for the user for this session
+    Expects a json structure having  a question, answer and topic
+    :return:A success message stating the exercise was added.
+    """
     json_data = request.get_json()
     new_question = json_data.get("new_question")
     new_answer = json_data.get("new_answer")
@@ -225,6 +230,12 @@ def add_exercise():
 @app.route("/addresource", methods=["POST"])
 @validate_json("new_resource_name", "new_resource_url", "topic_id")
 def add_resource():
+    """
+    Adds a resource that the user can lookup for help on exercises
+    Expects a resource name, url for that resource and a
+    topic id to associate with it.
+    :return: A success
+    """
     json_data = request.get_json()
     new_resource_name = json_data.get("new_resource_name")
     new_resource_url = json_data.get("new_resource_url")
@@ -236,12 +247,18 @@ def add_resource():
     model.add_resource(new_resource_name, new_resource_url, user_id, topic_id)
     return "okay so far so good i guess...."
 
+
 @app.route("/exercisehistory")
 def get_exercise_history():
+    """
+    Get the user's history of attempts made on exercises within different topics
+    :return: A JSON structure of the history of the user's attempts.
+    """
     #user_id = session.get("email")
     user_id = "cotejrp@gmail.com"
     history = model.full_attempt_history(user_id)
     return jsonify({"history":history})
+
 
 if __name__ == '__main__':
     app.secret_key = parser["learningmachine"]["session_key"]

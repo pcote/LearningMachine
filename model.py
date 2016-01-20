@@ -322,19 +322,37 @@ def get_topic_name(topic_id, user_id):
 
 
 def get_attempts(exercise_id):
+    """
+    Grab attempts history as they pertain to attempts on a particular exercise
+    :param exercise_id: ID number for the exercise in question
+    :return: History of scores and dates attemptes for that exercise as a list of dictionaries.
+    """
     conn = eng.connect()
     query = select([attempt_table.c.score, attempt_table.c.when_attempted]).where(attempt_table.c.exercise_id == exercise_id)
     result_records = conn.execute(query).fetchall()
     attempts = [{"score": score, "when_attempted":when_attempted} for score, when_attempted in result_records]
     return attempts
 
+
 def full_attempt_history(user_id):
+    """
+    Get a full history on all topics, all exercises under those topics, and all attempts made.
+    :param user_id: The user whose history we're looking up.
+    :return: A hierarchial history list in the form of topic -> exercise -> attempts
+    """
+
+    # pull basic topic information from the database for this user..
     conn = eng.connect()
     query = select([topic_table.c.id, topic_table.c.name]).where(topic_table.c.user_id == user_id)
     topic_records = conn.execute(query).fetchall()
+
+    # Create a new list that includes the topics with associated exercises.
+    # This is the topic -> exercise hierarchy.
     topic_exercises = [{"topic": t_name, "exercises": get_exercises(t_id, user_id)}
                             for t_id, t_name in topic_records]
 
+    # Expand the information again, this time including the attempts history for specific exercises.
+    # Hierarchy from this to be topic -> exercise -> attempts
     topic_exercises_with_attempts = []
     for topic_exercise in topic_exercises:
         for exercise in topic_exercise.get("exercises"):
