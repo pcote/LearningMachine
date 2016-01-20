@@ -245,7 +245,7 @@ def add_resource():
     print("URL OF RESOURCE TO ADD: {}".format(new_resource_url))
     print("TOPIC ID OF RESOURCE TO ADD: {}".format(topic_id))
     model.add_resource(new_resource_name, new_resource_url, user_id, topic_id)
-    return "okay so far so good i guess...."
+    return jsonify({"message": "add resource call completed"})
 
 
 @app.route("/exercisehistory")
@@ -254,8 +254,7 @@ def get_exercise_history():
     Get the user's history of attempts made on exercises within different topics
     :return: A JSON structure of the history of the user's attempts.
     """
-    #user_id = session.get("email")
-    user_id = "cotejrp@gmail.com"
+    user_id = session.get("email")
     history = model.full_attempt_history(user_id)
     return jsonify({"history":history})
 
