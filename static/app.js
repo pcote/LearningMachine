@@ -1,3 +1,9 @@
+// The main application controller
+// Main controller is a container for shared state variables.
+
+// The sub-controllers. (UserController, AttemptReportController, ect) specialize in different parts of
+// the application functionality.
+
 
 (function(){
 var controller = function($scope, $rootScope, categoryService, userService, exerciseService, resourceService){
@@ -25,30 +31,31 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.report = {}
     $scope.report.attempts = []
 
-
-
-
-
-
 }
 
+
+// Initial setup upon the user having logged in and arrived at the main page.
 var UserController = function($scope, userService){
-    <!-- Initial setup upon the user having logged in and arrived at the main page.-->
     userService.showUserName($scope)
 }
 
+
+// Handle mouse event to ensure the user gets their attempts report to display.
 var AttemptsReportController = function($scope, exerciseService){
     $scope.viewAttemptsClick = function(){
         exerciseService.getAttemptsReport($scope)
     }
 }
 
+
+// Makes sure tag lists show up and that topics display when a tag gets clicked on.
 var TagController = function($scope, $rootScope, categoryService){
+
     // display of tags
     categoryService.refreshTagList($scope)
 
     // response to clicks on tags
-    <!-- Mouse click handling event functions -->
+    // Mouse click handling event functions
     $scope.tag_click = function(tag_id){
         categoryService.updateTopicsList($scope, tag_id)
         $scope.showStatus.topics = true
@@ -59,7 +66,14 @@ var TagController = function($scope, $rootScope, categoryService){
 
 }
 
+
+// Handles the adding events for when users add exercises, click on them, and push buttons that
+// rate how they felt they did.
 var ExerciseController = function($scope, $rootScope, exerciseService){
+
+
+    // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
+    // when done.
     $scope.addExerciseClick = function(newQuestion, newAnswer){
         exerciseService.addExercise(newQuestion, newAnswer, $rootScope.activeObject.topic.id)
         exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
@@ -67,16 +81,23 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         $scope.newAnswer = ""
     }
 
+
+    // Make sure the right questions show up in the question box.
     $scope.exerciseClick = function(exercise){
         $rootScope.activeObject.exercise = exercise
         $("#questionModal").modal()
     }
 
+
+    // When user clicks "show answer" in the question box, show the answer in a display they can rate themselves on.
     $scope.showAnswerClick = function(){
         $("#questionModal").modal("hide")
         $("#questionAnswerModal").modal()
     }
 
+
+    // Handle a user rating themselves.  Here, just send the rating to the server
+    // and make the question answer box go away.
     $scope.scoreClick = function(score){
         exerciseService.submitScore($rootScope.activeObject.exercise, score)
         $("#questionAnswerModal").modal("hide")
@@ -84,17 +105,23 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
 
 }
 
+
+// Handle the adding of new resources from the new resource form.
 var ResourceController = function($scope, $rootScope, resourceService){
         $scope.addResourceClick = function(newResourceName, newResourceUrl){
-        resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
-        $scope.newResourceName = ""
-        $scope.newResourceUrl = ""
+            resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
+            $scope.newResourceName = ""
+            $scope.newResourceUrl = ""
     }
 
 }
 
+
+// Handlers concerning adding new topics and handling clicks on existing topics so that the right exercises show up.
 var TopicController = function($scope, categoryService, exerciseService){
 
+
+    // Adds a new topic based on the add topic form, clears form fields, and updates the tags.
     $scope.add_topic_click = function(){
         categoryService.addTopicInfo($scope, $scope.new_topic_name, $scope.new_topic_tags)
         categoryService.refreshTagList($scope)
@@ -102,14 +129,14 @@ var TopicController = function($scope, categoryService, exerciseService){
         $scope.new_topic_tags = ""
     }
 
+    // When a user clicks a topic, get the right exercises related to it to show up.
     $scope.topic_click = function(topicId){
         exerciseService.setupExerciseDisplay($scope, topicId)
     }
 
-
 }
 
-<!-- Core Angular app initialization -->
+// Core Angular app initialization
 angular.module("app", [])
     .controller("controller", controller)
     .controller("TopicController", TopicController)

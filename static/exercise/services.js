@@ -1,7 +1,13 @@
-
+// Exercise Service - Manages info concerning listing of exercises,
+// adding new ones, scoring attempts, and getting reports on those attempts.
 
 var ExerciseService = function($http, $rootScope){
+
+    // Setup the display for the main body of the exercise page.
+    // Info needed here includes lists of exercises and resources relevant
+    // to a given topic.
     this.setupExerciseDisplay = function(scope, topicId){
+
         // get the topic name first.
         $http.get("/topicname/" + topicId).then(function(res){
             $rootScope.activeObject.topic = {"id": topicId, "name": res.data.topic_name}
@@ -22,6 +28,7 @@ var ExerciseService = function($http, $rootScope){
         }, function(res){})
     }
 
+    // Take the score use submitted for the given exercise and report it to the server.
     this.submitScore = function(exercise, score){
         var req = {
             url: "/addscore",
@@ -38,6 +45,7 @@ var ExerciseService = function($http, $rootScope){
         $http(req).then(function(res){}, function(res){})
     }
 
+    // Take the new question and answer pertaining to some topic and store that in the system.
     this.addExercise = function(newQuestion, newAnswer, topicId){
         var req = {
             url: "/addexercise",
@@ -55,6 +63,8 @@ var ExerciseService = function($http, $rootScope){
         $http(req).then(function(res){}, function(res){})
     }
 
+    // Pull the data concerning a user's exercise history into a local json structure
+    // that can be displayed in report form.  Also show it.
     this.getAttemptsReport = function(scope){
 
         var cbSuccess = function(res){
@@ -72,8 +82,11 @@ var ExerciseService = function($http, $rootScope){
     }
 }
 
+// Service that handles resources
 var ResourceService = function($http, $rootScope){
 
+    // Add a new resource pertaining to a given topic.
+    // Also takes care of showing the latest info to the user.
     this.addResource = function(scope, name, url, topic_id){
         var req = {
             url: "/addresource",
@@ -88,6 +101,7 @@ var ResourceService = function($http, $rootScope){
             }
         }
 
+        // (Second step) Refresh the resource list after establishing the posting of new reource succeeds.
         var cbAddResourceSuccess = function(res){
             // grab the resources
             $http.get("/resources/" + topic_id).then(function(res){
@@ -100,9 +114,7 @@ var ResourceService = function($http, $rootScope){
             alert("attempt to add resource bombed.  check the stacktrace")
         }
 
+        // (First step) Send the resource
         $http(req).then(cbAddResourceSuccess, cbAddResourceFail)
     }
 }
-
-
-
