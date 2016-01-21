@@ -7,27 +7,27 @@
 
 (function(){
 var controller = function($scope, $rootScope, categoryService, userService, exerciseService, resourceService){
-    <!-- The currently "active" variables used to help set up lists, add new info, ect.  -->
+    // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {}
     $rootScope.activeObject.tag = {"name":"Untagged", "id": 0}
     $rootScope.activeObject.topic = {}
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"}
     $rootScope.activeObject.user = {}
 
-    <!-- Controls the visibility of the topics and exercise sections -->
+    // Controls the visibility of the topics and exercise sections
     $scope.showStatus = {}
     $scope.showStatus.topics = true
     $scope.showStatus.exercises = false
     $scope.showStatus.attempts = false
 
-    <!-- Item lists to display on different parts of the page -->
+    // Item lists to display on different parts of the page
     $scope.dataList = {}
     $scope.dataList.topics = []
     $scope.dataList.tags = []
     $scope.dataList.resources = []
     $scope.dataList.exercises = []
 
-    <!-- Exercise attempts report data.  -->
+    // Exercise attempts report data.
     $scope.report = {}
     $scope.report.attempts = []
 
