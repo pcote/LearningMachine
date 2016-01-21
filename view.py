@@ -241,9 +241,6 @@ def add_resource():
     new_resource_url = json_data.get("new_resource_url")
     topic_id = json_data.get("topic_id")
     user_id = session.get("email")
-    print("RESOURCE TO ADD: {}".format(new_resource_name))
-    print("URL OF RESOURCE TO ADD: {}".format(new_resource_url))
-    print("TOPIC ID OF RESOURCE TO ADD: {}".format(topic_id))
     model.add_resource(new_resource_name, new_resource_url, user_id, topic_id)
     return jsonify({"message": "add resource call completed"})
 
