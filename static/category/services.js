@@ -1,3 +1,11 @@
+var _refreshTagList = function(scope, http){
+        http.get("/tags").then(function(res){
+            scope.dataList.tags = res.data.tags
+        }, function(res){
+            alert("referesh of tag list failed")
+        })
+}
+
 var CategoryService = function($http, $rootScope){
 
 // Service for managing topic categories and the tags that get associated with them.
@@ -27,17 +35,14 @@ var CategoryService = function($http, $rootScope){
         $http(req).then(function(res){
             $http.get("/topics/" + $rootScope.activeObject.tag.id).then(function(res){
                 scope.dataList.topics = res.data.topics
+                _refreshTagList(scope, $http)
             }, function(res){})
         }, function(res){})
     }
 
     // Gets the latest set of tags from the server to be ultimately displayed on the side in the tag list.
     this.refreshTagList = function(scope){
-        $http.get("/tags").then(function(res){
-            scope.dataList.tags = res.data.tags
-        }, function(res){
-            alert("referesh of tag list failed")
-        })
+        _refreshTagList(scope, $http)
     }
 
     // Get the latest topic info from the server concerning topics that happen to be associated with

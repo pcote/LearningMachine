@@ -124,7 +124,6 @@ var TopicController = function($scope, categoryService, exerciseService){
     // Adds a new topic based on the add topic form, clears form fields, and updates the tags.
     $scope.add_topic_click = function(){
         categoryService.addTopicInfo($scope, $scope.new_topic_name, $scope.new_topic_tags)
-        categoryService.refreshTagList($scope)
         $scope.new_topic_name = ""
         $scope.new_topic_tags = ""
     }
