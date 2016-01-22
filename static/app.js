@@ -75,8 +75,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
     // when done.
     $scope.addExerciseClick = function(newQuestion, newAnswer){
-        exerciseService.addExercise(newQuestion, newAnswer, $rootScope.activeObject.topic.id)
-        exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
+        exerciseService.addExercise($scope, newQuestion, newAnswer, $rootScope.activeObject.topic.id)
         $scope.newQuestion = ""
         $scope.newAnswer = ""
     }
