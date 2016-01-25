@@ -16,7 +16,7 @@
                                 </tr>
                                 <tr ng-repeat="attempt in exercise.attempts">
                                     <td>{{ attempt.when_attempted }}</td>
-                                    <td>{{ attempt.score }}</td>
+                                    <td>{{ attempt.score | lmScoreWord }}</td>
                                 </tr>
                             </table>
                         </ul>

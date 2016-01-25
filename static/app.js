@@ -134,6 +134,28 @@ var TopicController = function($scope, categoryService, exerciseService){
 
 }
 
+
+// Convert a number score value into a word (good, okay, bad) in the attempts report
+var lmScoreWordFilter = function(){
+    var filter = function(score){
+        if(score == 1 ){
+            return "Bad"
+        }
+        else if(score == 2){
+            return "Okay"
+        }
+        else if(score == 3){
+            return "Good"
+        }
+        else{
+            return "ERROR: Bad score argument"
+        }
+    }
+
+    return filter
+}
+
+
 // Core Angular app initialization
 angular.module("app", [])
     .controller("controller", controller)
@@ -147,4 +169,5 @@ angular.module("app", [])
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .service("resourceService", ResourceService)
+    .filter("lmScoreWord", lmScoreWordFilter)
 })()
