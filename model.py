@@ -68,8 +68,10 @@ def user_exists(email_arg):
     :return: True if the user exists.  False otherwise.
     """
     conn = eng.connect()
+
     query = select([user_table])\
-        .where(user_table.c.email == email_arg)
+            .where(user_table.c.email == email_arg)
+
     result = conn.execute(query).fetchall()
     return True if result else False
 
@@ -82,7 +84,10 @@ def add_user(email, display_name):
     :return: Nothing
     """
     conn = eng.connect()
-    query = user_table.insert().values(email=email, display_name=display_name)
+
+    query = user_table.insert()\
+                      .values(email=email, display_name=display_name)
+
     conn.execute(query)
 
 
@@ -93,7 +98,10 @@ def get_tags(user_id):
     :return: A list of tags with their associated IDs
     """
     conn = eng.connect()
-    query = select([tag_table.c.id, tag_table.c.name]).where(tag_table.c.user_id == user_id)
+
+    query = select([tag_table.c.id, tag_table.c.name])\
+            .where(tag_table.c.user_id == user_id)
+
     results = conn.execute(query).fetchall()
     tags = [{"id": id, "name": name} for id, name in results]
     return tags
@@ -107,14 +115,24 @@ def get_tag_id(tag_name, user_id):
     :return: Record number id associated with the tag in question for this user.
     """
     conn = eng.connect()
-    query = select([tag_table.c.id]).where(and_(tag_table.c.name == tag_name, tag_table.c.user_id == user_id))
+
+    query = select([tag_table.c.id])\
+            .where(and_(
+                        tag_table.c.name == tag_name,
+                        tag_table.c.user_id == user_id))
+
     result, *_ = conn.execute(query).fetchone()
     return result
 
 
 def get_tag_info(tag_id, user_id):
     conn = eng.connect()
-    query = select([tag_table.c.id, tag_table.c.name]).where(and_(tag_table.c.id == tag_id, tag_table.c.user_id == user_id))
+
+    query = select([tag_table.c.id, tag_table.c.name])\
+            .where(and_(
+                        tag_table.c.id == tag_id,
+                        tag_table.c.user_id == user_id))
+
     id, name = conn.execute(query).fetchone()
     return dict(id=id, name=name)
 
@@ -127,7 +145,12 @@ def get_topic_id(topic_name, user_id):
     :return: Record number id associated with the topic name for the specified user.
     """
     conn = eng.connect()
-    query = select([topic_table.c.id]).where(and_(topic_table.c.name == topic_name, topic_table.c.user_id == user_id))
+
+    query = select([topic_table.c.id])\
+            .where(and_(
+                        topic_table.c.name == topic_name,
+                        topic_table.c.user_id == user_id))
+
     result, *_ = conn.execute(query).fetchone()
     return result
 
@@ -141,41 +164,48 @@ def add_topic(topic_name, user_id, tags=None):
     """
 
     def __tag_in_system(conn, tag, user_id):
+
         query = select([tag_table])\
-            .where(and_(tag_table.c.name == tag, tag_table.c.user_id == user_id))
+                .where(and_(
+                            tag_table.c.name == tag,
+                            tag_table.c.user_id == user_id))
 
         return True if conn.execute(query).fetchall() else False
 
     def __add_tag(conn, tag, user_id):
-        query = tag_table.insert().values(name=tag, user_id=user_id)
+        query = tag_table.insert()\
+                         .values(name=tag, user_id=user_id)
         conn.execute(query)
 
     def __assoc_exists(conn, tag, topic):
         tag_id = get_tag_id(tag, user_id)
         topic_id = get_topic_id(topic, user_id)
         assoc_query = select([tag_by_topic_table.c.tag_id])\
-                .where(and_(
-                       tag_by_topic_table.c.tag_id == tag_id,
-                       tag_by_topic_table.c.topic_id == topic_id))
+                      .where(and_(
+                                tag_by_topic_table.c.tag_id == tag_id,
+                                tag_by_topic_table.c.topic_id == topic_id))
 
         result = conn.execute(assoc_query).fetchall()
         return True if result else False
 
     def __add_assoc(conn, tag_id, topic_id):
-        query = tag_by_topic_table.insert().values(tag_id=tag_id, topic_id=topic_id)
+        query = tag_by_topic_table.insert()\
+                                  .values(tag_id=tag_id, topic_id=topic_id)
         conn.execute(query)
 
     def __topic_exists(conn, topic, user_id):
         # find out if the topic is in the table already.
         query = select([topic_table])\
-            .where(and_(topic_table.c.name == topic_name,
+                .where(and_(topic_table.c.name == topic_name,
                         topic_table.c.user_id == user_id))
 
         topics_in_system = conn.execute(query).fetchall()
         return True if topics_in_system else False
 
     def __add_topic(topic_name, user_id):
-        query = topic_table.insert().values(name=topic_name, user_id=user_id)
+        query = topic_table.insert()\
+                           .values(name=topic_name, user_id=user_id)
+
         conn.execute(query)
 
     tags = [] if None else tags
@@ -208,8 +238,9 @@ def get_topics_by_tag(tag_id, user_id):
     conn = eng.connect()
     query = select([topic_table.c.id, topic_table.c.name])\
         .select_from(topic_table.join(tag_by_topic_table))\
-        .where(and_(topic_table.c.user_id == user_id,
-                 tag_by_topic_table.c.tag_id == tag_id))
+        .where(and_(
+                topic_table.c.user_id == user_id,
+                tag_by_topic_table.c.tag_id == tag_id))
 
     results = conn.execute(query).fetchall()
     topics = [dict(id=topic_id, name=topic_name) for topic_id, topic_name in results]
@@ -226,11 +257,15 @@ def add_exercise(question, answer, topic_id, user_id):
     :return: Nothing
     """
     conn = eng.connect()
-    query = exercise_table.insert().values(question=question, answer=answer, user_id=user_id)
+
+    query = exercise_table.insert()\
+                          .values(question=question, answer=answer, user_id=user_id)
+
     result = conn.execute(query)
     exercise_id = result.inserted_primary_key[0]
 
-    assoc_query = exercise_by_topic_table.insert().values(exercise_id=exercise_id, topic_id=topic_id)
+    assoc_query = exercise_by_topic_table.insert()\
+                                         .values(exercise_id=exercise_id, topic_id=topic_id)
     conn.execute(assoc_query)
     return
 
@@ -243,14 +278,18 @@ def get_exercises(topic_id, user_id):
     :return: List of exercises complete with exercise id, question, and answer.
     """
     conn = eng.connect()
+
+    # join between exercise and exercise-by-topic needed
+    # to specify to only topic-relevant exercises
     query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
                     .select_from(exercise_table.join(exercise_by_topic_table))\
                         .where(and_(
-                            exercise_by_topic_table.c.topic_id == topic_id,
-                            exercise_table.c.user_id == user_id))
+                                exercise_by_topic_table.c.topic_id == topic_id,
+                                exercise_table.c.user_id == user_id))
 
     result_set = conn.execute(query).fetchall()
-    exercise_list = [dict(id=id, question=question, answer=answer) for id, question, answer in result_set]
+    exercise_list = [dict(id=id, question=question, answer=answer)
+                     for id, question, answer in result_set]
     return exercise_list
 
 
@@ -262,6 +301,9 @@ def get_resources(topic_id, user_id):
     :return: LIst of resources complete with id, name, and url
     """
     conn = eng.connect()
+
+    # join with between resource and resource_by_topic required so that only
+    # resources pertaining to a particular topic are retrieved
     query = select([resource_table.c.id, resource_table.c.name, resource_table.c.url])\
                     .select_from(resource_table.join(resource_by_topic_table))\
                         .where(and_(
@@ -282,11 +324,20 @@ def add_resource(name, url, user_id, topic_id):
     :return: Nothing
     """
     conn = eng.connect()
-    new_resource_query = resource_table.insert().values(name=name, url=url, user_id=user_id)
+
+    #This is a 2 step process.
+    # 1.) Add the resource in question.
+    new_resource_query = resource_table.insert()\
+                                       .values(name=name, url=url, user_id=user_id)
+
     result = conn.execute(new_resource_query)
 
+    # 2.) Record key is an auto-incremented key created as a result of step #1.
+    # Use the key from that new record to help create the association with the topic.
     resource_id = result.inserted_primary_key[0]
-    assoc_query = resource_by_topic_table.insert().values(resource_id=resource_id, topic_id=topic_id)
+    assoc_query = resource_by_topic_table.insert()\
+                                         .values(resource_id=resource_id, topic_id=topic_id)
+
     conn.execute(assoc_query)
 
 
@@ -300,7 +351,8 @@ def add_attempt(exercise_id, score):
     conn = eng.connect()
     from datetime import datetime
     now = datetime.now()
-    query = attempt_table.insert().values(exercise_id=exercise_id, score=score, when_attempted=now)
+    query = attempt_table.insert()\
+                         .values(exercise_id=exercise_id, score=score, when_attempted=now)
     conn.execute(query)
 
 
@@ -328,9 +380,13 @@ def get_attempts(exercise_id):
     :return: History of scores and dates attemptes for that exercise as a list of dictionaries.
     """
     conn = eng.connect()
-    query = select([attempt_table.c.score, attempt_table.c.when_attempted]).where(attempt_table.c.exercise_id == exercise_id)
+
+    query = select([attempt_table.c.score, attempt_table.c.when_attempted])\
+            .where(attempt_table.c.exercise_id == exercise_id)
+
     result_records = conn.execute(query).fetchall()
-    attempts = [{"score": score, "when_attempted":when_attempted} for score, when_attempted in result_records]
+    attempts = [{"score": score, "when_attempted":when_attempted}
+                    for score, when_attempted in result_records]
     return attempts
 
 
@@ -343,7 +399,10 @@ def full_attempt_history(user_id):
 
     # pull basic topic information from the database for this user..
     conn = eng.connect()
-    query = select([topic_table.c.id, topic_table.c.name]).where(topic_table.c.user_id == user_id)
+
+    query = select([topic_table.c.id, topic_table.c.name])\
+            .where(topic_table.c.user_id == user_id)
+
     topic_records = conn.execute(query).fetchall()
 
     # Create a new list that includes the topics with associated exercises.
@@ -360,6 +419,7 @@ def full_attempt_history(user_id):
             exercise.update({"attempts": attempts})
 
     return topic_exercises
+
 
 if __name__ == '__main__':
     pass
