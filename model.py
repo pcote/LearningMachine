@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP
+from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, bindparam
 from sqlalchemy.sql import select, and_
 from configparser import ConfigParser
 from collections import namedtuple
@@ -130,10 +130,10 @@ def get_tag_info(tag_id, user_id):
 
     query = select([tag_table.c.id, tag_table.c.name])\
             .where(and_(
-                        tag_table.c.id == tag_id,
+                        tag_table.c.id == bindparam("tag_id", type_=Integer),
                         tag_table.c.user_id == user_id))
 
-    id, name = conn.execute(query).fetchone()
+    id, name = conn.execute(query, tag_id=tag_id).fetchone()
     return dict(id=id, name=name)
 
 
@@ -240,9 +240,9 @@ def get_topics_by_tag(tag_id, user_id):
         .select_from(topic_table.join(tag_by_topic_table))\
         .where(and_(
                 topic_table.c.user_id == user_id,
-                tag_by_topic_table.c.tag_id == tag_id))
+                tag_by_topic_table.c.tag_id == bindparam("tag_id", type_=Integer)))
 
-    results = conn.execute(query).fetchall()
+    results = conn.execute(query, tag_id=tag_id).fetchall()
     topics = [dict(id=topic_id, name=topic_name) for topic_id, topic_name in results]
     return topics
 
@@ -265,8 +265,8 @@ def add_exercise(question, answer, topic_id, user_id):
     exercise_id = result.inserted_primary_key[0]
 
     assoc_query = exercise_by_topic_table.insert()\
-                                         .values(exercise_id=exercise_id, topic_id=topic_id)
-    conn.execute(assoc_query)
+                                         .values(exercise_id=exercise_id, topic_id=bindparam("topic_id", type_=Integer))
+    conn.execute(assoc_query, topic_id=topic_id)
     return
 
 
@@ -284,10 +284,10 @@ def get_exercises(topic_id, user_id):
     query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
                     .select_from(exercise_table.join(exercise_by_topic_table))\
                         .where(and_(
-                                exercise_by_topic_table.c.topic_id == topic_id,
+                                exercise_by_topic_table.c.topic_id == bindparam("topic_id", type_=Integer),
                                 exercise_table.c.user_id == user_id))
 
-    result_set = conn.execute(query).fetchall()
+    result_set = conn.execute(query, topic_id=topic_id).fetchall()
     exercise_list = [dict(id=id, question=question, answer=answer)
                      for id, question, answer in result_set]
     return exercise_list
@@ -307,10 +307,10 @@ def get_resources(topic_id, user_id):
     query = select([resource_table.c.id, resource_table.c.name, resource_table.c.url])\
                     .select_from(resource_table.join(resource_by_topic_table))\
                         .where(and_(
-                                resource_by_topic_table.c.topic_id == topic_id,
+                                resource_by_topic_table.c.topic_id == bindparam("topic_id", type_=Integer),
                                 resource_table.c.user_id == user_id))
 
-    result_set = conn.execute(query).fetchall()
+    result_set = conn.execute(query, topic_id=topic_id).fetchall()
     resource_list = [dict(id=id, name=name, url=url) for id, name, url in result_set]
     return resource_list
 
@@ -336,9 +336,9 @@ def add_resource(name, url, user_id, topic_id):
     # Use the key from that new record to help create the association with the topic.
     resource_id = result.inserted_primary_key[0]
     assoc_query = resource_by_topic_table.insert()\
-                                         .values(resource_id=resource_id, topic_id=topic_id)
+                                         .values(resource_id=resource_id, topic_id=bindparam("topic_id", type_=Integer))
 
-    conn.execute(assoc_query)
+    conn.execute(assoc_query, topic_id=topic_id)
 
 
 def add_attempt(exercise_id, score):
@@ -352,8 +352,8 @@ def add_attempt(exercise_id, score):
     from datetime import datetime
     now = datetime.now()
     query = attempt_table.insert()\
-                         .values(exercise_id=exercise_id, score=score, when_attempted=now)
-    conn.execute(query)
+                         .values(exercise_id=bindparam("exercise_id", type_=Integer), score=score, when_attempted=now)
+    conn.execute(query, exercise_id=exercise_id)
 
 
 def get_topic_name(topic_id, user_id):
@@ -365,10 +365,10 @@ def get_topic_name(topic_id, user_id):
     """
     conn = eng.connect()
     query = select([topic_table.c.name])\
-            .where(and_(topic_table.c.id == topic_id,
+            .where(and_(topic_table.c.id == bindparam("topic_id", type_=Integer),
                         topic_table.c.user_id == user_id))
 
-    results = conn.execute(query).fetchone()
+    results = conn.execute(query, topic_id=topic_id).fetchone()
     topic_name = list(results)[0]
     return topic_name
 
@@ -382,9 +382,9 @@ def get_attempts(exercise_id):
     conn = eng.connect()
 
     query = select([attempt_table.c.score, attempt_table.c.when_attempted])\
-            .where(attempt_table.c.exercise_id == exercise_id)
+            .where(attempt_table.c.exercise_id == bindparam("exercise_id", type_=Integer))
 
-    result_records = conn.execute(query).fetchall()
+    result_records = conn.execute(query, exercise_id=exercise_id).fetchall()
     attempts = [{"score": score, "when_attempted":when_attempted}
                     for score, when_attempted in result_records]
     return attempts
