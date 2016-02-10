@@ -28,7 +28,7 @@
     - name: copy over nginx configuration
       copy:
         src: nginx.conf
-        dest: /etc/nginx.conf
+        dest: /etc/nginx/nginx.conf
 
     - name: reboot nginx with the new configuration file
       service:
@@ -65,4 +65,43 @@
       with_items:
         - /var/app/learningmachine/
         - /var/log/learningmachine/
-        - /var/www/learningmachine/static/
+        - /var/www/learningmachine/
+
+    - name: Copy over the source and config files for the learning machine app
+      copy:
+        src: "{{item}}"
+        dest: /var/app/learningmachine/{{item}}
+        mode: 0660
+        owner: www-data
+        group: www-data
+      with_items:
+        - client_secret.json
+        - lm.ini
+        - login.py
+        - model.py
+        - view.py
+
+    - name: Copy over the html and javascript static assets
+      copy:
+        src: static
+        dest: /var/www/learningmachine/
+        mode: 0660
+        owner: www-data
+        group: www-data
+
+
+    - name: set up the config template
+      template:
+        src: config.ini.template
+        dest: /var/app/learningmachine/config.ini
+        mode: 0660
+        owner: www-data
+        group: www-data
+
+    - name: Copy over the upstart learningmachine service script
+      copy:
+        src: learningmachine.conf
+        dest: /etc/init/learningmachine.conf
+        owner: www-data
+        group: www-data
+        mode: 0660

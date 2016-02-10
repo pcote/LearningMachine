@@ -1,0 +1,7 @@
+[learningmachine]
+user=root
+password={{mysql_root_password}}
+host=localhost
+db=learningmachine
+session_key=dgtadefrawefgeqf
+domain=18c34e4e.ngrok.com
