@@ -4,7 +4,10 @@ from configparser import ConfigParser
 from collections import namedtuple
 
 cp = ConfigParser()
-cp.read("config.ini")
+dir_path = __file__.rsplit("/", maxsplit=1)[0]
+config_file_name = "{}/{}".format(dir_path, "config.ini")
+cp.read(config_file_name)
+
 db_section = cp["learningmachine"]
 user, password = db_section.get("user"), db_section.get("password")
 host, db = db_section.get("host"), db_section.get("db")

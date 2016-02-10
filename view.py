@@ -8,7 +8,9 @@ import re
 from pdb import set_trace
 
 parser = ConfigParser()
-parser.read("config.ini")
+dir_path = __file__.rsplit("/", maxsplit=1)[0]
+config_file_name = "{}/{}".format(dir_path, "config.ini")
+parser.read(config_file_name)
 
 
 logger = logging.root
@@ -17,7 +19,8 @@ logger.setLevel(logging.DEBUG)
 
 nudir = lambda mod: [x for x in dir(mod) if not x.startswith("_")]
 app = Flask(__name__)
-
+app.debug = True
+app.secret_key = parser["learningmachine"]["session_key"]
 
 def validate_json(*expected_args):
     """
@@ -59,7 +62,7 @@ def login():
     :return: An appropriate redirect (depending on what step of the login process this is.
     """
     domain = parser["learningmachine"]["domain"]
-    secrets_file = "client_secret.json"
+    secrets_file = "{}/{}".format(dir_path, "client_secret.json")
     scope = "https://www.googleapis.com/auth/userinfo.email"
     redirect_uri = "http://{}/login".format(domain)
     login_handler = LoginHandler(secrets_file, scope, redirect_uri)
@@ -257,5 +260,4 @@ def get_exercise_history():
 
 
 if __name__ == '__main__':
-    app.secret_key = parser["learningmachine"]["session_key"]
     app.run(debug=True)
