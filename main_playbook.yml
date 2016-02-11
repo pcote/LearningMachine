@@ -30,10 +30,10 @@
         src: nginx.conf
         dest: /etc/nginx/nginx.conf
 
-    - name: reboot nginx with the new configuration file
+    - name: boot nginx with the new configuration file
       service:
         name: nginx
-        state: restarted
+        state: reloaded
 
     - name: copy over the learningmachine data definitions.
       copy:
