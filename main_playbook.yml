@@ -4,7 +4,7 @@
   vars:
     mysql_root_password: changeRootPassword 
     public_user_password: changePublicPassword 
-    domain: example.domain.com 
+    domain: 18c34e4e.ngrok.com 
     session_key: setSessionKeyHere 
 
   tasks:
@@ -31,18 +31,8 @@
       copy:
         src: nginx.conf
         dest: /etc/nginx/nginx.conf
+      notify: restart nginx
 
-    - name: boot nginx with the new configuration file(start)
-      service:
-        name: nginx
-        state: started 
-
-    # For some reason, you have to run vagrant provision twice to ensure that 
-    # nginx starts and is working with the right version of nginx.conf
-    - name: boot nginx with the new configuration file(bounce it)
-      service:
-        name: nginx
-        state: restarted 
 
     - name: copy over the learningmachine data definitions.
       copy:
@@ -119,3 +109,9 @@
       service:
         name: learningmachine
         state: started
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
