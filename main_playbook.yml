@@ -4,6 +4,8 @@
   vars:
     mysql_root_password: changeRootPassword 
     public_user_password: changePublicPassword 
+    domain: example.domain.com 
+    session_key: setSessionKeyHere 
 
   tasks:
     - name: Install apt packages for git, nginx, and pip3
