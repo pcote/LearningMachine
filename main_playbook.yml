@@ -26,6 +26,14 @@
         password: "{{ mysql_root_password }}"
       ignore_errors: true
 
+    - name: Set up the public user
+      mysql_user:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        name: public
+        password: "{{ public_user_password }}"
+        priv: "learningmachine.*: SELECT,INSERT"
+
     - name: Install apt packages for git, nginx, and pip3
       apt:
         pkg: "{{item}}"

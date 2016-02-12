@@ -1,6 +1,6 @@
 [learningmachine]
-user=root
-password={{mysql_root_password}}
+user=public
+password={{public_user_password}}
 host=localhost
 db=learningmachine
 session_key={{session_key}}
