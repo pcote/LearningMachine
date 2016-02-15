@@ -11,7 +11,41 @@ It'set up with the following features....
 
 Installation
 ============
-TODO - Feature still in development.
+
+#### Prerequisites
+
+The instructions assume you are running a modern 64-bit Linux distribution.  Beyond that, it is expected you have the following.
+
+* [Git](https://git-scm.com/)
+* [Ngrok](https://ngrok.com/)
+* [Vagrant](https://www.vagrantup.com/)
+* [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+* [Ansible](https://www.ansible.com/)
+* A Google account that will allow you to setup Google Oauth
+
+#### The actual setup process.
+1.  Set up a home directory that you will be working out of and cd to it.
+2.  Run the command - git clone https://github.com/pcote/LearningMachine.git
+3.  Fire up the following in a separate window to get ngrok going - ngrok 8080
+4.  Open up the file "main_playbook.yml" in your text editor of choice.  There you will find variables in the "vars" section.  Set the following.
+    1.  mysql_root_password - Choose a secure password to act as the password for the root user of the database.
+    2.  public_user_password - This is a password for the database's public user account.  This account is what the user goes through to add new info to the system.
+    3.  domain - The domain name.  Your running ngrok interface will have the domain name you want here.  Copy the URL found there that starts with http://
+    4.  session_key - Choose a secure key to represent the session_key.  This key is used by Learning Machine's Flask component to cryptographically sign user session cookies.
+5.  Save the "main_playbook.yml" file with the variables that you've set.
+6.  Going back to the command line, type in "vagrant up" and hit enter.  You will now be setting up the full server running inside of Virtual Box.
+
+#### OAuth Setup
+Logging into Learning Machine requires that the user go through the Google Oauth system.  
+It's beyond the scope of the instructions to explain the workings of this system, there are some things you will need. 
+At the [Google Developer's console](https://console.developers.google.com), you will need the following....
+
+* A credentials fle specifically named "client_secret.json".  This can be downloaded via the Google dev console.
+* Permissions set up to access the Google Plus v. 1 API
+* A redirect specified for learningmachine similar to the following kind of address. http://yourdomainhere.com/login . Note that the /login at the end is important for this setup to work.
+
+
+    
 
 
 Logging in
@@ -24,6 +58,7 @@ Learning machine is organized into three general views of your materials.
 1.  Topics and tags - View and manage topic and tag information
 2.  Exercises and Resources - Manage exercises and resources.  Drill yourself on question too.
 3.  Attempts Report - Review your history of any and all attempts made on your exercises.
+4.  Open up main_playbook.yml in your editor of choice.
 
 Managing Topics and Tags
 ========================
