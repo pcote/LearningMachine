@@ -30,7 +30,7 @@ The instructions assume you are running a modern 64-bit Linux distribution.  Bey
 4.  Open up the file "main_playbook.yml" in your text editor of choice.  There you will find variables in the "vars" section.  Set the following.
     1.  mysql_root_password - Choose a secure password to act as the password for the root user of the database.
     2.  public_user_password - This is a password for the database's public user account.  This account is what the user goes through to add new info to the system.
-    3.  domain - The domain name.  Your running ngrok interface will have the domain name you want here.  Copy the URL found there that starts with http://
+    3.  domain - The domain name.  Your running ngrok interface will have the domain name you want.  Copy the domain name found here.  WARNING: Do not include the "http://" parrt in this field.
     4.  session_key - Choose a secure key to represent the session_key.  This key is used by Learning Machine's Flask component to cryptographically sign user session cookies.
 5.  Save the "main_playbook.yml" file with the variables that you've set.
 6.  Going back to the command line, type in "vagrant up" and hit enter.  You will now be setting up the full server running inside of Virtual Box.
@@ -45,8 +45,15 @@ At the [Google Developer's console](https://console.developers.google.com), you 
 * A redirect specified for learningmachine similar to the following kind of address. http://yourdomainhere.com/login . Note that the /login at the end is important for this setup to work.
 
 
-    
+#### Testing Your Setup
 
+Now is the time to test out your installation.  Here's what you do.
+
+1. Go to your ngrok view.  Copy the part of the url that starts with "http://"
+2. Paste that url into the browser of your choice and hit enter.  (DO NOT USE a localhost address)
+3. You should be at the "welcome" page.  Click the "login" button.
+
+If all goes well, you should now have the Learning Machine main page in front of you.  Have fun!
 
 Logging in
 ===========
