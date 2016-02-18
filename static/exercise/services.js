@@ -64,7 +64,8 @@ var ExerciseService = function($http, $rootScope){
         }
 
         $http(req).then(function(res){
-            _setupExerciseDisplay(scope, $rootScope, $http, topicId)
+            scope.trigger = !scope.trigger
+            // _setupExerciseDisplay(scope, $rootScope, $http, topicId)
         }, function(res){})
     }
 

@@ -71,6 +71,18 @@ var TagController = function($scope, $rootScope, categoryService){
 // rate how they felt they did.
 var ExerciseController = function($scope, $rootScope, exerciseService){
 
+    // exercise list sentinel used to trigger refreshes of exercise list.
+    $scope.trigger = true
+
+    $scope.$watch(function(){
+        return $scope.trigger
+    }, function(newVal, oldVal){
+        if(newVal !== oldVal){
+            alert("trigger provoked - oldVal: " + oldVal + " newVal: " + newVal)
+            exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
+        }
+    })
+
 
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
     // when done.
