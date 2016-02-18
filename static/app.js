@@ -78,7 +78,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         return $scope.trigger
     }, function(newVal, oldVal){
         if(newVal !== oldVal){
-            alert("trigger provoked - oldVal: " + oldVal + " newVal: " + newVal)
             exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
         }
     })

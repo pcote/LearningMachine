@@ -1,10 +1,16 @@
 // Exercise Service - Manages info concerning listing of exercises,
 // adding new ones, scoring attempts, and getting reports on those attempts.
 
-var _setupExerciseDisplay = function(scope, rootScope, http, topicId){
+var ExerciseService = function($http, $rootScope){
+
+    // Setup the display for the main body of the exercise page.
+    // Info needed here includes lists of exercises and resources relevant
+    // to a given topic.
+    this.setupExerciseDisplay = function(scope, topicId){
+
         // get the topic name first.
-        http.get("/topicname/" + topicId).then(function(res){
-            rootScope.activeObject.topic = {"id": topicId, "name": res.data.topic_name}
+        $http.get("/topicname/" + topicId).then(function(res){
+            $rootScope.activeObject.topic = {"id": topicId, "name": res.data.topic_name}
             scope.showStatus.topics = false
             scope.showStatus.attempts = false
             scope.showStatus.exercises = true
@@ -12,23 +18,14 @@ var _setupExerciseDisplay = function(scope, rootScope, http, topicId){
         }, function(res){})
 
         // grab the exercises
-        http.get("/exercises/" + topicId).then(function(res){
+        $http.get("/exercises/" + topicId).then(function(res){
             scope.dataList.exercises = res.data.exercises
         }, function(res){})
 
         // grab the resources
-        http.get("/resources/" + topicId).then(function(res){
+        $http.get("/resources/" + topicId).then(function(res){
             scope.dataList.resources = res.data.resources
         }, function(res){})
-}
-
-var ExerciseService = function($http, $rootScope){
-
-    // Setup the display for the main body of the exercise page.
-    // Info needed here includes lists of exercises and resources relevant
-    // to a given topic.
-    this.setupExerciseDisplay = function(scope, topicId){
-        _setupExerciseDisplay(scope, $rootScope, $http, topicId)
     }
 
     // Take the score use submitted for the given exercise and report it to the server.
@@ -65,7 +62,6 @@ var ExerciseService = function($http, $rootScope){
 
         $http(req).then(function(res){
             scope.trigger = !scope.trigger
-            // _setupExerciseDisplay(scope, $rootScope, $http, topicId)
         }, function(res){})
     }
 
