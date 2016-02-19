@@ -29,11 +29,7 @@ topic_table = Table("topics", meta,
                     Column("name", VARCHAR(140)),
                     Column("user_id", ForeignKey("users.email")))
 
-resource_table = Table("resources", meta,
-                       Column("id", Integer, primary_key=True, autoincrement=True),
-                       Column("name", VARCHAR(140)),
-                       Column("url", VARCHAR(2048)),
-                       Column("user_id", ForeignKey("users.email")))
+
 
 exercise_table = Table("exercises", meta,
                        Column("id", Integer, primary_key=True, autoincrement=True),
@@ -52,9 +48,6 @@ tag_by_topic_table = Table("tags_by_topic", meta,
                            Column("tag_id", ForeignKey("tags.id"), primary_key=True),
                            Column("topic_id", ForeignKey("topics.id"), primary_key=True))
 
-resource_by_topic_table = Table("resources_by_topic", meta,
-                                Column("resource_id", ForeignKey("resources.id"), primary_key=True),
-                                Column("topic_id", ForeignKey("topics.id"), primary_key=True))
 
 exercise_by_topic_table = Table("exercises_by_topic", meta,
                                 Column("exercise_id", ForeignKey("exercises.id"), primary_key=True),
@@ -294,54 +287,6 @@ def get_exercises(topic_id, user_id):
     exercise_list = [dict(id=id, question=question, answer=answer)
                      for id, question, answer in result_set]
     return exercise_list
-
-
-def get_resources(topic_id, user_id):
-    """
-    Get resources associated with a gtiven topic and user
-    :param topic_id: Database ID for the topic
-    :param user_id: ID for the user
-    :return: LIst of resources complete with id, name, and url
-    """
-    conn = eng.connect()
-
-    # join with between resource and resource_by_topic required so that only
-    # resources pertaining to a particular topic are retrieved
-    query = select([resource_table.c.id, resource_table.c.name, resource_table.c.url])\
-                    .select_from(resource_table.join(resource_by_topic_table))\
-                        .where(and_(
-                                resource_by_topic_table.c.topic_id == bindparam("topic_id", type_=Integer),
-                                resource_table.c.user_id == user_id))
-
-    result_set = conn.execute(query, topic_id=topic_id).fetchall()
-    resource_list = [dict(id=id, name=name, url=url) for id, name, url in result_set]
-    return resource_list
-
-
-def add_resource(name, url, user_id, topic_id):
-    """
-    Add a resource for a given user topic
-    :param resource_name: Title given to a resource
-    :param url: URL where the resource can be found on the interenet.
-    :param topic_id: ID number for the topic.
-    :return: Nothing
-    """
-    conn = eng.connect()
-
-    #This is a 2 step process.
-    # 1.) Add the resource in question.
-    new_resource_query = resource_table.insert()\
-                                       .values(name=name, url=url, user_id=user_id)
-
-    result = conn.execute(new_resource_query)
-
-    # 2.) Record key is an auto-incremented key created as a result of step #1.
-    # Use the key from that new record to help create the association with the topic.
-    resource_id = result.inserted_primary_key[0]
-    assoc_query = resource_by_topic_table.insert()\
-                                         .values(resource_id=resource_id, topic_id=bindparam("topic_id", type_=Integer))
-
-    conn.execute(assoc_query, topic_id=topic_id)
 
 
 def add_attempt(exercise_id, score):

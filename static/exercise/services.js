@@ -4,7 +4,7 @@
 var ExerciseService = function($http, $rootScope){
 
     // Setup the display for the main body of the exercise page.
-    // Info needed here includes lists of exercises and resources relevant
+    // Info needed here includes lists of exercises relevant
     // to a given topic.
     this.setupExerciseDisplay = function(scope, topicId){
 
@@ -22,10 +22,6 @@ var ExerciseService = function($http, $rootScope){
             scope.dataList.exercises = res.data.exercises
         }, function(res){})
 
-        // grab the resources
-        $http.get("/resources/" + topicId).then(function(res){
-            scope.dataList.resources = res.data.resources
-        }, function(res){})
     }
 
     // Take the score use submitted for the given exercise and report it to the server.
@@ -84,39 +80,3 @@ var ExerciseService = function($http, $rootScope){
     }
 }
 
-// Service that handles resources
-var ResourceService = function($http, $rootScope){
-
-    // Add a new resource pertaining to a given topic.
-    // Also takes care of showing the latest info to the user.
-    this.addResource = function(scope, name, url, topic_id){
-        var req = {
-            url: "/addresource",
-            method: "post",
-            headers: {
-                "Content-type": "application/json"
-            },
-            data: {
-                "new_resource_name": name,
-                "new_resource_url": url,
-                "topic_id": topic_id
-            }
-        }
-
-        // (Second step) Refresh the resource list after establishing the posting of new reource succeeds.
-        var cbAddResourceSuccess = function(res){
-            // grab the resources
-            $http.get("/resources/" + topic_id).then(function(res){
-                scope.dataList.resources = res.data.resources
-            }, function(res){})
-
-        }
-
-        var cbAddResourceFail = function(res){
-            alert("attempt to add resource bombed.  check the stacktrace")
-        }
-
-        // (First step) Send the resource
-        $http(req).then(cbAddResourceSuccess, cbAddResourceFail)
-    }
-}

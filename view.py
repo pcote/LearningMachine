@@ -186,18 +186,6 @@ def get_exercises(topic_id):
     return jsonify(dict(exercises=exercises))
 
 
-@app.route("/resources/<topic_id>")
-def get_resources(topic_id):
-    """
-    Pull a list of all resources specific to a given topic.
-    :param topic_id: ID of the topic for which we're getting resources for.
-    :return: A json list of resources retrieved for this particular topic.
-    """
-    email = session.get("email")
-    resources = model.get_resources(topic_id, email)
-    return jsonify(dict(resources=resources))
-
-
 @app.route("/addscore", methods=["POST"])
 @validate_json("exercise_id", "score")
 def add_score():
@@ -228,24 +216,6 @@ def add_exercise():
     user_id = session.get("email")
     model.add_exercise(new_question, new_answer, topic_id, user_id)
     return jsonify({"message": "add exercise call completed"})
-
-
-@app.route("/addresource", methods=["POST"])
-@validate_json("new_resource_name", "new_resource_url", "topic_id")
-def add_resource():
-    """
-    Adds a resource that the user can lookup for help on exercises
-    Expects a resource name, url for that resource and a
-    topic id to associate with it.
-    :return: A success
-    """
-    json_data = request.get_json()
-    new_resource_name = json_data.get("new_resource_name")
-    new_resource_url = json_data.get("new_resource_url")
-    topic_id = json_data.get("topic_id")
-    user_id = session.get("email")
-    model.add_resource(new_resource_name, new_resource_url, user_id, topic_id)
-    return jsonify({"message": "add resource call completed"})
 
 
 @app.route("/exercisehistory")

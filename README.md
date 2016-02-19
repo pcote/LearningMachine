@@ -6,7 +6,6 @@ It'set up with the following features....
 
 * Make and tag learning topics
 * Create and practice exercises
-* Make up a list of support resources for your topics of interest
 * Review history of attempts at practice exercises to see where improvement is needed.
 
 Installation
@@ -63,7 +62,7 @@ How Learning Machine Is Organized
 =================================
 Learning machine is organized into three general views of your materials.
 1.  Topics and tags - View and manage topic and tag information
-2.  Exercises and Resources - Manage exercises and resources.  Drill yourself on question too.
+2.  Exercises - Manage exercises.  Drill yourself on question too.
 3.  Attempts Report - Review your history of any and all attempts made on your exercises.
 4.  Open up main_playbook.yml in your editor of choice.
 
@@ -84,12 +83,12 @@ Pushing the "add" button will do three things.
 #### Viewing Your Tagged Topics
 The tags on the left hand of the view are clickable.  When you click them, it will take you to a topics view.  Here you will see a list of topics that are associated with the tag you clicked.
 
-Managing Exercises and Resources
+Managing Exercises
 ================================
-All exercises and resources are associated with a specific topic.  Exercises will let you quiz yourself and rate your own knowledge.  Resources will give you links to information pertaining to that topic.  For both exercises and resources, you have options for adding new material.
+All exercises are associated with a specific topic.  Exercises will let you quiz yourself and rate your own knowledge.  For exercises, you have options for adding new material.
 
-#### Creating New Exercises and Resources
-To choose a resource, click on a topic from your topics list.  This will take you to the "exercises and resources" view.
+#### Creating New Exercises
+To add an exercise, click on a topic from your topics list.  This will take you to the "exercises" view.
 
 #### Adding Exercises
 Adding exercises gives you questions you can drill yourself on to test and assess your knowledge.  In the form section under the title, "New Question", you may fill out a new question along with a corresponding answer.
@@ -98,12 +97,6 @@ Clicking the "Add Exercise" button will do the following.
 1.  Associates the question with the current existing topic.  Keep in mind that each question can be connected to one topic only.
 2.  Adds a new clickable question on your list of exercises for your current active topic.
 
-#### Adding Resources
-Adding resources gives you clickable links that you can refer to for extra info concerning a given topic.  In the form secion under the title "New Resource", you can put in a link text and a link url.
-
-Clicking on "Add Resource" does the following.
-1.  Associates the resource with the current existing topic.  Keep in mind that each resource can be connected to one topic only.
-2.  Adds a clickable link to your list of resources which, when clicked on, will take you to the page with the needed learning resources.
 
 #### Drilling yourself on exercises
 

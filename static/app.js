@@ -6,7 +6,7 @@
 
 
 (function(){
-var controller = function($scope, $rootScope, categoryService, userService, exerciseService, resourceService){
+var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
     // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {}
     $rootScope.activeObject.tag = {"name":"Untagged", "id": 0}
@@ -24,7 +24,6 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
     $scope.dataList = {}
     $scope.dataList.topics = []
     $scope.dataList.tags = []
-    $scope.dataList.resources = []
     $scope.dataList.exercises = []
 
     // Exercise attempts report data.
@@ -116,17 +115,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
 }
 
 
-// Handle the adding of new resources from the new resource form.
-var ResourceController = function($scope, $rootScope, resourceService){
-        $scope.addResourceClick = function(newResourceName, newResourceUrl){
-            resourceService.addResource($scope, newResourceName, newResourceUrl, $rootScope.activeObject.topic.id)
-            $scope.newResourceName = ""
-            $scope.newResourceUrl = ""
-    }
-
-}
-
-
 // Handlers concerning adding new topics and handling clicks on existing topics so that the right exercises show up.
 var TopicController = function($scope, categoryService, exerciseService){
 
@@ -171,7 +159,6 @@ var lmScoreWordFilter = function(){
 angular.module("app", [])
     .controller("controller", controller)
     .controller("TopicController", TopicController)
-    .controller("ResourceController", ResourceController)
     .controller("ExerciseController", ExerciseController)
     .controller("TagController", TagController)
     .controller("AttemptsReportController", AttemptsReportController)
@@ -179,6 +166,5 @@ angular.module("app", [])
     .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
-    .service("resourceService", ResourceService)
     .filter("lmScoreWord", lmScoreWordFilter)
 })()

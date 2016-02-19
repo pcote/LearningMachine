@@ -43,39 +43,6 @@
         </table>
     </div>
 
-    <div class="col-xs-6">
-        <b><u>Resources</u></b>
-        <br />
-
-        <!-- Resource list display -->
-        <ul>
-            <li ng-repeat="resource in dataList.resources">
-                <a href="{{resource.url}}"">{{resource.name}}</a>
-            </li>
-        </ul>
-        <br />
-
-        <!--
-        Form section for adding a new resource
-        -->
-        <table class="table" ng-controller="ResourceController">
-            <tr>
-                <td align="center" colspan="2"><b><u>New Resource</u></b></td>
-            </tr>
-            <tr>
-                <td><b>Resource Name</b></td>
-                <td><textarea rows="4" cols="30" ng-model="newResourceName" id="newResourceNameId"/></td>
-            </tr>
-                <tr>
-                <td><b>URL</b></td>
-                <td><textarea rows="4" cols="30" ng-model="newResourceUrl" id="newResourceUrlId" /></td>
-            </tr>
-            <tr>
-                <td align="center" colspan="2"><button class="btn btn-primary" ng-click="addResourceClick(newResourceName, newResourceUrl)">Add Resource</button></td>
-            </tr>
-        </table>
-
-    </div>
 
 </div>
 
