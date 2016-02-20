@@ -15,7 +15,7 @@ class ViewTestCase(unittest.TestCase):
 
 
     def testExerciseHistory(self):
-        test_user_id = "cotejrp@gmail.com"
+        test_user_id = "dummyuser@email.com"
         with app.test_client() as client:
             with client.session_transaction() as sess:
                 sess["email"] = test_user_id
