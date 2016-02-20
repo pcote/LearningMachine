@@ -4,24 +4,17 @@
         <h3><span align="center">Attempts Report</span></h3><br />
         <ul>
             <li ng-repeat="entry in report.attempts">
-                <b><u>Topic: </u></b>{{ entry.topic }}
-                <ul>
-                    <li ng-repeat="exercise in entry.exercises">
-                        {{ exercise.question }}
-                        <ul>
-                            <table class="table table-striped">
-                                <tr>
-                                    <th>Attempt Date</th>
-                                    <th>Score</th>
-                                </tr>
-                                <tr ng-repeat="attempt in exercise.attempts">
-                                    <td>{{ attempt.when_attempted }}</td>
-                                    <td>{{ attempt.score | lmScoreWord }}</td>
-                                </tr>
-                            </table>
-                        </ul>
-                    </li>
-                </ul>
+                <b><u>Question: </u></b>{{ entry.question }}<br />
+                <table class="table table-striped">
+                    <tr>
+                        <th>Attempt Date</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr ng-repeat="attempt in entry.attempts">
+                        <td>{{ attempt.when_attempted }}</td>
+                        <td>{{ attempt.score | lmScoreWord }}</td>
+                    </tr>
+                </table>
             </li>
         </ul>
     </div>

@@ -289,6 +289,22 @@ def get_exercises(topic_id, user_id):
     return exercise_list
 
 
+def get_all_exercises(user_id):
+    """
+    Get every exercise for a specified user
+    :param user_id: The user id of the user to get exercises for
+    :return: a list of all exercises for a given user.
+    """
+    conn = eng.connect()
+    user_parm = bindparam("user_id")
+    query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
+            .where(exercise_table.c.user_id == user_parm)
+
+    result_set = conn.execute(query, user_id=user_id).fetchall()
+    exercise_list = [dict(id=id, question=question, answer=answer) for id, question, answer in result_set]
+    return exercise_list
+
+
 def add_attempt(exercise_id, score):
     """
     Record how well the user did in attempting an exercise
@@ -348,25 +364,16 @@ def full_attempt_history(user_id):
     # pull basic topic information from the database for this user..
     conn = eng.connect()
 
-    query = select([topic_table.c.id, topic_table.c.name])\
-            .where(topic_table.c.user_id == user_id)
+    # new version.....
+    # get all exercises
+    exercises_with_attempts = get_all_exercises(user_id)
 
-    topic_records = conn.execute(query).fetchall()
+    # for each exercise get the attempts for that exercise
+    for exercise in exercises_with_attempts:
+        attempts = get_attempts(exercise.get("id"))
+        exercise.update({"attempts": attempts})
 
-    # Create a new list that includes the topics with associated exercises.
-    # This is the topic -> exercise hierarchy.
-    topic_exercises = [{"topic": t_name, "exercises": get_exercises(t_id, user_id)}
-                            for t_id, t_name in topic_records]
-
-    # Expand the information again, this time including the attempts history for specific exercises.
-    # Hierarchy from this to be topic -> exercise -> attempts
-    topic_exercises_with_attempts = []
-    for topic_exercise in topic_exercises:
-        for exercise in topic_exercise.get("exercises"):
-            attempts = get_attempts(exercise.get("id"))
-            exercise.update({"attempts": attempts})
-
-    return topic_exercises
+    return exercises_with_attempts
 
 
 if __name__ == '__main__':

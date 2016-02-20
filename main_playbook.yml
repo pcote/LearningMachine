@@ -4,7 +4,7 @@
   vars:
     mysql_root_password: setRootPasswordHere
     public_user_password: setUserPasswordHere
-    domain: yourdomain.com
+    domain: 18c34e4e.ngrok.com  
     session_key: yoursessionkeyhere
 
   tasks:
