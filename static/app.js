@@ -16,8 +16,8 @@ var controller = function($scope, $rootScope, categoryService, userService, exer
 
     // Controls the visibility of the topics and exercise sections
     $scope.showStatus = {}
-    $scope.showStatus.topics = true
-    $scope.showStatus.exercises = false
+    $scope.showStatus.topics = false
+    $scope.showStatus.exercises = true
     $scope.showStatus.attempts = false
 
     // Item lists to display on different parts of the page
@@ -77,9 +77,11 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         return $scope.trigger
     }, function(newVal, oldVal){
         if(newVal !== oldVal){
-            exerciseService.setupExerciseDisplay($scope, $rootScope.activeObject.topic.id)
+            exerciseService.setupExerciseDisplay($scope)
         }
     })
+
+    exerciseService.setupExerciseDisplay($scope)
 
 
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
@@ -128,7 +130,7 @@ var TopicController = function($scope, categoryService, exerciseService){
 
     // When a user clicks a topic, get the right exercises related to it to show up.
     $scope.topic_click = function(topicId){
-        exerciseService.setupExerciseDisplay($scope, topicId)
+        exerciseService.setupExerciseDisplay($scope)
     }
 
 }

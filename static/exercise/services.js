@@ -6,16 +6,7 @@ var ExerciseService = function($http, $rootScope){
     // Setup the display for the main body of the exercise page.
     // Info needed here includes lists of exercises relevant
     // to a given topic.
-    this.setupExerciseDisplay = function(scope, topicId){
-
-        // get the topic name first.
-        $http.get("/topicname/" + topicId).then(function(res){
-            $rootScope.activeObject.topic = {"id": topicId, "name": res.data.topic_name}
-            scope.showStatus.topics = false
-            scope.showStatus.attempts = false
-            scope.showStatus.exercises = true
-
-        }, function(res){})
+    this.setupExerciseDisplay = function(scope){
 
         // grab the exercises
         $http.get("/exercises/").then(function(res){
