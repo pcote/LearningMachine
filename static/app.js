@@ -6,7 +6,7 @@
 
 
 (function(){
-var controller = function($scope, $rootScope, categoryService, userService, exerciseService){
+var controller = function($scope, $rootScope, userService, exerciseService){
     // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {}
     $rootScope.activeObject.tag = {"name":"Untagged", "id": 0}
@@ -129,7 +129,6 @@ angular.module("app", [])
     .controller("ExerciseController", ExerciseController)
     .controller("AttemptsReportController", AttemptsReportController)
     .controller("UserController", UserController)
-    .service("categoryService", CategoryService)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
