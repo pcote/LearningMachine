@@ -182,7 +182,7 @@ def get_exercises(topic_id):
     :return: A JSON list of the exercises for this topic and user.
     """
     email = session.get("email")
-    exercises = model.get_exercises(topic_id, email)
+    exercises = model.get_all_exercises(email)
     return jsonify(dict(exercises=exercises))
 
 
