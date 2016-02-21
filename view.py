@@ -174,8 +174,8 @@ def get_topic_name(topic_id):
     return jsonify(dict(topic_name=topic_name))
 
 
-@app.route("/exercises/<topic_id>")
-def get_exercises(topic_id):
+@app.route("/exercises/")
+def get_exercises():
     """
     Get a list of exercises pertaining to a topic for a specific user.
     :param topic_id: Topic ID for the topic we're looking for exercises on.

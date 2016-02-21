@@ -18,7 +18,7 @@ var ExerciseService = function($http, $rootScope){
         }, function(res){})
 
         // grab the exercises
-        $http.get("/exercises/" + topicId).then(function(res){
+        $http.get("/exercises/").then(function(res){
             scope.dataList.exercises = res.data.exercises
         }, function(res){})
 
