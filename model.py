@@ -243,7 +243,7 @@ def get_topics_by_tag(tag_id, user_id):
     return topics
 
 
-def add_exercise(question, answer, topic_id, user_id):
+def add_exercise(question, answer, user_id):
     """
     Add a question / answer pair for a given user's topic
     :param question: Text of the question
@@ -258,11 +258,6 @@ def add_exercise(question, answer, topic_id, user_id):
                           .values(question=question, answer=answer, user_id=user_id)
 
     result = conn.execute(query)
-    exercise_id = result.inserted_primary_key[0]
-
-    assoc_query = exercise_by_topic_table.insert()\
-                                         .values(exercise_id=exercise_id, topic_id=bindparam("topic_id", type_=Integer))
-    conn.execute(assoc_query, topic_id=topic_id)
     return
 
 

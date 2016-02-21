@@ -202,7 +202,7 @@ def add_score():
 
 
 @app.route("/addexercise", methods=["POST"])
-@validate_json("new_question", "new_answer", "topic_id")
+@validate_json("new_question", "new_answer")
 def add_exercise():
     """
     Add a new exercise to the system for the user for this session
@@ -214,7 +214,7 @@ def add_exercise():
     new_answer = json_data.get("new_answer")
     topic_id = json_data.get("topic_id")
     user_id = session.get("email")
-    model.add_exercise(new_question, new_answer, topic_id, user_id)
+    model.add_exercise(new_question, new_answer, user_id)
     return jsonify({"message": "add exercise call completed"})
 
 

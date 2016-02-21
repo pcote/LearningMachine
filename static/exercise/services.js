@@ -33,7 +33,7 @@ var ExerciseService = function($http, $rootScope){
     }
 
     // Take the new question and answer pertaining to some topic and store that in the system.
-    this.addExercise = function(scope, newQuestion, newAnswer, topicId){
+    this.addExercise = function(scope, newQuestion, newAnswer){
         var req = {
             url: "/addexercise",
             method: "post",
@@ -42,8 +42,7 @@ var ExerciseService = function($http, $rootScope){
             },
             data: {
                     "new_question": newQuestion,
-                    "new_answer": newAnswer,
-                    "topic_id": topicId
+                    "new_answer": newAnswer
             }
         }
 
