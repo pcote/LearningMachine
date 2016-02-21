@@ -43,12 +43,10 @@
 
 
         <!--
-         The three types of content that can show up in the central part of the application itself.
-         * topics_body - A list of topics the user can choose from as well as an option for adding new topics
+         The two types of content that can show up in the central part of the application itself.
          * exercise_body - Exercises pertaining to a user specified topic.
          * attempt_report - A report displaying the user's history regarding how they graded themselves on different exercises.
         -->
-        <div class="col-xs-9 topicarea" ng-show="showStatus.topics" ng-include="'category/topics_body.html'"></div>
         <div class="col-xs-9" ng-include="'exercise/exercise_body.html'" ng-show="showStatus.exercises"></div>
         <div class="col-xs-9" ng-include="'exercise/attempt_report.html'" ng-show="showStatus.attempts"></div>
     </div>

@@ -47,23 +47,6 @@ var AttemptsReportController = function($scope, exerciseService){
 }
 
 
-// Makes sure tag lists show up and that topics display when a tag gets clicked on.
-var TagController = function($scope, $rootScope, categoryService){
-
-    // display of tags
-    categoryService.refreshTagList($scope)
-
-    // response to clicks on tags
-    // Mouse click handling event functions
-    $scope.tag_click = function(tag_id){
-        categoryService.updateTopicsList($scope, tag_id)
-        $scope.showStatus.topics = true
-        $scope.showStatus.exercises = false
-        $scope.showStatus.attempts = false
-    }
-
-
-}
 
 
 // Handles the adding events for when users add exercises, click on them, and push buttons that
@@ -117,23 +100,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
 }
 
 
-// Handlers concerning adding new topics and handling clicks on existing topics so that the right exercises show up.
-var TopicController = function($scope, categoryService, exerciseService){
-
-
-    // Adds a new topic based on the add topic form, clears form fields, and updates the tags.
-    $scope.add_topic_click = function(){
-        categoryService.addTopicInfo($scope, $scope.new_topic_name, $scope.new_topic_tags)
-        $scope.new_topic_name = ""
-        $scope.new_topic_tags = ""
-    }
-
-    // When a user clicks a topic, get the right exercises related to it to show up.
-    $scope.topic_click = function(topicId){
-        exerciseService.setupExerciseDisplay($scope)
-    }
-
-}
 
 
 // Convert a number score value into a word (good, okay, bad) in the attempts report
@@ -160,9 +126,7 @@ var lmScoreWordFilter = function(){
 // Core Angular app initialization
 angular.module("app", [])
     .controller("controller", controller)
-    .controller("TopicController", TopicController)
     .controller("ExerciseController", ExerciseController)
-    .controller("TagController", TagController)
     .controller("AttemptsReportController", AttemptsReportController)
     .controller("UserController", UserController)
     .service("categoryService", CategoryService)
