@@ -19,17 +19,6 @@ user_table = Table("users", meta,
                    Column("email", VARCHAR(255), primary_key=True),
                    Column("display_name", Text))
 
-tag_table = Table("tags", meta,
-                  Column("id", Integer, primary_key=True, autoincrement=True),
-                  Column("name", VARCHAR(140)),
-                  Column("user_id", ForeignKey("users.email")))
-
-topic_table = Table("topics", meta,
-                    Column("id", Integer, primary_key=True, autoincrement=True),
-                    Column("name", VARCHAR(140)),
-                    Column("user_id", ForeignKey("users.email")))
-
-
 
 exercise_table = Table("exercises", meta,
                        Column("id", Integer, primary_key=True, autoincrement=True),
@@ -37,21 +26,12 @@ exercise_table = Table("exercises", meta,
                        Column("answer", Text),
                        Column("user_id", ForeignKey("users.email")))
 
+
 attempt_table = Table("attempts", meta,
                       Column("id", Integer, primary_key=True, autoincrement=True),
                       Column("score", Integer),
                       Column("when_attempted", TIMESTAMP),
                       Column("exercise_id", ForeignKey("exercises.id")))
-
-
-tag_by_topic_table = Table("tags_by_topic", meta,
-                           Column("tag_id", ForeignKey("tags.id"), primary_key=True),
-                           Column("topic_id", ForeignKey("topics.id"), primary_key=True))
-
-
-exercise_by_topic_table = Table("exercises_by_topic", meta,
-                                Column("exercise_id", ForeignKey("exercises.id"), primary_key=True),
-                                Column("topic_id", ForeignKey("topics.id"), primary_key=True))
 
 
 meta.create_all(bind=eng)
@@ -87,162 +67,6 @@ def add_user(email, display_name):
     conn.execute(query)
 
 
-def get_tags(user_id):
-    """
-    Get the full list of tags created by this user
-    :param user_id: email address of the user to grab tags for.
-    :return: A list of tags with their associated IDs
-    """
-    conn = eng.connect()
-
-    query = select([tag_table.c.id, tag_table.c.name])\
-            .where(tag_table.c.user_id == user_id)
-
-    results = conn.execute(query).fetchall()
-    tags = [{"id": id, "name": name} for id, name in results]
-    return tags
-
-
-def get_tag_id(tag_name, user_id):
-    """
-    Utility function to map tag names to tag id numbers.  Specific to a given user.
-    :param tag_name: Name of the tag in question (case sensitve)
-    :param user_id: Identifier for the user
-    :return: Record number id associated with the tag in question for this user.
-    """
-    conn = eng.connect()
-
-    query = select([tag_table.c.id])\
-            .where(and_(
-                        tag_table.c.name == tag_name,
-                        tag_table.c.user_id == user_id))
-
-    result, *_ = conn.execute(query).fetchone()
-    return result
-
-
-def get_tag_info(tag_id, user_id):
-    conn = eng.connect()
-
-    query = select([tag_table.c.id, tag_table.c.name])\
-            .where(and_(
-                        tag_table.c.id == bindparam("tag_id", type_=Integer),
-                        tag_table.c.user_id == user_id))
-
-    id, name = conn.execute(query, tag_id=tag_id).fetchone()
-    return dict(id=id, name=name)
-
-
-def get_topic_id(topic_name, user_id):
-    """
-    Utility function to map topic names to topic id numbers.  Specific to a given user.
-    :param topic_name: Name of the topic in queestion. (case sensitive)
-    :param user_id: Identifier for the user
-    :return: Record number id associated with the topic name for the specified user.
-    """
-    conn = eng.connect()
-
-    query = select([topic_table.c.id])\
-            .where(and_(
-                        topic_table.c.name == topic_name,
-                        topic_table.c.user_id == user_id))
-
-    result, *_ = conn.execute(query).fetchone()
-    return result
-
-
-def add_topic(topic_name, user_id, tags=None):
-    """
-    Make sure that the topic and whatever associated tags go in there are in the system.
-    :param topic_name: The name of the topic to add to the database
-    :param tags: A list of tag strings (if any)
-    :return: Nothing.
-    """
-
-    def __tag_in_system(conn, tag, user_id):
-
-        query = select([tag_table])\
-                .where(and_(
-                            tag_table.c.name == tag,
-                            tag_table.c.user_id == user_id))
-
-        return True if conn.execute(query).fetchall() else False
-
-    def __add_tag(conn, tag, user_id):
-        query = tag_table.insert()\
-                         .values(name=tag, user_id=user_id)
-        conn.execute(query)
-
-    def __assoc_exists(conn, tag, topic):
-        tag_id = get_tag_id(tag, user_id)
-        topic_id = get_topic_id(topic, user_id)
-        assoc_query = select([tag_by_topic_table.c.tag_id])\
-                      .where(and_(
-                                tag_by_topic_table.c.tag_id == tag_id,
-                                tag_by_topic_table.c.topic_id == topic_id))
-
-        result = conn.execute(assoc_query).fetchall()
-        return True if result else False
-
-    def __add_assoc(conn, tag_id, topic_id):
-        query = tag_by_topic_table.insert()\
-                                  .values(tag_id=tag_id, topic_id=topic_id)
-        conn.execute(query)
-
-    def __topic_exists(conn, topic, user_id):
-        # find out if the topic is in the table already.
-        query = select([topic_table])\
-                .where(and_(topic_table.c.name == topic_name,
-                        topic_table.c.user_id == user_id))
-
-        topics_in_system = conn.execute(query).fetchall()
-        return True if topics_in_system else False
-
-    def __add_topic(topic_name, user_id):
-        query = topic_table.insert()\
-                           .values(name=topic_name, user_id=user_id)
-
-        conn.execute(query)
-
-    tags = [] if None else tags
-    conn = eng.connect()
-
-    # Put topic in topic table.
-    if not __topic_exists(conn, topic_name, user_id):
-        __add_topic(topic_name, user_id)
-
-    # Put tags that AREN'T already in the tag table into the tag table.
-    for tag in tags:
-        if not __tag_in_system(conn, tag, user_id):
-            __add_tag(conn, tag, user_id)
-
-    # Enter the association into the system for cases where the association doesn't already exist.
-    for tag in tags:
-        if not __assoc_exists(conn, tag, topic_name):
-            tag_id = get_tag_id(tag, user_id)
-            topic_id = get_topic_id(topic_name, user_id)
-            __add_assoc(conn, tag_id, topic_id)
-
-
-def get_topics_by_tag(tag_id, user_id):
-    """
-    Get topics connected to a given tag as pertains to a specific user
-    :param tag_id: ID number of the tag
-    :param user_id: identifier for the user
-    :return: A list of topics that are connected with a certain tag and user
-    """
-    conn = eng.connect()
-    query = select([topic_table.c.id, topic_table.c.name])\
-        .select_from(topic_table.join(tag_by_topic_table))\
-        .where(and_(
-                topic_table.c.user_id == user_id,
-                tag_by_topic_table.c.tag_id == bindparam("tag_id", type_=Integer)))
-
-    results = conn.execute(query, tag_id=tag_id).fetchall()
-    topics = [dict(id=topic_id, name=topic_name) for topic_id, topic_name in results]
-    return topics
-
-
 def add_exercise(question, answer, user_id):
     """
     Add a question / answer pair for a given user's topic
@@ -259,29 +83,6 @@ def add_exercise(question, answer, user_id):
 
     result = conn.execute(query)
     return
-
-
-def get_exercises(topic_id, user_id):
-    """
-    Get exercises that are setup for a given topic and user
-    :param topic_id: Database id for the topic
-    :param user_id: ID for the user
-    :return: List of exercises complete with exercise id, question, and answer.
-    """
-    conn = eng.connect()
-
-    # join between exercise and exercise-by-topic needed
-    # to specify to only topic-relevant exercises
-    query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
-                    .select_from(exercise_table.join(exercise_by_topic_table))\
-                        .where(and_(
-                                exercise_by_topic_table.c.topic_id == bindparam("topic_id", type_=Integer),
-                                exercise_table.c.user_id == user_id))
-
-    result_set = conn.execute(query, topic_id=topic_id).fetchall()
-    exercise_list = [dict(id=id, question=question, answer=answer)
-                     for id, question, answer in result_set]
-    return exercise_list
 
 
 def get_all_exercises(user_id):
@@ -313,23 +114,6 @@ def add_attempt(exercise_id, score):
     query = attempt_table.insert()\
                          .values(exercise_id=bindparam("exercise_id", type_=Integer), score=score, when_attempted=now)
     conn.execute(query, exercise_id=exercise_id)
-
-
-def get_topic_name(topic_id, user_id):
-    """
-    Get the name of the topic connected to the topic id for that user
-    :param topic_id: id number of the topic
-    :param user_id: id for the user. (there to ensure the user owns this topic)
-    :return: topic name as a simple string
-    """
-    conn = eng.connect()
-    query = select([topic_table.c.name])\
-            .where(and_(topic_table.c.id == bindparam("topic_id", type_=Integer),
-                        topic_table.c.user_id == user_id))
-
-    results = conn.execute(query, topic_id=topic_id).fetchone()
-    topic_name = list(results)[0]
-    return topic_name
 
 
 def get_attempts(exercise_id):
