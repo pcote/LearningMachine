@@ -57,7 +57,6 @@ var ExerciseService = function($http, $rootScope){
 
         var cbSuccess = function(res){
             scope.report.attempts = res.data.history
-            scope.showStatus.topics = false
             scope.showStatus.exercises = false
             scope.showStatus.attempts = true
         }
