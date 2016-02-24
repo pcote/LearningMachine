@@ -96,7 +96,7 @@ def get_user_info():
         return jsonify(dict(email="error", display_name="Could not get info for this user"))
 
 
-@app.route("/exercises/")
+@app.route("/exercises")
 def get_exercises():
     """
     Get a list of exercises pertaining to a topic for a specific user.

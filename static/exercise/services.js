@@ -9,7 +9,7 @@ var ExerciseService = function($http, $rootScope){
     this.setupExerciseDisplay = function(scope){
 
         // grab the exercises
-        $http.get("/exercises/").then(function(res){
+        $http.get("/exercises").then(function(res){
             scope.dataList.exercises = res.data.exercises
         }, function(res){})
 
