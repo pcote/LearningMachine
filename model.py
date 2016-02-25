@@ -48,8 +48,9 @@ def user_exists(email_arg):
     query = select([user_table])\
             .where(user_table.c.email == email_arg)
 
-    result = conn.execute(query).fetchall()
-    return True if result else False
+    user_found = True if conn.execute(query).fetchall() else False
+    conn.close()
+    return user_found
 
 
 def add_user(email, display_name):
@@ -65,6 +66,7 @@ def add_user(email, display_name):
                       .values(email=email, display_name=display_name)
 
     conn.execute(query)
+    conn.close()
 
 
 def add_exercise(question, answer, user_id):
@@ -82,7 +84,7 @@ def add_exercise(question, answer, user_id):
                           .values(question=question, answer=answer, user_id=user_id)
 
     result = conn.execute(query)
-    return
+    conn.close()
 
 
 def get_all_exercises(user_id):
@@ -98,6 +100,7 @@ def get_all_exercises(user_id):
 
     result_set = conn.execute(query, user_id=user_id).fetchall()
     exercise_list = [dict(id=id, question=question, answer=answer) for id, question, answer in result_set]
+    conn.close()
     return exercise_list
 
 
@@ -114,6 +117,7 @@ def add_attempt(exercise_id, score):
     query = attempt_table.insert()\
                          .values(exercise_id=bindparam("exercise_id", type_=Integer), score=score, when_attempted=now)
     conn.execute(query, exercise_id=exercise_id)
+    conn.close()
 
 
 def get_attempts(exercise_id):
@@ -130,6 +134,7 @@ def get_attempts(exercise_id):
     result_records = conn.execute(query, exercise_id=exercise_id).fetchall()
     attempts = [{"score": score, "when_attempted":when_attempted}
                     for score, when_attempted in result_records]
+    conn.close()
     return attempts
 
 
@@ -152,6 +157,7 @@ def full_attempt_history(user_id):
         attempts = get_attempts(exercise.get("id"))
         exercise.update({"attempts": attempts})
 
+    conn.close()
     return exercises_with_attempts
 
 
