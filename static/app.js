@@ -77,6 +77,13 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         $("#questionModal").modal()
     }
 
+    // Navigate to the exercises page
+    $scope.viewExercisesClick = function(){
+        $scope.showStatus.exercises = true
+        $scope.showStatus.attempts = false
+        exerciseService.setupExerciseDisplay($scope)
+    }
+
 
     // When user clicks "show answer" in the question box, show the answer in a display they can rate themselves on.
     $scope.showAnswerClick = function(){
