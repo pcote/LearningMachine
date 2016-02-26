@@ -12,7 +12,7 @@ db_section = cp["learningmachine"]
 user, password = db_section.get("user"), db_section.get("password")
 host, db = db_section.get("host"), db_section.get("db")
 db_url = "mysql+pymysql://{}:{}@{}/{}".format(user, password, host, db)
-eng = create_engine(db_url)
+eng = create_engine(db_url, pool_recycle=14400)
 meta = MetaData()
 
 user_table = Table("users", meta,
