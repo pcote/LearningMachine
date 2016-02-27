@@ -15,7 +15,7 @@
                         <th>Score</th>
                     </tr>
                     <tr ng-repeat="attempt in entry.attempts">
-                        <td>{{ attempt.when_attempted }}</td>
+                        <td>{{ attempt.when_attempted | date:'medium' }}</td>
                         <td>{{ attempt.score | lmScoreWord }}</td>
                     </tr>
                 </table>

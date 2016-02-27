@@ -132,7 +132,7 @@ def get_attempts(exercise_id):
             .where(attempt_table.c.exercise_id == bindparam("exercise_id", type_=Integer))
 
     result_records = conn.execute(query, exercise_id=exercise_id).fetchall()
-    attempts = [{"score": score, "when_attempted":when_attempted}
+    attempts = [{"score": score, "when_attempted":when_attempted.isoformat()}
                     for score, when_attempted in result_records]
     conn.close()
     return attempts
