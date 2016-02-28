@@ -4,6 +4,7 @@ import logging
 from login import LoginHandler
 import model
 from functools import wraps
+import sys
 import re
 from pdb import set_trace
 
@@ -12,14 +13,13 @@ dir_path = __file__.rsplit("/", maxsplit=1)[0]
 config_file_name = "{}/{}".format(dir_path, "config.ini")
 parser.read(config_file_name)
 
-
-logger = logging.root
-
-logger.setLevel(logging.DEBUG)
-
 nudir = lambda mod: [x for x in dir(mod) if not x.startswith("_")]
+
+
 app = Flask(__name__)
-app.debug = True
+app.debug = False
+app.logger.setLevel(logging.INFO)
+app.logger.addHandler(logging.StreamHandler(stream=sys.stdout))
 app.secret_key = parser["learningmachine"]["session_key"]
 
 def validate_json(*expected_args):
@@ -73,10 +73,18 @@ def login():
         session["display_name"] = login_handler.display_name
 
         if not model.user_exists(login_handler.email):
+            msg = "Adding user: {} with ID of {} to the database."\
+                .format(login_handler.email, login_handler.display_name)
             model.add_user(login_handler.email, login_handler.display_name)
 
+        msg = "Sending user: {} to main page".format(login_handler.email)
+        app.logger.info(msg)
         return redirect("/static/main.html")
+
     else:
+        msg = "No login code yet.  Letting Google handle the login process at: {}"\
+                .format(login_handler.auth_url)
+        app.logger.info(msg)
         return redirect(login_handler.auth_url)
 
 
@@ -90,7 +98,7 @@ def get_user_info():
         email = session.get("email")
         display_name = session.get("display_name")
         data = dict(email=email, displayName=display_name)
-        logger.debug("Success in getting log information on user: {} at email: {}".format(display_name, email))
+        app.logger.debug("Success in getting log information on user: {} at email: {}".format(display_name, email))
         return jsonify(data)
     else:
         return jsonify(dict(email="error", display_name="Could not get info for this user"))
@@ -105,6 +113,8 @@ def get_exercises():
     """
     email = session.get("email")
     exercises = model.get_all_exercises(email)
+    msg = "Found {} exercises for {}".format(len(exercises), email)
+    app.logger.info(msg)
     return jsonify(dict(exercises=exercises))
 
 
@@ -120,6 +130,10 @@ def add_score():
     exercise_id = json_data.get("exercise_id")
     score = json_data.get("score")
     model.add_attempt(exercise_id, score)
+
+    msg = "Attempt added.  Exercise ID: {} Score: {}"\
+            .format(exercise_id, score)
+    app.logger.info(msg)
     return jsonify(dict(result="success"))
 
 
@@ -137,6 +151,9 @@ def add_exercise():
     topic_id = json_data.get("topic_id")
     user_id = session.get("email")
     model.add_exercise(new_question, new_answer, user_id)
+
+    msg = "Exercise added for user: {}".format(user_id)
+    app.logger.info(msg)
     return jsonify({"message": "add exercise call completed"})
 
 
@@ -148,8 +165,12 @@ def get_exercise_history():
     """
     user_id = session.get("email")
     history = model.full_attempt_history(user_id)
+
+    msg = "Attempt history found for user: {}.  {} records."\
+            .format(user_id, len(history))
+    app.logger.info(msg)
     return jsonify({"history":history})
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
