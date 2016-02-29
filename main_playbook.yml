@@ -1,11 +1,11 @@
 ---
-- hosts: all
+- hosts: "{{ host }}"
   sudo: yes
   vars:
-    mysql_root_password: setRootPasswordHere
-    public_user_password: setUserPasswordHere
-    domain: 18c34e4e.ngrok.com  
-    session_key: yoursessionkeyhere
+    mysql_root_password: "{{ root_password }}"
+    public_user_password: "{{ public_password }}" 
+    domain: "{{ domain }}"
+    session_key: "{{ session_key }}" 
 
   tasks:
 
@@ -79,6 +79,7 @@
         name: learningmachine
         state: import
         target: /tmp/learningmachine.sql
+      when: import_database == true
 
     - name: Make the directories
       file:
@@ -105,6 +106,7 @@
         - login.py
         - model.py
         - view.py
+      notify: restart learningmachine
 
     - name: Copy over the html and javascript static assets
       copy:
@@ -141,3 +143,9 @@
       service:
         name: nginx
         state: restarted
+    
+    - name: restart learningmachine
+      service:
+        name: learningmachine
+        state: restarted
+   

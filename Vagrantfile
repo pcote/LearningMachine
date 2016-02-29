@@ -17,6 +17,15 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "dev_playbook.yml"
+    ansible.verbose="v"
+    ansible.extra_vars = {
+        host: "all",
+        root_password: "setRootPasswordHere",
+        public_password: "setPublicPasswordHere",
+        domain: "3fbc11a7.ngrok.com",
+        session_key: "fdargf45t4dfavf536yyntui75n^W(_",
+        import_database: false 
+    }
+    ansible.playbook = "main_playbook.yml"
   end 
 end
