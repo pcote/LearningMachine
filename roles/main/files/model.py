@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, bindparam
-from sqlalchemy.sql import select, and_
+from sqlalchemy.sql import select, and_, text
 from configparser import ConfigParser
 from collections import namedtuple
 
@@ -32,6 +32,11 @@ attempt_table = Table("attempts", meta,
                       Column("score", Integer),
                       Column("when_attempted", TIMESTAMP),
                       Column("exercise_id", ForeignKey("exercises.id")))
+
+exercise_deletion_table = Table("exercise_deletions", meta,
+                                Column("id", Integer, primary_key=True, autoincrement=True),
+                                Column("exercise_id", ForeignKey("exercises.id")),
+                                Column("deletion_time", TIMESTAMP))
 
 
 meta.create_all(bind=eng)
@@ -94,9 +99,13 @@ def get_all_exercises(user_id):
     :return: a list of all exercises for a given user.
     """
     conn = eng.connect()
+
+    subquery = conn.execute(select([exercise_deletion_table.c.exercise_id])).fetchall()
+
     user_parm = bindparam("user_id")
     query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
-            .where(exercise_table.c.user_id == user_parm)
+            .where(and_(exercise_table.c.user_id == user_parm,
+                        text("exercises.id not in ( select exercise_id from exercise_deletions )")))
 
     result_set = conn.execute(query, user_id=user_id).fetchall()
     exercise_list = [dict(id=id, question=question, answer=answer) for id, question, answer in result_set]
@@ -160,6 +169,19 @@ def full_attempt_history(user_id):
     conn.close()
     return exercises_with_attempts
 
+
+def delete_exercise(exercise_id):
+    """
+    Submit a request to have an exercise deleted.
+    :param exercise_id: ID of the exercise we're requesting to have deleted
+    :return: Nothing.
+    """
+    conn = eng.connect()
+    from datetime import datetime
+    now = datetime.now()
+    query = exercise_deletion_table.insert().values(exercise_id=exercise_id, deletion_time=now)
+    conn.execute(query)
+    conn.close()
 
 if __name__ == '__main__':
     pass
