@@ -1,0 +1,5 @@
+---
+mysql_root_password: "{{ root_password }}"
+public_user_password: "{{ public_password }}"
+domain: "{{ domain }}"
+session_key: "{{ session_key }}"
