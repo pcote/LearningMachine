@@ -31,7 +31,6 @@ The instructions assume you are running a modern 64-bit Linux distribution.  Bey
     2.  public_password - This is a password for the database's public user account.  This account is what the user goes through to add new info to the system.
     3.  domain - The domain name.  Your running ngrok interface will have the domain name you want.  Copy the domain name found here.  WARNING: Do not include the "http://" parrt in this field.
     4.  session_key - Choose a secure key to represent the session_key.  This key is used by Learning Machine's Flask component to cryptographically sign user session cookies.
-    5.  import_database - set to either true or false.  You want this at true if you want to create a fresh new database.  You want it at false if you already have the database and don't want the information in it to be wiped out.
 5.  Save the "Vagrantfile" file with the variables that you've set.
 6.  Going back to the command line, type in "vagrant up" and hit enter.  You will now be setting up the full server running inside of Virtual Box.
 

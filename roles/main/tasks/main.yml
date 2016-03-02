@@ -49,27 +49,12 @@
     dest: /etc/nginx/nginx.conf
   notify: restart nginx
 
-
-- name: copy over the learningmachine data definitions.
-  copy:
-    src: learningmachine.sql
-    dest: /tmp/learningmachine.sql
-
 - name: Create the learning machine database
   mysql_db:
     login_user: root
     login_password: "{{ mysql_root_password }}"
     name: learningmachine
     state: present
-
-- name: Migrate table defs into the database
-  mysql_db:
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    name: learningmachine
-    state: import
-    target: /tmp/learningmachine.sql
-  when: import_database == true
 
 - name: Make the directories
   file:
