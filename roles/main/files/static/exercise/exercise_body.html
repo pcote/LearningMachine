@@ -18,6 +18,7 @@
         <ul ng-controller="ExerciseController">
             <li ng-repeat="exercise in dataList.exercises">
                 <a ng-click="exerciseClick(exercise)">{{exercise.question}}</a>
+                &nbsp; <a ng-click="deleteExerciseClick(exercise.id)">[X]</a>
             </li>
         </ul>
         <br />

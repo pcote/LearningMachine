@@ -51,6 +51,30 @@ var ExerciseService = function($http, $rootScope){
         }, function(res){})
     }
 
+    this.deleteExercise = function(scope, exercise_id){
+        var url = "/deleteexercise"
+        var req = {
+            url: "/deleteexercise",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: {
+                "exercise_id": exercise_id
+            }
+        }
+
+        var cbSuccess = function(res){
+            scope.trigger = !scope.trigger
+        }
+
+        var cbFailure = function(res){
+            alert("Deletion attempt failed: " + res.data)
+        }
+
+        $http(req).then(cbSuccess, cbFailure)
+    }
+
     // Pull the data concerning a user's exercise history into a local json structure
     // that can be displayed in report form.  Also show it.
     this.getAttemptsReport = function(scope){

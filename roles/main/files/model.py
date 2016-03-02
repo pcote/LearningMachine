@@ -170,18 +170,32 @@ def full_attempt_history(user_id):
     return exercises_with_attempts
 
 
-def delete_exercise(exercise_id):
+def delete_exercise(user_id, exercise_id):
     """
     Submit a request to have an exercise deleted.
     :param exercise_id: ID of the exercise we're requesting to have deleted
     :return: Nothing.
     """
     conn = eng.connect()
-    from datetime import datetime
-    now = datetime.now()
-    query = exercise_deletion_table.insert().values(exercise_id=exercise_id, deletion_time=now)
-    conn.execute(query)
+
+    query = select([exercise_table.c.id]).where(and_(
+        exercise_table.c.id == exercise_id,
+        exercise_table.c.user_id == user_id
+    ))
+
+    is_valid_user = conn.execute(query).fetchone()
+
+    if is_valid_user:
+        from datetime import datetime
+        now = datetime.now()
+        query = exercise_deletion_table.insert().values(exercise_id=exercise_id, deletion_time=now)
+        conn.execute(query)
+        msg = "Executed deleteion query on exercise: {} belonging to user: {}".format(exercise_id, user_id)
+    else:
+        msg = "User: {} not the owner of exercise: {}".format(user_id, exercise_id)
+
     conn.close()
+    return msg
 
 if __name__ == '__main__':
     pass

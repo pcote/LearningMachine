@@ -99,6 +99,10 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         $("#questionAnswerModal").modal("hide")
     }
 
+    $scope.deleteExerciseClick = function(exercise_id){
+        exerciseService.deleteExercise($scope, exercise_id)
+    }
+
 }
 
 

@@ -157,6 +157,16 @@ def add_exercise():
     return jsonify({"message": "add exercise call completed"})
 
 
+@app.route("/deleteexercise", methods=["POST"])
+def delete_exercise():
+    json_ob = request.get_json()
+    exercise_id = json_ob.get("exercise_id")
+    user_id = session.get("email")
+    msg = model.delete_exercise(user_id, exercise_id)
+    app.logger.info(msg)
+    return ""
+
+
 @app.route("/exercisehistory")
 def get_exercise_history():
     """
@@ -164,6 +174,7 @@ def get_exercise_history():
     :return: A JSON structure of the history of the user's attempts.
     """
     user_id = session.get("email")
+
     history = model.full_attempt_history(user_id)
 
     msg = "Attempt history found for user: {}.  {} records."\
