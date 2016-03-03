@@ -22,7 +22,7 @@
     login_password: "{{ mysql_root_password }}"
     name: public
     password: "{{ public_user_password }}"
-    priv: "learningmachine.*: SELECT,INSERT,CREATE"
+    priv: "learningmachine.*: SELECT,INSERT"
 
 - name: Install apt packages for git, nginx, and pip3
   apt:
@@ -81,15 +81,19 @@
     - login.py
     - model.py
     - view.py
+  notify: update tables
   notify: restart learningmachine
 
-- name: Copy over the file to be used for cron deletion of files
+- name: Copy over util scripts to handle deletions and ensuring table existence
   copy:
     src: purge_deletions.py
     dest: /var/app/learningmachine/
     mode: 0550
     owner: www-data
     group: www-data
+  with_items:
+    - purge_deletions.py
+    - make_tables.py
 
 - name: Set up the cron job
   cron:
