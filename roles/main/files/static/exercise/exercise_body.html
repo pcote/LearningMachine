@@ -15,12 +15,12 @@
         <br />
 
         <!-- Exercise list display -->
-        <ul ng-controller="ExerciseController">
-            <li ng-repeat="exercise in dataList.exercises">
-                <a ng-click="exerciseClick(exercise)">{{exercise.question}}</a>
-                &nbsp; <a ng-click="deleteExerciseClick(exercise.id)">[X]</a>
-            </li>
-        </ul>
+        <table ng-controller="ExerciseController" class="table">
+            <tr ng-repeat="exercise in dataList.exercises">
+                <td><a ng-click="exerciseClick(exercise)">{{exercise.question}}</a></td>
+                <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">X</button></a></td>
+            </tr>
+        </table>
         <br />
 
         <!--
@@ -32,11 +32,11 @@
             </tr>
             <tr>
                 <td><b>Question</b></td>
-                <td><textarea rows="4" cols="30" id="newQuestionId" ng-model="newQuestion" /></td>
+                <td><textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" /></td>
             </tr>
                 <tr>
                 <td><b>Answer</b></td>
-                <td><textarea rows="4" cols="30" id="newAnswerId" ng-model="newAnswer" /></td>
+                <td><textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" /></td>
             </tr>
             <tr>
                 <td align="center" colspan="2"><button class="btn btn-primary" ng-click="addExerciseClick(newQuestion, newAnswer)">Add Exercise</button></td>
