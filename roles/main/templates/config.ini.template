@@ -1,6 +1,7 @@
 [learningmachine]
 user=public
 password={{public_user_password}}
+root_password={{root_password}}
 host=localhost
 db=learningmachine
 session_key={{session_key}}

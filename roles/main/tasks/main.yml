@@ -83,6 +83,22 @@
     - view.py
   notify: restart learningmachine
 
+- name: Copy over the file to be used for cron deletion of files
+  copy:
+    src: purge_deletions.py
+    dest: /var/app/learningmachine/
+    mode: 0550
+    owner: www-data
+    group: www-data
+
+- name: Set up the cron job
+  cron:
+    name: Purge Deletions
+    state: present
+    job: /var/app/learningmachine/purge_deletions.py
+    user: www-data
+    minute: "*/2"
+
 - name: Copy over the html and javascript static assets
   copy:
     src: static

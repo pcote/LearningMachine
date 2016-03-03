@@ -35,7 +35,7 @@ attempt_table = Table("attempts", meta,
 
 exercise_deletion_table = Table("exercise_deletions", meta,
                                 Column("id", Integer, primary_key=True, autoincrement=True),
-                                Column("exercise_id", ForeignKey("exercises.id")),
+                                Column("exercise_id", Integer),
                                 Column("deletion_time", TIMESTAMP))
 
 
