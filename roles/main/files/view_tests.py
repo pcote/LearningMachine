@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import MagicMock
 from view import app
 import json
+from pdb import set_trace
 
 class ViewTestCase(unittest.TestCase):
     def setUp(self):
@@ -12,6 +13,31 @@ class ViewTestCase(unittest.TestCase):
         string_data = raw_data.decode()
         json_ob = json.loads(string_data)
         return json_ob
+
+
+    def testWelcomePage(self):
+        with app.test_client() as client:
+            res = client.get("/")
+            self.assertTrue("302" in res.status)
+
+
+    def testUserInfo(self):
+        test_user_id = "dummyuser@somewhere.com"
+        test_display_name = "Dummy User"
+
+        with app.test_client() as client:
+            with client.session_transaction() as sess:
+                sess["email"] = test_user_id
+                sess["display_name"] = test_display_name
+
+            res = client.get("/userinfo")
+            json_data = self.get_json(res)
+            print(json_data)
+            self.assertIn("displayName", json_data)
+            self.assertIn("email", json_data)
+            self.assertEqual(test_user_id, json_data["email"])
+            self.assertEqual(test_display_name, json_data["displayName"])
+
 
 
     def testExerciseHistory(self):
