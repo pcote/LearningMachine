@@ -6,6 +6,7 @@
 
 - name: update tables
   command: /var/app/learningmachine/make_tables.py
+  notify: restart learningmachine
 
 - name: restart learningmachine
   service:

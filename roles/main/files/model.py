@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, bindparam
 from sqlalchemy.sql import select, and_, text
+from tabledefs import user_table, exercise_table, attempt_table, exercise_deletion_table, meta
 from configparser import ConfigParser
 from collections import namedtuple
 
@@ -13,30 +14,6 @@ user, password = db_section.get("user"), db_section.get("password")
 host, db = db_section.get("host"), db_section.get("db")
 db_url = "mysql+pymysql://{}:{}@{}/{}".format(user, password, host, db)
 eng = create_engine(db_url, pool_recycle=14400)
-meta = MetaData()
-
-user_table = Table("users", meta,
-                   Column("email", VARCHAR(255), primary_key=True),
-                   Column("display_name", Text))
-
-
-exercise_table = Table("exercises", meta,
-                       Column("id", Integer, primary_key=True, autoincrement=True),
-                       Column("question", Text),
-                       Column("answer", Text),
-                       Column("user_id", ForeignKey("users.email")))
-
-
-attempt_table = Table("attempts", meta,
-                      Column("id", Integer, primary_key=True, autoincrement=True),
-                      Column("score", Integer),
-                      Column("when_attempted", TIMESTAMP),
-                      Column("exercise_id", ForeignKey("exercises.id")))
-
-exercise_deletion_table = Table("exercise_deletions", meta,
-                                Column("id", Integer, primary_key=True, autoincrement=True),
-                                Column("exercise_id", Integer),
-                                Column("deletion_time", TIMESTAMP))
 
 
 meta.create_all(bind=eng)

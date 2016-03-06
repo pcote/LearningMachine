@@ -4,6 +4,7 @@ Ensures that the tables that need to exist do exist.
 """
 from configparser import ConfigParser
 from sqlalchemy import create_engine
+from tabledefs import meta
 
 if __name__ == '__main__':
     cp = ConfigParser()
@@ -16,6 +17,5 @@ if __name__ == '__main__':
     host, db = db_section.get("host"), db_section.get("db")
     db_url = "mysql+pymysql://{}:{}@{}/{}".format(user, root_password, host, db)
     eng = create_engine(db_url)
-    from model import meta
     meta.create_all(bind=eng)
     print("all tables set up")
