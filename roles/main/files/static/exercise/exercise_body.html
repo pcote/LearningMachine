@@ -2,10 +2,11 @@
     <div class="col-xs-12" align="center" ng-controller="AttemptsReportController">
 
         <!-- Link to take the user over to a report on their attempts on different exercises -->
-        <a href="#" ng-click="viewAttemptsClick()">Exercise Attempts Report</a><br />
+        <br />
+        <a href="#" ng-click="viewAttemptsClick()"><button class="btn btn-primary">Exercise Attempts Report</button></a><br />
 
         <!-- Topic title area for exercise related stuff -->
-        <b><u><h3>Topic: Everything</h3></u></b>
+        <b><u><h3>Exercises</h3></u></b>
     </div>
 </div>
 <div class="row">
@@ -18,7 +19,7 @@
         <table ng-controller="ExerciseController" class="table">
             <tr ng-repeat="exercise in dataList.exercises">
                 <td><a ng-click="exerciseClick(exercise)">{{exercise.question}}</a></td>
-                <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">X</button></a></td>
+                <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
             </tr>
         </table>
         <br />
