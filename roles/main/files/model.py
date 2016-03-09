@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, bindparam
 from sqlalchemy.sql import select, and_, text
-from tabledefs import user_table, exercise_table, attempt_table, exercise_deletion_table, meta
+from tabledefs import user_table, exercise_table, attempt_table, exercise_deletion_table, resource_table, meta
 from configparser import ConfigParser
 from collections import namedtuple
 
@@ -173,6 +173,40 @@ def delete_exercise(user_id, exercise_id):
 
     conn.close()
     return msg
+
+
+def add_resource(caption, url, user_id):
+    """
+    Add a clickable resource to the data store
+    :param caption: The text to show up for the user to click on.
+    :param url: Where clicking the text takes you.
+    :param user_id: Who owns this link.
+    :return: Nothing.
+    """
+    conn = eng.connect()
+
+    query = resource_table.insert().values(caption=caption, url=url, user_id=user_id)
+    conn.execute(query)
+    conn.close()
+    msg = ""
+    return msg
+
+def get_resources(user_id):
+    """
+    Get all resources connected to a specific user
+    :param user_id: ID of the user whose resources we wish to find.
+    :return: A list of all the exercises owned by this user
+    """
+    conn = eng.connect()
+    user_id_parm = bindparam("user_id")
+    query = select([resource_table])\
+        .where(resource_table.c.user_id == user_id_parm)
+    result = conn.execute(query, user_id=user_id)
+    resources = [dict(resource_id=resource_id, user_id=user_id, caption=caption, url=url)
+                    for resource_id, caption, url, user_id in result.fetchall()]
+    conn.close()
+
+    return resources
 
 if __name__ == '__main__':
     pass

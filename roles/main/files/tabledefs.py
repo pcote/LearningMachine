@@ -24,3 +24,9 @@ exercise_deletion_table = Table("exercise_deletions", meta,
                                 Column("exercise_id", Integer),
                                 Column("deletion_time", TIMESTAMP))
 
+resource_table = Table("resources", meta,
+                       Column("id", Integer, primary_key=True, autoincrement=True),
+                       Column("caption", Text),
+                       Column("url", Text),
+                       Column("user_id", ForeignKey("users.email")))
+
