@@ -1,52 +1,125 @@
-<div class="row">
-    <div class="col-xs-12" align="center" ng-controller="AttemptsReportController">
-
-        <!-- Link to take the user over to a report on their attempts on different exercises -->
-        <br />
-        <a href="#" ng-click="viewAttemptsClick()"><button class="btn btn-primary">Exercise Attempts Report</button></a><br />
-
-        <!-- Topic title area for exercise related stuff -->
-        <b><u><h3>Exercises</h3></u></b>
-    </div>
-</div>
-<div class="row">
-
-    <div class="col-xs-6">
-        <b><u>Exercises</u></b>
-        <br />
-
-        <!-- Exercise list display -->
-        <table ng-controller="ExerciseController" class="table">
-            <tr ng-repeat="exercise in dataList.exercises">
-                <td><a ng-click="exerciseClick(exercise)">{{exercise.question}}</a></td>
-                <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
-            </tr>
-        </table>
-        <br />
-
-        <!--
-        Form section for adding new exercises
-        -->
-        <table class="table" ng-controller="ExerciseController">
-            <tr>
-                <td align="center" colspan="2"><b><u>New Question</u></b></td>
-            </tr>
-            <tr>
-                <td><b>Question</b></td>
-                <td><textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" /></td>
-            </tr>
-                <tr>
-                <td><b>Answer</b></td>
-                <td><textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" /></td>
-            </tr>
-            <tr>
-                <td align="center" colspan="2"><button class="btn btn-primary" ng-click="addExerciseClick(newQuestion, newAnswer)">Add Exercise</button></td>
-            </tr>
-        </table>
+<div class="container overall_exercise_resource_container">
+    <div class="row spacer_row">
+        <div class="col-xs-12">&nbsp;</div>
     </div>
 
+    <div class="row report_button_row">
+        <div class="col-xs-12" align="center" ng-controller="AttemptsReportController">
+            <a href="#" ng-click="viewAttemptsClick()"><button class="btn btn-primary">Exercise Attempts Report</button></a>
+        </div>
+    </div>
 
+    <div class="row spacer_row">
+        <div class="col-xs-12">&nbsp;</div>
+    </div>
+
+    <div class="row exercise_resource_containers_row">
+        <div class="col-xs-6 exercise_container_column">
+            <div class="container exercise_container">
+                <div class="row exercise_title_row">
+                    <div class="col-xs-6" align="center">
+                        <u><b>Exercises</b></u>
+                    </div>
+                </div>
+                <div class="row exercise_data_table_row">
+                    <div class="col-xs-6">
+                        <table class="table" ng-controller="ExerciseController">
+                            <tr>
+                                <th>Question</th>
+                                <th>Delete button</th>
+                            </tr>
+                            <tr ng-repeat="exercise in dataList.exercises">
+                                <td><a ng-click="exerciseClick(exercise)">{{exercise.question}}</a></td>
+                                <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row new_question_form_container_row">
+                    <div class="col-xs-6">
+                        <div class="container new_exercise_form_container" ng-controller="ExerciseController">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    New Question
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    New Answer
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-primary" ng-click="addExerciseClick(newQuestion, newAnswer)">Add Exercise</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 resource_container_column">
+            <div class="container resource_container">
+                <div class="row resource_title_row">
+                    <div class="col-xs-6" align="center">
+                        <u><b>Resources</b></u>
+                    </div>
+                </div>
+                <div class="row resource_table_row">
+                    <div class="col-xs-6">
+                        <table class="table resource_data_table">
+                            <tr>
+                                <th>Resource</th>
+                                <th>Delete option</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row new_resource_form_container_row">
+                    <div class="col-xs-6">
+                        <div class="container resource_form_container">
+                            <div class="row">
+                                <div class="col-xs-6">New Resource Caption</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <textarea cols="50" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">New Resource URL</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <textarea cols="50" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button class="btn btn-primary">Add Resource</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 
 <!--
