@@ -181,5 +181,26 @@ def get_exercise_history():
     return jsonify({"history":history})
 
 
+@app.route("/resources")
+def get_resources():
+    """
+    Get the resources for this user.
+    :return: A json list of resources
+    """
+    user_id = session["email"]
+    resources = model.get_resources(user_id)
+    returned_val = dict(resources=resources)
+    return jsonify(returned_val)
+
+
+@app.route("/addresource", methods=["POST"])
+def add_resource():
+    user_id = session["email"]
+    json_data = request.get_json()
+    new_caption = json_data["new_caption"]
+    new_url = json_data["new_url"]
+    model.add_resource(new_caption, new_url, user_id)
+    return "FINISHED"
+
 if __name__ == '__main__':
     app.run(debug=False)

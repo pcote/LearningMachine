@@ -118,6 +118,37 @@ class ViewTestCase(unittest.TestCase):
             self.assertIsNotNone(json_data, "There should be json data here, not a none value")
             self.assertTrue("history" in json_data, "There should be a history key in the json")
 
+    def test_get_resources(self):
+        import model
+        empty_list = []
+        mock = MagicMock(return_value=empty_list)
+        model.get_resources = mock
+
+        with app.test_client() as client:
+            with client.session_transaction() as sess:
+                sess["email"] = self.test_user_id
+            result = client.get("/resources")
+            json_data = self.get_json(result)
+            self.assertTrue("resources" in json_data)
+            mock.assert_called_with(self.test_user_id)
+
+    def test_add_resource(self):
+        test_caption = "Hacker News"
+        test_url = "https://news.ycombinator.com"
+        mock = MagicMock()
+        import model
+        model.add_resource = mock
+
+        with app.test_client() as client:
+            with client.session_transaction() as sess:
+                sess["email"] = self.test_user_id
+
+            headers = {"Content-type": "application/json"}
+            args_dict = dict(new_caption=test_caption, new_url=test_url)
+            data = self.make_json_text(args_dict)
+            client.post("/addresource", headers=headers, data=data)
+            mock.assert_called_with(test_caption, test_url, self.test_user_id)
+
 
 if __name__ == '__main__':
     unittest.main()
