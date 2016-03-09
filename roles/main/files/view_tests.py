@@ -2,13 +2,12 @@ import unittest
 from unittest.mock import MagicMock
 from view import app
 import json
-from pdb import set_trace
+
 
 class ViewTestCase(unittest.TestCase):
     def setUp(self):
         self.test_user_id = "dummyuser@somewhere.com"
         self.test_display_name = "Dummy User"
-
 
     def get_json(self, res):
         raw_data = res.data
@@ -21,14 +20,12 @@ class ViewTestCase(unittest.TestCase):
         raw_data = raw_data.encode("utf8")
         return raw_data
 
-
-    def testWelcomePage(self):
+    def test_welcome_page(self):
         with app.test_client() as client:
             res = client.get("/")
             self.assertTrue("302" in res.status)
 
-
-    def testUserInfo(self):
+    def test_user_info(self):
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -43,8 +40,7 @@ class ViewTestCase(unittest.TestCase):
             self.assertEqual(self.test_user_id, json_data["email"])
             self.assertEqual(self.test_display_name, json_data["displayName"])
 
-
-    def testAddScore(self):
+    def test_add_score(self):
         import model
         test_exercise_id = 1
         test_score = 1
@@ -62,7 +58,7 @@ class ViewTestCase(unittest.TestCase):
             client.post("/addscore", headers=headers, data=data)
             mock.assert_called_with(test_exercise_id, test_score)
 
-    def testAddExercise(self):
+    def test_add_exercise(self):
         import model
         test_question = "Test Question?"
         test_answer = "Test Answer"
@@ -75,12 +71,12 @@ class ViewTestCase(unittest.TestCase):
             with client.session_transaction() as sess:
                 sess["email"] = self.test_user_id
 
-            headers={"Content-type": "application/json"}
+            headers = {"Content-type": "application/json"}
             data = self.make_json_text(test_dict)
             client.post("/addexercise", headers=headers, data=data)
             mock.assert_called_with(test_question, test_answer, self.test_user_id)
 
-    def testDeleteExercise(self):
+    def test_delete_exercise(self):
         import model
         test_exercise_id = 1
         test_dict = dict(exercise_id=test_exercise_id)
@@ -96,8 +92,7 @@ class ViewTestCase(unittest.TestCase):
             client.post("/deleteexercise", headers=headers, data=data)
             mock.assert_called_with(self.test_user_id, test_exercise_id)
 
-
-    def testGetExercises(self):
+    def test_get_exercises(self):
         import model
         empty_list = []
         mock = MagicMock(return_value=empty_list)
@@ -112,8 +107,7 @@ class ViewTestCase(unittest.TestCase):
             mock.assert_called_with(self.test_user_id)
             self.assertTrue("exercises" in json_data)
 
-
-    def testExerciseHistory(self):
+    def test_exercise_history(self):
         with app.test_client() as client:
             with client.session_transaction() as sess:
                 sess["email"] = self.test_user_id
@@ -124,8 +118,6 @@ class ViewTestCase(unittest.TestCase):
             self.assertIsNotNone(json_data, "There should be json data here, not a none value")
             self.assertTrue("history" in json_data, "There should be a history key in the json")
 
-    def tearDown(self):
-        pass
 
 if __name__ == '__main__':
     unittest.main()
