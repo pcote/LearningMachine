@@ -107,9 +107,8 @@ def get_user_info():
 @app.route("/exercises")
 def get_exercises():
     """
-    Get a list of exercises pertaining to a topic for a specific user.
-    :param topic_id: Topic ID for the topic we're looking for exercises on.
-    :return: A JSON list of the exercises for this topic and user.
+    Get a list of exercises for a specific user.
+    :return: A JSON list of the exercises for this user.
     """
     email = session.get("email")
     exercises = model.get_all_exercises(email)
@@ -142,13 +141,12 @@ def add_score():
 def add_exercise():
     """
     Add a new exercise to the system for the user for this session
-    Expects a json structure having  a question, answer and topic
+    Expects a json structure having a new_question and new_answer.
     :return:A success message stating the exercise was added.
     """
     json_data = request.get_json()
     new_question = json_data.get("new_question")
     new_answer = json_data.get("new_answer")
-    topic_id = json_data.get("topic_id")
     user_id = session.get("email")
     model.add_exercise(new_question, new_answer, user_id)
 
@@ -170,7 +168,7 @@ def delete_exercise():
 @app.route("/exercisehistory")
 def get_exercise_history():
     """
-    Get the user's history of attempts made on exercises within different topics
+    Get the user's history of attempts made on exercises
     :return: A JSON structure of the history of the user's attempts.
     """
     user_id = session.get("email")
