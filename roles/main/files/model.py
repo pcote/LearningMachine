@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, bindparam
 from sqlalchemy.sql import select, and_, text
-from tabledefs import user_table, exercise_table, attempt_table, exercise_deletion_table, resource_table, meta
+from tabledefs import user_table, exercise_table, attempt_table, exercise_deletion_table, resource_table, resource_deletion_table, meta
 from configparser import ConfigParser
 from collections import namedtuple
 
@@ -175,6 +175,25 @@ def delete_exercise(user_id, exercise_id):
     return msg
 
 
+def delete_resource(user_id, resource_id):
+    conn = eng.connect()
+
+    query = select([resource_table.c.id]).where(and_(
+        resource_table.c.id == resource_id,
+        resource_table.c.user_id == user_id
+    ))
+
+    is_valid_user = conn.execute(query).fetchone()
+
+    if is_valid_user:
+        from datetime import datetime
+        now = datetime.now()
+        query = resource_deletion_table.insert().values(resource_id=resource_id, deletion_time=now)
+        conn.execute(query)
+
+    conn.close()
+
+
 def add_resource(caption, url, user_id):
     """
     Add a clickable resource to the data store
@@ -200,7 +219,8 @@ def get_resources(user_id):
     conn = eng.connect()
     user_id_parm = bindparam("user_id")
     query = select([resource_table])\
-        .where(resource_table.c.user_id == user_id_parm)
+        .where(and_(resource_table.c.user_id == user_id_parm,
+                    text("resources.id not in (select resource_id from resource_deletions)")))
     result = conn.execute(query, user_id=user_id)
     resources = [dict(resource_id=resource_id, user_id=user_id, caption=caption, url=url)
                     for resource_id, caption, url, user_id in result.fetchall()]

@@ -30,3 +30,8 @@ resource_table = Table("resources", meta,
                        Column("url", Text),
                        Column("user_id", ForeignKey("users.email")))
 
+
+resource_deletion_table = Table("resource_deletions", meta,
+                                Column("id", Integer, primary_key=True, autoincrement=True),
+                                Column("resource_id", Integer),
+                                Column("deletion_time", TIMESTAMP))
