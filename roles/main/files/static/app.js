@@ -127,6 +127,10 @@ var LearningResourceController = function($scope, learningResourceService){
         $scope.new_caption_field = ""
         $scope.new_url_field = ""
     }
+
+    $scope.deleteLearningResourceClick = function(resource_id){
+        learningResourceService.deleteLearningResource($scope, resource_id)
+    }
 }
 
 

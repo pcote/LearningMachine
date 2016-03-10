@@ -123,11 +123,36 @@ var LearningResourceService = function($http){
         var url = "/resources"
         var cb_success = function(res){
             scope.dataList.resources = res.data.resources
-            scope.resource_trigger = !scope.resource_trigger
         }
         var cb_failure = function(res){
             alert("failure at accessing resources")
         }
         $http.get(url).then(cb_success, cb_failure)
+    }
+
+    this.deleteLearningResource = function(scope, resource_id){
+        var req = {
+            url: "/deleteresource",
+            method: "post",
+            headers: {
+                "Content-type": "application/json"
+            },
+            data: {
+                "resource_id": resource_id
+            }
+        }
+
+        var cb_success = function(res){
+            $http.get("/resources").then(function(res){
+                scope.dataList.resources = res.data.resources
+            }, function(res){})
+        }
+
+        var cb_failure = function(res){
+            alert("failure in deleting the resource")
+        }
+
+        $http(req).then(cb_success, cb_failure)
+
     }
 }
