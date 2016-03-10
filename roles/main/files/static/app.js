@@ -6,7 +6,7 @@
 
 
 (function(){
-var controller = function($scope, $rootScope, userService, exerciseService){
+var controller = function($scope, $rootScope, userService, exerciseService, learningResourceService){
     // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {}
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"}
@@ -20,6 +20,7 @@ var controller = function($scope, $rootScope, userService, exerciseService){
     // Item lists to display on different parts of the page
     $scope.dataList = {}
     $scope.dataList.exercises = []
+    $scope.dataList.resources = []
 
     // Exercise attempts report data.
     $scope.report = {}
@@ -106,8 +107,25 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
 }
 
 var LearningResourceController = function($scope, learningResourceService){
+
+    learningResourceService.setupLearningResourceDisplay($scope)
+
+    $scope.resource_trigger = true
+
+    var resource_trigger_watcher = function(){
+        return $scope.resource_trigger
+    }
+
+    var resource_trigger_listener = function(new_val, old_val){
+            learningResourceService.setupLearningResourceDisplay($scope)
+    }
+
+    $scope.$watch(resource_trigger_watcher, resource_trigger_listener)
+
     $scope.addLearningResourceClick = function(new_cap, new_url){
-        learningResourceService.addLearningResource(new_cap, new_url)
+        learningResourceService.addLearningResource($scope, new_cap, new_url)
+        $scope.new_caption_field = ""
+        $scope.new_url_field = ""
     }
 }
 

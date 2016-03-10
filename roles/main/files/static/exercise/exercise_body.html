@@ -81,9 +81,9 @@
                                 <th>Resource</th>
                                 <th>Delete option</th>
                             </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                            <tr ng-repeat="resource in dataList.resources">
+                                <td><a href="{{resource.url}}">{{resource.caption}}</a></td>
+                                <td><button class="btn btn-danger" disabled>delete</button></td>
                             </tr>
                         </table>
                     </div>

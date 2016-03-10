@@ -94,28 +94,40 @@ var ExerciseService = function($http, $rootScope){
 }
 
 var LearningResourceService = function($http){
-    this.addLearningResource = function(new_cap, new_url){
+    this.addLearningResource = function(scope, new_cap, new_url){
         var req = {
-            "url": "/addresource",
-            "method": "post",
-            "headers": {
+            url: "/addresource",
+            method: "post",
+            headers: {
                 "Content-type": "application/json"
             },
-            "data": {
+            data: {
                 "new_caption": new_cap,
                 "new_url": new_url
             }
         }
 
         var cb_success = function(){
-            alert("success in adding the resource")
+            scope.resource_trigger_watcher = ! scope.resource_trigger_watcher
         }
 
         var cb_failure = function(){
             alert("failure in adding the resource")
         }
 
+
         $http(req).then(cb_success, cb_failure)
     }
-}
 
+    this.setupLearningResourceDisplay = function(scope){
+        var url = "/resources"
+        var cb_success = function(res){
+            scope.dataList.resources = res.data.resources
+            scope.resource_trigger = !scope.resource_trigger
+        }
+        var cb_failure = function(res){
+            alert("failure at accessing resources")
+        }
+        $http.get(url).then(cb_success, cb_failure)
+    }
+}
