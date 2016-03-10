@@ -165,6 +165,15 @@ def delete_exercise():
     return ""
 
 
+@app.route("/deleteresource", methods=["POST"])
+def delete_resource():
+    json_ob = request.get_json()
+    resource_id = json_ob.get("resource_id")
+    user_id = session.get("email")
+    msg = model.delete_resource(user_id, resource_id)
+    return ""
+
+
 @app.route("/exercisehistory")
 def get_exercise_history():
     """

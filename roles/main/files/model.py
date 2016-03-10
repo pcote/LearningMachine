@@ -192,6 +192,7 @@ def delete_resource(user_id, resource_id):
         conn.execute(query)
 
     conn.close()
+    return "FINISHED"
 
 
 def add_resource(caption, url, user_id):

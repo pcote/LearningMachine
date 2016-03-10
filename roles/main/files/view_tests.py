@@ -149,6 +149,22 @@ class ViewTestCase(unittest.TestCase):
             client.post("/addresource", headers=headers, data=data)
             mock.assert_called_with(test_caption, test_url, self.test_user_id)
 
+    def test_delete_resource(self):
+        test_resource_id = 1
+        mock = MagicMock(return_value="FINISHED")
+        import model
+        model.delete_resource = mock
+
+        with app.test_client() as client:
+            with client.session_transaction() as sess:
+                sess["email"] = self.test_user_id
+
+            test_dict = dict(resource_id=test_resource_id)
+            data = self.make_json_text(test_dict)
+            headers={"Content-type":"application/json"}
+            res = client.post("/deleteresource", headers=headers, data=data)
+            mock.assert_called_with(self.test_user_id, test_resource_id)
+
 
 if __name__ == '__main__':
     unittest.main()
