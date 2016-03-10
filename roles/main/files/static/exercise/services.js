@@ -93,3 +93,29 @@ var ExerciseService = function($http, $rootScope){
     }
 }
 
+var LearningResourceService = function($http){
+    this.addLearningResource = function(new_cap, new_url){
+        var req = {
+            "url": "/addresource",
+            "method": "post",
+            "headers": {
+                "Content-type": "application/json"
+            },
+            "data": {
+                "new_caption": new_cap,
+                "new_url": new_url
+            }
+        }
+
+        var cb_success = function(){
+            alert("success in adding the resource")
+        }
+
+        var cb_failure = function(){
+            alert("failure in adding the resource")
+        }
+
+        $http(req).then(cb_success, cb_failure)
+    }
+}
+

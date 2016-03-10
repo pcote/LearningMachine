@@ -68,7 +68,7 @@
         </div>
 
         <div class="col-xs-6 resource_container_column">
-            <div class="container resource_container">
+            <div class="container resource_container" ng-controller="LearningResourceController">
                 <div class="row resource_title_row">
                     <div class="col-xs-6" align="center">
                         <u><b>Resources</b></u>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <textarea cols="50" rows="4"></textarea>
+                                    <textarea cols="50" rows="4" ng-model="new_caption_field"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -104,12 +104,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <textarea cols="50" rows="4"></textarea>
+                                    <textarea cols="50" rows="4" ng-model="new_url_field"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button class="btn btn-primary">Add Resource</button>
+                                    <button class="btn btn-primary" ng-click="addLearningResourceClick(new_caption_field, new_url_field)">Add Resource</button>
                                 </div>
                             </div>
                         </div>

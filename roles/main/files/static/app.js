@@ -105,6 +105,12 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
 
 }
 
+var LearningResourceController = function($scope, learningResourceService){
+    $scope.addLearningResourceClick = function(new_cap, new_url){
+        learningResourceService.addLearningResource(new_cap, new_url)
+    }
+}
+
 
 
 
@@ -135,7 +141,9 @@ angular.module("app", [])
     .controller("ExerciseController", ExerciseController)
     .controller("AttemptsReportController", AttemptsReportController)
     .controller("UserController", UserController)
+    .controller("LearningResourceController", LearningResourceController)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
+    .service("learningResourceService", LearningResourceService)
     .filter("lmScoreWord", lmScoreWordFilter)
 })()
