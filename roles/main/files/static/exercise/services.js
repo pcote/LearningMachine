@@ -108,7 +108,9 @@ var LearningResourceService = function($http){
         }
 
         var cb_success = function(){
-            scope.resource_trigger_watcher = ! scope.resource_trigger_watcher
+            $http.get("/resources").then(function(res){
+                scope.dataList.resources = res.data.resources
+            }, function(res){})
         }
 
         var cb_failure = function(){
