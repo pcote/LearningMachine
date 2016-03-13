@@ -14,15 +14,15 @@
     </div>
 
     <div class="row exercise_resource_containers_row">
-        <div class="col-lg-6 exercise_container_column">
+        <div class="col-lg-6 col-xs-12 exercise_container_column">
             <div class="container exercise_container">
                 <div class="row exercise_title_row">
-                    <div class="col-xs-6" align="center">
+                    <div class="col-lg-6 col-xs-12" align="center">
                         <u><b>Exercises</b></u>
                     </div>
                 </div>
                 <div class="row exercise_data_table_row">
-                    <div class="col-xs-6">
+                    <div class="col-lg-6 col-xs-12">
                         <table class="table" ng-controller="ExerciseController">
                             <tr>
                                 <th>Question</th>
@@ -36,25 +36,25 @@
                     </div>
                 </div>
                 <div class="row new_question_form_container_row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6 col-xs-12">
                         <div class="container new_exercise_form_container" ng-controller="ExerciseController">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-lg-6 col-xs-12">
                                     New Question
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-lg-6 col-xs-12">
                                     <textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" />
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-lg-6 col-xs-12">
                                     New Answer
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-lg-6 col-xs-12">
                                     <textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" />
                                 </div>
                             </div>
@@ -67,15 +67,15 @@
             </div>
         </div>
 
-        <div class="col-lg-6 resource_container_column">
+        <div class="col-lg-6 col-xs-12 resource_container_column">
             <div class="container resource_container" ng-controller="LearningResourceController">
                 <div class="row resource_title_row">
-                    <div class="col-xs-6" align="center">
+                    <div class="col-lg-6 col-xs-12" align="center">
                         <u><b>Resources</b></u>
                     </div>
                 </div>
                 <div class="row resource_table_row">
-                    <div class="col-xs-6">
+                    <div class="col-lg-6 col-xs-12">
                         <table class="table resource_data_table">
                             <tr>
                                 <th>Resource</th>
@@ -89,26 +89,26 @@
                     </div>
                 </div>
                 <div class="row new_resource_form_container_row">
-                    <div class="col-xs-6">
+                    <div class="col-lg-6 col-xs-12">
                         <div class="container resource_form_container">
                             <div class="row">
-                                <div class="col-xs-6">New Resource Caption</div>
+                                <div class="col-lg-6 col-xs-12">New Resource Caption</div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-lg-6 col-xs-12">
                                     <textarea cols="50" rows="4" ng-model="new_caption_field"></textarea>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">New Resource URL</div>
+                                <div class="col-lg-6 col-xs-12">New Resource URL</div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-lg-6 col-xs-12">
                                     <textarea cols="50" rows="4" ng-model="new_url_field"></textarea>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-lg-6 col-xs-12">
                                     <button class="btn btn-primary" ng-click="addLearningResourceClick(new_caption_field, new_url_field)">Add Resource</button>
                                 </div>
                             </div>
