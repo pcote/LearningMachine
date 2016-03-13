@@ -22,7 +22,18 @@ if __name__ == '__main__':
     query_string = "delete from exercises where id in (select exercise_id from exercise_deletions)"
     conn.execute(query_string)
 
-    # clear the deletion queue
+    # clear the deletion queue for exercises
     query_string = "delete from exercise_deletions"
     conn.execute(query_string)
+
+    # clear the learning resources
+    query_string = "delete from resources where id in (select resource_id from resource_deletions)"
+    conn.execute(query_string)
+
+    # clear the deletion queue for resources
+    query_string = "delete from resource_deletions"
+    conn.execute(query_string)
+
     conn.close()
+
+    print("Purging of deleted exercises and resources complete.")
