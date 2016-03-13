@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, bindparam
+from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, String, bindparam, DateTime
 from sqlalchemy.sql import select, and_, text
 from tabledefs import user_table, exercise_table, attempt_table, exercise_deletion_table, resource_table, resource_deletion_table, meta
 from configparser import ConfigParser
@@ -100,9 +100,12 @@ def add_attempt(exercise_id, score):
     conn = eng.connect()
     from datetime import datetime
     now = datetime.now()
+    exercise_parm = bindparam("exercise_id", type_=Integer)
+    score_parm = bindparam("score", type_=Integer)
+
     query = attempt_table.insert()\
-                         .values(exercise_id=bindparam("exercise_id", type_=Integer), score=score, when_attempted=now)
-    conn.execute(query, exercise_id=exercise_id)
+                         .values(exercise_id=exercise_parm, score=score_parm, when_attempted=now)
+    conn.execute(query, exercise_id=exercise_id, score=score)
     conn.close()
 
 
@@ -155,18 +158,21 @@ def delete_exercise(user_id, exercise_id):
     """
     conn = eng.connect()
 
+    exercise_parm = bindparam("exercise_id", type_=Integer)
+    user_parm = bindparam("user_id", type_=String)
+
     query = select([exercise_table.c.id]).where(and_(
-        exercise_table.c.id == exercise_id,
-        exercise_table.c.user_id == user_id
+        exercise_table.c.id == exercise_parm,
+        exercise_table.c.user_id == user_parm
     ))
 
-    is_valid_user = conn.execute(query).fetchone()
+    is_valid_user = conn.execute(query, exercise_id=exercise_id, user_id=user_id).fetchone()
 
     if is_valid_user:
         from datetime import datetime
         now = datetime.now()
-        query = exercise_deletion_table.insert().values(exercise_id=exercise_id, deletion_time=now)
-        conn.execute(query)
+        query = exercise_deletion_table.insert().values(exercise_id=exercise_parm, deletion_time=now)
+        conn.execute(query, exercise_id=exercise_id)
         msg = "Executed deleteion query on exercise: {} belonging to user: {}".format(exercise_id, user_id)
     else:
         msg = "User: {} not the owner of exercise: {}".format(user_id, exercise_id)
@@ -178,22 +184,24 @@ def delete_exercise(user_id, exercise_id):
 def delete_resource(user_id, resource_id):
     conn = eng.connect()
 
+    user_parm = bindparam("user_id", type_=String)
+    resource_parm = bindparam("resource_id", type_=Integer)
+
     query = select([resource_table.c.id]).where(and_(
-        resource_table.c.id == resource_id,
-        resource_table.c.user_id == user_id
+        resource_table.c.id == resource_parm,
+        resource_table.c.user_id == user_parm
     ))
 
-    is_valid_user = conn.execute(query).fetchone()
+    is_valid_user = conn.execute(query, user_id=user_id, resource_id=resource_id).fetchone()
 
     if is_valid_user:
         from datetime import datetime
         now = datetime.now()
-        query = resource_deletion_table.insert().values(resource_id=resource_id, deletion_time=now)
-        conn.execute(query)
+        query = resource_deletion_table.insert().values(resource_id=resource_parm, deletion_time=now)
+        conn.execute(query, resource_id=resource_id)
 
     conn.close()
     return "FINISHED"
-
 
 def add_resource(caption, url, user_id):
     """
@@ -204,9 +212,11 @@ def add_resource(caption, url, user_id):
     :return: Nothing.
     """
     conn = eng.connect()
-
-    query = resource_table.insert().values(caption=caption, url=url, user_id=user_id)
-    conn.execute(query)
+    caption_parm = bindparam("caption", type_=String)
+    url_parm = bindparam("url", type_=String)
+    user_parm = bindparam("user_id", type_=String)
+    query = resource_table.insert().values(caption=caption_parm, url=url_parm, user_id=user_parm)
+    conn.execute(query, caption=caption, url=url, user_id=user_id)
     conn.close()
     msg = ""
     return msg
