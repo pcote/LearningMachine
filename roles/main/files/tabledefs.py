@@ -19,10 +19,6 @@ attempt_table = Table("attempts", meta,
                       Column("when_attempted", TIMESTAMP),
                       Column("exercise_id", ForeignKey("exercises.id")))
 
-exercise_deletion_table = Table("exercise_deletions", meta,
-                                Column("id", Integer, primary_key=True, autoincrement=True),
-                                Column("exercise_id", Integer),
-                                Column("deletion_time", TIMESTAMP))
 
 resource_table = Table("resources", meta,
                        Column("id", Integer, primary_key=True, autoincrement=True),
@@ -31,7 +27,3 @@ resource_table = Table("resources", meta,
                        Column("user_id", ForeignKey("users.email")))
 
 
-resource_deletion_table = Table("resource_deletions", meta,
-                                Column("id", Integer, primary_key=True, autoincrement=True),
-                                Column("resource_id", Integer),
-                                Column("deletion_time", TIMESTAMP))

@@ -6,7 +6,17 @@
 
 - name: update tables
   command: /var/app/learningmachine/make_tables.py
+  notify: setup public user
+
+- name: setup public user
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: public
+    password: "{{ public_user_password }}"
+    priv: "learningmachine.*:SELECT,INSERT/learningmachine.exercises:DELETE/learningmachine.resources:DELETE/learningmachine.attempts:DELETE/learningmachine.exercises:DELETE"
   notify: restart learningmachine
+
 
 - name: restart learningmachine
   service:

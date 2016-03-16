@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, String, bindparam, DateTime
 from sqlalchemy.sql import select, and_, text
-from tabledefs import user_table, exercise_table, attempt_table, exercise_deletion_table, resource_table, resource_deletion_table, meta
+from tabledefs import user_table, exercise_table, attempt_table, resource_table, meta
 from configparser import ConfigParser
 from collections import namedtuple
 
@@ -77,12 +77,9 @@ def get_all_exercises(user_id):
     """
     conn = eng.connect()
 
-    subquery = conn.execute(select([exercise_deletion_table.c.exercise_id])).fetchall()
-
     user_parm = bindparam("user_id")
     query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
-            .where(and_(exercise_table.c.user_id == user_parm,
-                        text("exercises.id not in ( select exercise_id from exercise_deletions )")))
+            .where(exercise_table.c.user_id == user_parm)
 
     result_set = conn.execute(query, user_id=user_id).fetchall()
     exercise_list = [dict(id=id, question=question, answer=answer) for id, question, answer in result_set]
@@ -169,10 +166,13 @@ def delete_exercise(user_id, exercise_id):
     is_valid_user = conn.execute(query, exercise_id=exercise_id, user_id=user_id).fetchone()
 
     if is_valid_user:
-        from datetime import datetime
-        now = datetime.now()
-        query = exercise_deletion_table.insert().values(exercise_id=exercise_parm, deletion_time=now)
-        conn.execute(query, exercise_id=exercise_id)
+        with conn.begin() as trans:
+            query = attempt_table.delete().where(attempt_table.c.exercise_id == exercise_parm)
+            conn.execute(query, exercise_id=exercise_id)
+            query = exercise_table.delete().where(exercise_table.c.id == exercise_parm)
+            conn.execute(query, exercise_id=exercise_id)
+            trans.commit()
+
         msg = "Executed deleteion query on exercise: {} belonging to user: {}".format(exercise_id, user_id)
     else:
         msg = "User: {} not the owner of exercise: {}".format(user_id, exercise_id)
@@ -195,9 +195,7 @@ def delete_resource(user_id, resource_id):
     is_valid_user = conn.execute(query, user_id=user_id, resource_id=resource_id).fetchone()
 
     if is_valid_user:
-        from datetime import datetime
-        now = datetime.now()
-        query = resource_deletion_table.insert().values(resource_id=resource_parm, deletion_time=now)
+        query = resource_table.delete().where(resource_table.c.id == resource_parm)
         conn.execute(query, resource_id=resource_id)
 
     conn.close()
@@ -230,8 +228,8 @@ def get_resources(user_id):
     conn = eng.connect()
     user_id_parm = bindparam("user_id")
     query = select([resource_table])\
-        .where(and_(resource_table.c.user_id == user_id_parm,
-                    text("resources.id not in (select resource_id from resource_deletions)")))
+        .where(resource_table.c.user_id == user_id_parm)
+
     result = conn.execute(query, user_id=user_id)
     resources = [dict(resource_id=resource_id, user_id=user_id, caption=caption, url=url)
                     for resource_id, caption, url, user_id in result.fetchall()]

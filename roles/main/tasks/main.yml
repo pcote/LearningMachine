@@ -16,13 +16,7 @@
     password: "{{ mysql_root_password }}"
   ignore_errors: true
 
-- name: Set up the public user
-  mysql_user:
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    name: public
-    password: "{{ public_user_password }}"
-    priv: "learningmachine.*: SELECT,INSERT"
+
 
 - name: Install apt packages for git, nginx, and pip3
   apt:
@@ -82,6 +76,7 @@
     - model.py
     - view.py
     - tabledefs.py
+    - handler_trigger.txt
   notify: update tables
 
 - name: Copy over util scripts to handle deletions and ensuring table existence
@@ -92,16 +87,7 @@
     owner: www-data
     group: www-data
   with_items:
-    - purge_deletions.py
     - make_tables.py
-
-- name: Set up the cron job
-  cron:
-    name: Purge Deletions
-    state: present
-    job: /var/app/learningmachine/purge_deletions.py
-    user: www-data
-    minute: "*/2"
 
 - name: Copy over the html and javascript static assets
   copy:
