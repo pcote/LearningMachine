@@ -69,6 +69,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         exerciseService.addExercise($scope, newQuestion, newAnswer)
         $scope.newQuestion = ""
         $scope.newAnswer = ""
+        $("#addExerciseModal").modal("hide")
     }
 
 
@@ -126,6 +127,7 @@ var LearningResourceController = function($scope, learningResourceService){
         learningResourceService.addLearningResource($scope, new_cap, new_url)
         $scope.new_caption_field = ""
         $scope.new_url_field = ""
+        $("#addResourceModal").modal("hide")
     }
 
     $scope.deleteLearningResourceClick = function(resource_id){

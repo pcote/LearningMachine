@@ -5,7 +5,9 @@
 
     <div class="row report_button_row">
         <div class="col-xs-12" align="center" ng-controller="AttemptsReportController">
-            <a href="#" ng-click="viewAttemptsClick()"><button class="btn btn-primary">Exercise Attempts Report</button></a>
+            <a href="#" data-toggle="modal" data-target="#addExerciseModal"><button class="btn btn-primary">Add Exercise</button></a>
+            <a href="#" ng-click="viewAttemptsClick()"><button class="btn btn-primary">Exercise Attempts</button></a>
+            <a href="#" data-toggle="modal" data-target="#addResourceModal"><button class="btn btn-primary">Add Resource</button></a>
         </div>
     </div>
 
@@ -37,31 +39,6 @@
                 </div>
                 <div class="row new_question_form_container_row">
                     <div class="col-xs-6 col-xs-12">
-                        <div class="container new_exercise_form_container" ng-controller="ExerciseController">
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    New Question
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    <textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    New Answer
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    <textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button class="btn btn-primary" ng-click="addExerciseClick(newQuestion, newAnswer)">Add Exercise</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -90,29 +67,7 @@
                 </div>
                 <div class="row new_resource_form_container_row">
                     <div class="col-lg-6 col-xs-12">
-                        <div class="container resource_form_container">
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">New Resource Caption</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    <textarea cols="50" rows="4" ng-model="new_caption_field"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">New Resource URL</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    <textarea cols="50" rows="4" ng-model="new_url_field"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    <button class="btn btn-primary" ng-click="addLearningResourceClick(new_caption_field, new_url_field)">Add Resource</button>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -125,6 +80,77 @@
 <!--
 Modal dialogs for asking questions, seeing answers, and sending score submissions
 -->
+
+<div class="modal fade" id="addExerciseModal" ng-controller="ExerciseController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center">New Exercise</div>
+            <div class="modal-body">
+                        <div class="container new_exercise_form_container">
+                            <div class="row">
+                                <div class="col-lg-6 col-xs-12">
+                                    New Question
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-xs-12">
+                                    <textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-xs-12">
+                                    New Answer
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-xs-12">
+                                    <textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-primary" ng-click="addExerciseClick(newQuestion, newAnswer)">Add Exercise</button>
+                            </div>
+                        </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addResourceModal" ng-controller="LearningResourceController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center">New Learning Resource</div>
+            <div class="modal-body">
+                <div class="container resource_form_container">
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-12">New Resource Caption</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-12">
+                            <textarea cols="50" rows="4" ng-model="new_caption_field"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-12">New Resource URL</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-12">
+                            <textarea cols="50" rows="4" ng-model="new_url_field"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-12">
+                            <button class="btn btn-primary" ng-click="addLearningResourceClick(new_caption_field, new_url_field)">Add Resource</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
 
 <!-- Dialog showing the user a question -->
 <div class="modal fade" id="questionModal" ng-controller="ExerciseController">
