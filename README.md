@@ -70,10 +70,10 @@ Managing Exercises and Resources
 Exercises will let you quiz yourself and rate your own knowledge.  For these exercises, you have options for adding new material.
 
 #### Creating New Exercises
-1.  Scroll down to the bottom of your list of existing exercises.  There you will find a form with spaces to fill out.
+1.  At the top of the screen is a button that says "Add Exercise".  Press it to make a dialog box show up.
 2.  Fill out the question field with the question you will be asking yourself for this exercise.
 3.  Fill out the answer field with the answer to this question.
-4.  Click the add button below.  This will add your exercise to the list of exercises.
+4.  Finally, click the "Add Exercise" button that appears below the answer field in the dialog box.  This will add your exercise to the list of exercises.
 
 
 #### Drilling yourself on exercises
@@ -90,9 +90,10 @@ Every time you choose an answer to a question, that answer will be recorded in y
 
 New learning resources are just hyperlinks to other resources that can help you gain better mastery of your exercises.  The process of creating them is simple.
 
-1.  In the "New Resource Caption" box, fill in the caption that you want to see for your link.
+1.  At the top of the screen is a button that says "Add Resource".  Press it to make a dialog box show up.
+2.  Fill out the "New Resource Caption field with the caption you want for this url link.
 2.  In the "New Resource URL" box, fill in the URL to the learning resource.
-3.  When done, click the "Add Resource" button.
+3.  When done, click the "Add Resource" button as seen in the bottom of the dialog box.
 
 And that's it.
 
