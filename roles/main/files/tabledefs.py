@@ -26,4 +26,9 @@ resource_table = Table("resources", meta,
                        Column("url", Text),
                        Column("user_id", ForeignKey("users.email")))
 
+resource_by_exercise_table = Table("resources_by_exercise", meta,
+                           Column("id", Integer, primary_key=True, autoincrement=True),
+                           Column("resource_id", Integer, ForeignKey("resources.id")),
+                           Column("exercise_id", Integer, ForeignKey("exercises.id")))
+
 

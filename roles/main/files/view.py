@@ -208,7 +208,8 @@ def add_resource():
     json_data = request.get_json()
     new_caption = json_data["new_caption"]
     new_url = json_data["new_url"]
-    model.add_resource(new_caption, new_url, user_id)
+    exercise_id = json_data["exercise_id"]
+    model.add_resource(new_caption, new_url, user_id, exercise_id)
     return "FINISHED"
 
 if __name__ == '__main__':

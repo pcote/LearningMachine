@@ -133,8 +133,9 @@ class ViewTestCase(unittest.TestCase):
             mock.assert_called_with(self.test_user_id)
 
     def test_add_resource(self):
-        test_caption = "Hacker News"
-        test_url = "https://news.ycombinator.com"
+        test_caption = "Simeon Franklin Guide to Python Decorators (12 steps)"
+        test_url = "http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/"
+        test_exercise_id = 11
         mock = MagicMock()
         import model
         model.add_resource = mock
@@ -144,10 +145,10 @@ class ViewTestCase(unittest.TestCase):
                 sess["email"] = self.test_user_id
 
             headers = {"Content-type": "application/json"}
-            args_dict = dict(new_caption=test_caption, new_url=test_url)
+            args_dict = dict(new_caption=test_caption, new_url=test_url, exercise_id=test_exercise_id)
             data = self.make_json_text(args_dict)
             client.post("/addresource", headers=headers, data=data)
-            mock.assert_called_with(test_caption, test_url, self.test_user_id)
+            mock.assert_called_with(test_caption, test_url, self.test_user_id, test_exercise_id)
 
     def test_delete_resource(self):
         test_resource_id = 1

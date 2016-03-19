@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, String, bindparam, DateTime
 from sqlalchemy.sql import select, and_, text
-from tabledefs import user_table, exercise_table, attempt_table, resource_table, meta
+from tabledefs import user_table, exercise_table, attempt_table, resource_table, resource_by_exercise_table, meta
 from configparser import ConfigParser
 from collections import namedtuple
 
@@ -201,20 +201,31 @@ def delete_resource(user_id, resource_id):
     conn.close()
     return "FINISHED"
 
-def add_resource(caption, url, user_id):
+def add_resource(caption, url, user_id, exercise_id=None):
     """
     Add a clickable resource to the data store
     :param caption: The text to show up for the user to click on.
     :param url: Where clicking the text takes you.
     :param user_id: Who owns this link.
+    :param exercise_id The exercise that this resource refers to.
     :return: Nothing.
     """
-    conn = eng.connect()
     caption_parm = bindparam("caption", type_=String)
     url_parm = bindparam("url", type_=String)
     user_parm = bindparam("user_id", type_=String)
-    query = resource_table.insert().values(caption=caption_parm, url=url_parm, user_id=user_parm)
-    conn.execute(query, caption=caption, url=url, user_id=user_id)
+    exercise_parm = bindparam("exercise_id", type_=Integer)
+
+    conn = eng.connect()
+
+    with conn.begin() as trans:
+        query = resource_table.insert().values(caption=caption_parm, url=url_parm, user_id=user_parm)
+        result = conn.execute(query, caption=caption, url=url, user_id=user_id)
+        new_resource_id = result.inserted_primary_key[0]
+
+        query = resource_by_exercise_table.insert().values(exercise_id=exercise_parm, resource_id=new_resource_id)
+        conn.execute(query, exercise_id=exercise_id, user_id=user_id)
+        trans.commit()
+
     conn.close()
     msg = ""
     return msg
