@@ -105,9 +105,19 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         exerciseService.deleteExercise($scope, exercise_id)
     }
 
+    $scope.updateArrowClick = function(exercise_id){
+        alert("update arrow click stub.  exercise: " + exercise_id)
+        exerciseService.reviseLearningResourceList($scope, exercise_id)
+    }
+
+    $scope.exerciseToResourceModalClick = function(){
+        $("#questionModal").modal("hide")
+        $("#addResourceModal").modal()
+    }
+
 }
 
-var LearningResourceController = function($scope, learningResourceService){
+var LearningResourceController = function($scope, $rootScope, learningResourceService){
 
     learningResourceService.setupLearningResourceDisplay($scope)
 
@@ -124,11 +134,14 @@ var LearningResourceController = function($scope, learningResourceService){
     $scope.$watch(resource_trigger_watcher, resource_trigger_listener)
 
     $scope.addLearningResourceClick = function(new_cap, new_url){
-        learningResourceService.addLearningResource($scope, new_cap, new_url)
+        learningResourceService.addLearningResource($scope, new_cap, new_url, $rootScope.activeObject.exercise.id)
         $scope.new_caption_field = ""
         $scope.new_url_field = ""
         $("#addResourceModal").modal("hide")
+
     }
+
+
 
     $scope.deleteLearningResourceClick = function(resource_id){
         learningResourceService.deleteLearningResource($scope, resource_id)

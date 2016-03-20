@@ -91,10 +91,14 @@ var ExerciseService = function($http, $rootScope){
 
         $http.get("/exercisehistory").then(cbSuccess, cbFailure)
     }
+
+    this.reviseLearningResourceList = function(scope, exercise_id){
+        alert("revise learning resource list service stub.  exercise: " + exercise_id)
+    }
 }
 
 var LearningResourceService = function($http){
-    this.addLearningResource = function(scope, new_cap, new_url){
+    this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
         var req = {
             url: "/addresource",
             method: "post",
@@ -118,7 +122,8 @@ var LearningResourceService = function($http){
         }
 
 
-        $http(req).then(cb_success, cb_failure)
+        alert("addLearningResource stub.  exercise: " + exercise_id)
+        // $http(req).then(cb_success, cb_failure)
     }
 
     this.setupLearningResourceDisplay = function(scope){
