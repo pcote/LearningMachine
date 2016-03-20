@@ -162,7 +162,3 @@ var ExerciseService = function($http, $rootScope){
     }
 
 }
-
-var LearningResourceService = function($http){
-
-}

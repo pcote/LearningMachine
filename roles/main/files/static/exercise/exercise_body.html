@@ -1,4 +1,4 @@
-<div class="container overall_exercise_resource_container">
+<div class="container overall_exercise_resource_container" ng-controller="ExerciseController">
     <div class="row spacer_row">
         <div class="col-xs-12">&nbsp;</div>
     </div>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="row exercise_data_table_row">
                     <div class="col-lg-6 col-xs-12">
-                        <table class="table" ng-controller="ExerciseController">
+                        <table class="table">
                             <tr>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-lg-6 col-xs-12 resource_container_column">
-            <div class="container resource_container" ng-controller="LearningResourceController">
+            <div class="container resource_container">
                 <div class="row resource_title_row">
                     <div class="col-lg-6 col-xs-12" align="center">
                         <u><b>Resources</b></u>
@@ -118,7 +118,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
 </div>
 
 
-<div class="modal fade" id="addResourceModal" ng-controller="LearningResourceController">
+<div class="modal fade" id="addResourceModal" ng-controller="ExerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" align="center">New Learning Resource</div>

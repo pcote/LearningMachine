@@ -115,10 +115,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         $("#addResourceModal").modal()
     }
 
-}
-
-var LearningResourceController = function($scope, $rootScope, exerciseService){
-
     exerciseService.setupLearningResourceDisplay($scope)
 
     $scope.resource_trigger = true
@@ -146,9 +142,8 @@ var LearningResourceController = function($scope, $rootScope, exerciseService){
     $scope.deleteLearningResourceClick = function(resource_id){
         exerciseService.deleteLearningResource($scope, resource_id)
     }
+
 }
-
-
 
 
 // Convert a number score value into a word (good, okay, bad) in the attempts report
@@ -178,7 +173,6 @@ angular.module("app", [])
     .controller("ExerciseController", ExerciseController)
     .controller("AttemptsReportController", AttemptsReportController)
     .controller("UserController", UserController)
-    .controller("LearningResourceController", LearningResourceController)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
