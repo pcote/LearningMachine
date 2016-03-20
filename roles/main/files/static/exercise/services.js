@@ -96,7 +96,7 @@ var ExerciseService = function($http, $rootScope){
         alert("revise learning resource list service stub.  exercise: " + exercise_id)
     }
 
-        this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
+    this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
         var req = {
             url: "/addresource",
             method: "post",
@@ -105,7 +105,8 @@ var ExerciseService = function($http, $rootScope){
             },
             data: {
                 "new_caption": new_cap,
-                "new_url": new_url
+                "new_url": new_url,
+                "exercise_id": exercise_id
             }
         }
 
@@ -119,9 +120,7 @@ var ExerciseService = function($http, $rootScope){
             alert("failure in adding the resource")
         }
 
-
-        alert("addLearningResource stub.  exercise: " + exercise_id)
-        // $http(req).then(cb_success, cb_failure)
+        $http(req).then(cb_success, cb_failure)
     }
 
     this.setupLearningResourceDisplay = function(scope){
@@ -154,7 +153,7 @@ var ExerciseService = function($http, $rootScope){
         }
 
         var cb_failure = function(res){
-            alert("failure in deleting the resource")
+            alert("failure in deleting the resource: " + res.data)
         }
 
         $http(req).then(cb_success, cb_failure)

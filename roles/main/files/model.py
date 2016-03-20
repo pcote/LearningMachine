@@ -169,6 +169,10 @@ def delete_exercise(user_id, exercise_id):
         with conn.begin() as trans:
             query = attempt_table.delete().where(attempt_table.c.exercise_id == exercise_parm)
             conn.execute(query, exercise_id=exercise_id)
+
+            query = resource_by_exercise_table.delete().where(resource_by_exercise_table.c.exercise_id == exercise_parm)
+            conn.execute(query, exercise_id=exercise_id)
+
             query = exercise_table.delete().where(exercise_table.c.id == exercise_parm)
             conn.execute(query, exercise_id=exercise_id)
             trans.commit()
@@ -195,8 +199,13 @@ def delete_resource(user_id, resource_id):
     is_valid_user = conn.execute(query, user_id=user_id, resource_id=resource_id).fetchone()
 
     if is_valid_user:
-        query = resource_table.delete().where(resource_table.c.id == resource_parm)
-        conn.execute(query, resource_id=resource_id)
+        with conn.begin() as trans:
+            query = resource_by_exercise_table.delete().where(resource_by_exercise_table.c.resource_id == resource_parm)
+            conn.execute(query, resource_id=resource_id)
+
+            query = resource_table.delete().where(resource_table.c.id == resource_parm)
+            conn.execute(query, resource_id=resource_id)
+            trans.commit()
 
     conn.close()
     return "FINISHED"
