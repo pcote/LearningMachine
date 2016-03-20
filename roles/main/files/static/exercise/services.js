@@ -95,10 +95,8 @@ var ExerciseService = function($http, $rootScope){
     this.reviseLearningResourceList = function(scope, exercise_id){
         alert("revise learning resource list service stub.  exercise: " + exercise_id)
     }
-}
 
-var LearningResourceService = function($http){
-    this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
+        this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
         var req = {
             url: "/addresource",
             method: "post",
@@ -162,4 +160,9 @@ var LearningResourceService = function($http){
         $http(req).then(cb_success, cb_failure)
 
     }
+
+}
+
+var LearningResourceService = function($http){
+
 }

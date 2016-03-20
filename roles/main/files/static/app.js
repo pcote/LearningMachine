@@ -6,7 +6,7 @@
 
 
 (function(){
-var controller = function($scope, $rootScope, userService, exerciseService, learningResourceService){
+var controller = function($scope, $rootScope, userService, exerciseService){
     // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {}
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"}
@@ -117,9 +117,9 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
 
 }
 
-var LearningResourceController = function($scope, $rootScope, learningResourceService){
+var LearningResourceController = function($scope, $rootScope, exerciseService){
 
-    learningResourceService.setupLearningResourceDisplay($scope)
+    exerciseService.setupLearningResourceDisplay($scope)
 
     $scope.resource_trigger = true
 
@@ -128,13 +128,13 @@ var LearningResourceController = function($scope, $rootScope, learningResourceSe
     }
 
     var resource_trigger_listener = function(new_val, old_val){
-            learningResourceService.setupLearningResourceDisplay($scope)
+            exerciseService.setupLearningResourceDisplay($scope)
     }
 
     $scope.$watch(resource_trigger_watcher, resource_trigger_listener)
 
     $scope.addLearningResourceClick = function(new_cap, new_url){
-        learningResourceService.addLearningResource($scope, new_cap, new_url, $rootScope.activeObject.exercise.id)
+        exerciseService.addLearningResource($scope, new_cap, new_url, $rootScope.activeObject.exercise.id)
         $scope.new_caption_field = ""
         $scope.new_url_field = ""
         $("#addResourceModal").modal("hide")
@@ -144,7 +144,7 @@ var LearningResourceController = function($scope, $rootScope, learningResourceSe
 
 
     $scope.deleteLearningResourceClick = function(resource_id){
-        learningResourceService.deleteLearningResource($scope, resource_id)
+        exerciseService.deleteLearningResource($scope, resource_id)
     }
 }
 
@@ -181,6 +181,5 @@ angular.module("app", [])
     .controller("LearningResourceController", LearningResourceController)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
-    .service("learningResourceService", LearningResourceService)
     .filter("lmScoreWord", lmScoreWordFilter)
 })()
