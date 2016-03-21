@@ -122,15 +122,18 @@ class ViewTestCase(unittest.TestCase):
         import model
         empty_list = []
         mock = MagicMock(return_value=empty_list)
-        model.get_resources = mock
+        model.get_resources_for_exercise = mock
+        test_exercise_id = "40"
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
                 sess["email"] = self.test_user_id
-            result = client.get("/resources")
+
+            resource_url = "/resourcesforexercise/{}".format(test_exercise_id)
+            result = client.get(resource_url)
             json_data = self.get_json(result)
             self.assertTrue("resources" in json_data)
-            mock.assert_called_with(self.test_user_id)
+            mock.assert_called_with(test_exercise_id, self.test_user_id)
 
     def test_add_resource(self):
         test_caption = "Simeon Franklin Guide to Python Decorators (12 steps)"
