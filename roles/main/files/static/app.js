@@ -106,7 +106,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
     }
 
     $scope.updateArrowClick = function(exercise_id){
-        alert("update arrow click stub.  exercise: " + exercise_id)
         exerciseService.reviseLearningResourceList($scope, exercise_id)
     }
 
@@ -115,20 +114,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         $("#addResourceModal").modal()
     }
 
-    exerciseService.setupLearningResourceDisplay($scope)
-
-    $scope.resource_trigger = true
-
-    var resource_trigger_watcher = function(){
-        return $scope.resource_trigger
-    }
-
-    var resource_trigger_listener = function(new_val, old_val){
-            exerciseService.setupLearningResourceDisplay($scope)
-    }
-
-    $scope.$watch(resource_trigger_watcher, resource_trigger_listener)
-
     $scope.addLearningResourceClick = function(new_cap, new_url){
         exerciseService.addLearningResource($scope, new_cap, new_url, $rootScope.activeObject.exercise.id)
         $scope.new_caption_field = ""
@@ -136,8 +121,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         $("#addResourceModal").modal("hide")
 
     }
-
-
 
     $scope.deleteLearningResourceClick = function(resource_id){
         exerciseService.deleteLearningResource($scope, resource_id)

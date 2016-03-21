@@ -257,5 +257,32 @@ def get_resources(user_id):
 
     return resources
 
+def get_resources_for_exercise(exercise_id, user_id):
+    """
+    Get all resources connected to the given exercise
+    :param exercise_id: ID of the exercise in question
+    :param user_id: Owning user
+    :return: A list the appropriate resources.
+    """
+
+    conn = eng.connect()
+    user_id_parm = bindparam("user_id")
+    exercise_parm = bindparam("exercise_id")
+
+    query = select([resource_table.c.id, resource_table.c.caption, resource_table.c.url, resource_table.c.user_id])\
+                .select_from(resource_table.join(resource_by_exercise_table ))\
+                .where(and_(resource_table.c.user_id == user_id_parm,
+                            resource_by_exercise_table.c.exercise_id == exercise_parm))
+
+    result = conn.execute(query, user_id=user_id, exercise_id=exercise_id)
+    resources = [dict(resource_id=resource_id, user_id=user_id, caption=caption, url=url)
+                    for resource_id, caption, url, user_id in result.fetchall()]
+    conn.close()
+
+    return resources
+
+
 if __name__ == '__main__':
-    pass
+    test_exercise_id = 40
+    res = get_resources_for_exercise(test_exercise_id, "cotejrp@gmail.com")
+    print(res)

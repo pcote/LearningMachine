@@ -93,7 +93,13 @@ var ExerciseService = function($http, $rootScope){
     }
 
     this.reviseLearningResourceList = function(scope, exercise_id){
-        alert("revise learning resource list service stub.  exercise: " + exercise_id)
+        var url = "/resourcesforexercise/" + exercise_id
+        var cbSuccess = function(res){
+            scope.dataList.resources = res.data.resources
+        }
+
+        var cbFailure = function(res){}
+        $http.get(url).then(cbSuccess, cbFailure)
     }
 
     this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
@@ -111,7 +117,9 @@ var ExerciseService = function($http, $rootScope){
         }
 
         var cb_success = function(){
-            $http.get("/resources").then(function(res){
+            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id
+
+            $http.get(url).then(function(res){
                 scope.dataList.resources = res.data.resources
             }, function(res){})
         }
@@ -124,7 +132,8 @@ var ExerciseService = function($http, $rootScope){
     }
 
     this.setupLearningResourceDisplay = function(scope){
-        var url = "/resources"
+        var url = "/resourcesforexercise/" + scope.activeObject.exercise.id
+
         var cb_success = function(res){
             scope.dataList.resources = res.data.resources
         }
@@ -147,7 +156,8 @@ var ExerciseService = function($http, $rootScope){
         }
 
         var cb_success = function(res){
-            $http.get("/resources").then(function(res){
+            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id
+            $http.get(url).then(function(res){
                 scope.dataList.resources = res.data.resources
             }, function(res){})
         }

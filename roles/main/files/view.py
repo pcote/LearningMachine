@@ -202,6 +202,20 @@ def get_resources():
     return jsonify(returned_val)
 
 
+@app.route("/resourcesforexercise/<exercise_id>")
+def get_resources_for_exercise(exercise_id):
+    """
+    Get the resources associated with the specfied exercise
+    :param exercise_id: Exercise to match resource associations to.
+    :return: list of resources associated to the given exercise.
+    """
+    user_id = session.get("email")
+    resources = model.get_resources_for_exercise(exercise_id, user_id)
+    returned_val = dict(resources=resources)
+    return jsonify(returned_val)
+
+
+
 @app.route("/addresource", methods=["POST"])
 def add_resource():
     user_id = session["email"]
