@@ -54,7 +54,7 @@ Now is the time to test out your installation.  Here's what you do.
 
 If all goes well, you should now have the Learning Machine main page in front of you.  Have fun!
 
-Logging in
+Logging In
 ===========
 When you first arrive at Learning Machine, you should see a prompt that says "Welcome to Learning Machine" with a button that says "Login with Google".  When you push that button, you will be taken to Google's login page where it will tell you that there are certain permissions needed.  When you approve, you will be taken back to Learning Machine where you will have your very own account setup for you and ready to use.
 
@@ -65,7 +65,7 @@ Learning machine is organized into two general views of your materials.
 2.  Attempts Report - Review your history of any and all attempts made on your exercises.
 
 
-Managing Exercises and Resources
+Managing Exercises And Resources
 ================================
 Exercises will let you quiz yourself and rate your own knowledge.  For these exercises, you have options for adding new material.
 
@@ -76,13 +76,13 @@ Exercises will let you quiz yourself and rate your own knowledge.  For these exe
 4.  Finally, click the "Add Exercise" button that appears below the answer field in the dialog box.  This will add your exercise to the list of exercises.
 
 
-#### Drilling yourself on exercises
+#### Drilling Yourself on Exercises
 
 A key part of the "exercise view" of Learning Machine is the exercise list.  You can assess yourself on anything by doing the following.
 
 1.  Click on an exercise from the exercise list.
-2.  The question will pop up in a dialog box.  Consider what the answer would be to that question.  Push "Click for Anser" when you are ready to see the answer.
-3.  The question and answer will show up in another dialog box with sme buttons to pick from.  Click the one that reflects how you felt that you did.  If you don't want to self-rate right now, just click anywhere outside the dialog box.
+2.  The question will pop up in a dialog box.  Consider what the answer would be to that question.  Push "Click for Answer" when you are ready to see the answer.
+3.  The question and answer will show up in another dialog box with some buttons to pick from.  Click the one that reflects how you felt that you did.  If you don't want to self-rate right now, just click anywhere outside the dialog box.
 
 Every time you choose an answer to a question, that answer will be recorded in your history.
 
@@ -90,12 +90,22 @@ Every time you choose an answer to a question, that answer will be recorded in y
 
 New learning resources are just hyperlinks to other resources that can help you gain better mastery of your exercises.  The process of creating them is simple.
 
-1.  At the top of the screen is a button that says "Add Resource".  Press it to make a dialog box show up.
-2.  Fill out the "New Resource Caption field with the caption you want for this url link.
-2.  In the "New Resource URL" box, fill in the URL to the learning resource.
-3.  When done, click the "Add Resource" button as seen in the bottom of the dialog box.
+1.  Click on the exercise that you want to add a resource for.  This will cause a dialog box to show up.
+2.  Click on the "Add Resource" button at the bottom of this dialog.  This will make a new dialog show up for adding the resource.
+3.  Fill out the "New Resource Caption field with the caption you want for this url link.
+4.  In the "New Resource URL" box, fill in the URL to the learning resource.
+5.  When done, click the "Add Resource" button as seen in the bottom of the dialog box.
 
 And that's it.
+
+#### View Resources Connected To An Exercise
+
+As you develop exercises, you will eventually have a good list of resources to work with.  Here's how you navigate to the resources you need.
+
+1.  Scroll through your exercises to the one you want resources for.
+2.  Click the green arrow on that exercise.
+
+That's all there is to it.  You should now have a list of all the resources you set up for that particular exercise.
 
 Reviewing Your Exercise History
 ===============================
@@ -104,6 +114,6 @@ Every exercise you do is recorded in your history.  You can view that history an
 
 Exercise -> Rating with Attempt Time
 
-Questions
+Questions?
 =========
 If you have any questions, feel free to leave raise a new issue in the issues tracker for this project.  I appreciate any and all feedback as it can often help in making Learning Machine better.  Thanks.
