@@ -64,7 +64,7 @@ def login():
     domain = parser["learningmachine"]["domain"]
     secrets_file = "{}/{}".format(dir_path, "client_secret.json")
     scope = "https://www.googleapis.com/auth/userinfo.email"
-    redirect_uri = "http://{}/login".format(domain)
+    redirect_uri = "https://{}/login".format(domain)
     login_handler = LoginHandler(secrets_file, scope, redirect_uri)
 
     if "code" in request.args:
