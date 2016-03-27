@@ -15,15 +15,15 @@
     </div>
 
     <div class="row exercise_resource_containers_row">
-        <div class="col-lg-6 col-xs-12 exercise_container_column">
+        <div class="col-xs-12 exercise_container_column">
             <div class="container exercise_container">
                 <div class="row exercise_title_row">
-                    <div class="col-lg-6 col-xs-12" align="center">
+                    <div class="col-xs-12" align="center">
                         <u><b>Exercises</b></u>
                     </div>
                 </div>
                 <div class="row exercise_data_table_row">
-                    <div class="col-lg-6 col-xs-12">
+                    <div class="col-xs-12">
                         <table class="table">
                             <tr>
                                 <th>&nbsp;</th>
@@ -32,46 +32,18 @@
                             <tr ng-repeat="exercise in dataList.exercises">
                                 <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
                                 <td><a ng-click="exerciseClick(exercise)">{{exercise.question}}</a></td>
-                                <td><a ng-click="updateArrowClick(exercise.id)"><button class="btn btn-success glyphicon glyphicon-arrow-right"></button></a></td>
+                                <td><a ng-click="updateArrowClick(exercise.id)"><button class="btn btn-info">resources</button></a></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="row new_question_form_container_row">
-                    <div class="col-xs-6 col-xs-12">
+                    <div class="col-xs-12">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6 col-xs-12 resource_container_column">
-            <div class="container resource_container">
-                <div class="row resource_title_row">
-                    <div class="col-lg-6 col-xs-12" align="center">
-                        <u><b>Resources</b></u>
-                    </div>
-                </div>
-                <div class="row resource_table_row">
-                    <div class="col-lg-6 col-xs-12">
-                        <table class="table resource_data_table">
-                            <tr>
-                                <th>Resource</th>
-                                <th>Delete option</th>
-                            </tr>
-                            <tr ng-repeat="resource in dataList.resources">
-                                <td><a href="{{resource.url}}">{{resource.caption}}</a></td>
-                                <td><button class="btn btn-danger" ng-click="deleteLearningResourceClick(resource.resource_id)">delete</button></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row new_resource_form_container_row">
-                    <div class="col-lg-6 col-xs-12">
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -80,6 +52,29 @@
 <!--
 Modal dialogs for asking questions, seeing answers, and sending score submissions
 -->
+
+
+<div class="modal fade" id="resourceListId" ng-controller="ExerciseController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Resources
+            </div>
+            <div class="modal-body">
+                            <table class="table resource_data_table">
+                                <tr ng-repeat="resource in dataList.resources">
+                                    <td><a href="{{resource.url}}">{{resource.caption}}</a></td>
+                                    <td><button class="btn btn-danger" ng-click="deleteLearningResourceClick(resource.resource_id)">delete</button></td>
+                                </tr>
+                            </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-target="#resourceListId" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="addExerciseModal" ng-controller="ExerciseController">
     <div class="modal-dialog">

@@ -96,6 +96,7 @@ var ExerciseService = function($http, $rootScope){
         var url = "/resourcesforexercise/" + exercise_id
         var cbSuccess = function(res){
             scope.dataList.resources = res.data.resources
+            $("#resourceListId").modal()
         }
 
         var cbFailure = function(res){}
