@@ -58,7 +58,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                Resources
+                Resources - {{ activeObject.exercise.question }}
             </div>
             <div class="modal-body">
                             <table class="table resource_data_table">
@@ -117,7 +117,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
 <div class="modal fade" id="addResourceModal" ng-controller="ExerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" align="center">New Learning Resource</div>
+            <div class="modal-header" align="center">New Learning Resource - {{ activeObject.exercise.question }}</div>
             <div class="modal-body">
                 <div class="container resource_form_container">
                     <div class="row">
