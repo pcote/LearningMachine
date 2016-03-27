@@ -105,12 +105,13 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         exerciseService.deleteExercise($scope, exercise_id)
     }
 
-    $scope.updateArrowClick = function(exercise_id){
-        exerciseService.reviseLearningResourceList($scope, exercise_id)
+    $scope.resourceButtonClick = function(exercise){
+        $scope.activeObject.exercise = exercise
+        exerciseService.reviseLearningResourceList($scope, exercise.id)
     }
 
-    $scope.exerciseToResourceModalClick = function(){
-        $("#questionModal").modal("hide")
+    $scope.resourceListToResourceModalClick = function(){
+        $("#resourceListId").modal("hide")
         $("#addResourceModal").modal()
     }
 

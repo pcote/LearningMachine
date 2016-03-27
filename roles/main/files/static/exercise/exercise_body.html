@@ -32,7 +32,7 @@
                             <tr ng-repeat="exercise in dataList.exercises">
                                 <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
                                 <td><a ng-click="exerciseClick(exercise)">{{exercise.question}}</a></td>
-                                <td><a ng-click="updateArrowClick(exercise.id)"><button class="btn btn-info">resources</button></a></td>
+                                <td><a ng-click="resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
                             </tr>
                         </table>
                     </div>
@@ -69,6 +69,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </table>
             </div>
             <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="resourceListToResourceModalClick()">Add Resource</button>
                 <button class="btn btn-primary" data-target="#resourceListId" data-dismiss="modal">OK</button>
             </div>
         </div>
@@ -158,7 +159,6 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                 {{activeObject.exercise.question}}
             </div>
             <div class="modal-footer" align="center">
-                <button class="btn btn-lg btn-primary" ng-click="exerciseToResourceModalClick()">Add Resource</button>
                 <button class="btn btn-lg btn-primary" ng-click="showAnswerClick()">Show Answer</button>
             </div>
         </div>
