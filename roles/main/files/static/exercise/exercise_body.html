@@ -63,7 +63,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
             <div class="modal-body">
                             <table class="table resource_data_table">
                                 <tr ng-repeat="resource in dataList.resources">
-                                    <td><a href="{{resource.url}}">{{resource.caption}}</a></td>
+                                    <td><a href="{{resource.url}}" target="_blank">{{resource.caption}}</a></td>
                                     <td><button class="btn btn-danger" ng-click="deleteLearningResourceClick(resource.resource_id)">delete</button></td>
                                 </tr>
                             </table>
