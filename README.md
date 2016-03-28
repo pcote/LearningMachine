@@ -90,7 +90,7 @@ Every time you choose an answer to a question, that answer will be recorded in y
 
 New learning resources are just hyperlinks to other resources that can help you gain better mastery of your exercises.  The process of creating them is simple.
 
-1.  Click on the exercise that you want to add a resource for.  This will cause a dialog box to show up.
+1.  Click on the "resources" button next to the exercise that you want to add a resource for.  This will cause a dialog box to show up with whatever existing resources you have.
 2.  Click on the "Add Resource" button at the bottom of this dialog.  This will make a new dialog show up for adding the resource.
 3.  Fill out the "New Resource Caption field with the caption you want for this url link.
 4.  In the "New Resource URL" box, fill in the URL to the learning resource.
@@ -103,7 +103,7 @@ And that's it.
 As you develop exercises, you will eventually have a good list of resources to work with.  Here's how you navigate to the resources you need.
 
 1.  Scroll through your exercises to the one you want resources for.
-2.  Click the green arrow on that exercise.
+2.  Click the "resources" button next to the exercise in question.
 
 That's all there is to it.  You should now have a list of all the resources you set up for that particular exercise.
 
