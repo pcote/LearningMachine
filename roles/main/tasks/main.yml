@@ -1,14 +1,6 @@
 ---
 
-- name: copy the requirements file over
-  copy:
-    src: requirements.txt
-    dest: /tmp/requirements.txt
 
-- name: pip install the required python3 libs (including uwsgi)
-  pip:
-    executable: pip3
-    requirements: /tmp/requirements.txt
 
 - name: copy over nginx configuration
   copy:
