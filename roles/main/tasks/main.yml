@@ -3,9 +3,19 @@
 
 
 - name: copy over nginx configuration
-  copy:
-    src: nginx.conf
-    dest: /etc/nginx/nginx.conf
+  template:
+    src: lm_nginx.conf
+    dest: /etc/nginx/sites-available/lm_nginx.conf
+    owner: www-data
+    group: www-data
+    mode: 0550
+  notify: restart nginx
+
+- name: set up the symlink for the learning machine nginx config.
+  file:
+    path: /etc/nginx/sites-enabled/lm_nginx.conf
+    src: /etc/nginx/sites-available/lm_nginx.conf
+    state: link
   notify: restart nginx
 
 - name: Create the learning machine database
