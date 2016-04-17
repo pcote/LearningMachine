@@ -63,6 +63,7 @@
     group: www-data
   with_items:
     - make_tables.py
+  notify: restart learningmachine
 
 - name: Copy over the html and javascript static assets
   copy:
@@ -80,6 +81,7 @@
     mode: 0660
     owner: www-data
     group: www-data
+  notify: restart learningmachine
 
 - name: Copy over the upstart learningmachine service script
   copy:
@@ -88,3 +90,4 @@
     owner: www-data
     group: www-data
     mode: 0660
+  notify: restart learningmachine

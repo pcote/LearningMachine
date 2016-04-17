@@ -7,12 +7,12 @@ Vagrant.configure(2) do |config|
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
   config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network "private_network", ip: "192.168.33.10"
+  #config.vm.network "private_network", ip: "192.168.33.10"
   # config.vm.network "public_network"
   # config.vm.synced_folder "../data", "/vagrant_data"
   #
   config.vm.provider "virtualbox" do |vb|
-    vb.gui = false
+    vb.gui = false 
     vb.memory = "512"
   end
 
@@ -22,8 +22,8 @@ Vagrant.configure(2) do |config|
         host: "all",
         root_password: "setRootPasswordHere",
         public_password: "setPublicPasswordHere",
-        domain: "3fbc11a7.ngrok.com",
-        session_key: "fdargf45t4dfavf536yyntui75n^W(_",
+        domain: "domain.goes.here",
+        session_key: "sesson_key_goes_here",
     }
     ansible.playbook = "main_playbook.yml"
   end 
