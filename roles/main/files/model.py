@@ -4,6 +4,8 @@ from tabledefs import user_table, exercise_table, attempt_table, resource_table,
 from configparser import ConfigParser
 from collections import namedtuple
 
+CHARACTER_LIMIT = 140
+
 cp = ConfigParser()
 dir_path = __file__.rsplit("/", maxsplit=1)[0]
 config_file_name = "{}/{}".format(dir_path, "config.ini")
@@ -60,6 +62,11 @@ def add_exercise(question, answer, user_id):
     :param user_id: user id string
     :return: Nothing
     """
+
+    if len(question) > CHARACTER_LIMIT or len(answer) > CHARACTER_LIMIT:
+        msg = "Either the new question or new answer exceeded char limit of {} chars".format(CHARACTER_LIMIT)
+        raise Exception(msg)
+
     conn = eng.connect()
 
     query = exercise_table.insert()\
@@ -219,6 +226,11 @@ def add_resource(caption, url, user_id, exercise_id=None):
     :param exercise_id The exercise that this resource refers to.
     :return: Nothing.
     """
+
+    if len(caption) > CHARACTER_LIMIT or len(url) > CHARACTER_LIMIT:
+        msg = "Either new caption or new url exceeded char limit of {} chars".format(CHARACTER_LIMIT)
+        raise Exception(msg)
+
     caption_parm = bindparam("caption", type_=String)
     url_parm = bindparam("url", type_=String)
     user_parm = bindparam("user_id", type_=String)

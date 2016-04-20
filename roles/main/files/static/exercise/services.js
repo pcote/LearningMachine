@@ -34,6 +34,8 @@ var ExerciseService = function($http, $rootScope){
 
     // Take the new question and answer pertaining to some topic and store that in the system.
     this.addExercise = function(scope, newQuestion, newAnswer){
+        var MAX_CHARS = 140
+
         var req = {
             url: "/addexercise",
             method: "post",
@@ -46,9 +48,14 @@ var ExerciseService = function($http, $rootScope){
             }
         }
 
-        $http(req).then(function(res){
-            scope.trigger = !scope.trigger
-        }, function(res){})
+        if(newQuestion.length <= MAX_CHARS && newAnswer.length <= MAX_CHARS){
+            $http(req).then(function(res){
+                scope.trigger = !scope.trigger
+            }, function(res){})
+        }
+        else{
+            alert("Either the question, answer, or both fail the 140 character max.")
+        }
     }
 
     this.deleteExercise = function(scope, exercise_id){
@@ -104,6 +111,8 @@ var ExerciseService = function($http, $rootScope){
     }
 
     this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
+        var MAX_CHARS = 140
+        
         var req = {
             url: "/addresource",
             method: "post",
@@ -128,8 +137,12 @@ var ExerciseService = function($http, $rootScope){
         var cb_failure = function(){
             alert("failure in adding the resource")
         }
-
-        $http(req).then(cb_success, cb_failure)
+        if(new_cap.length <= MAX_CHARS && new_url.length <= MAX_CHARS){
+            $http(req).then(cb_success, cb_failure)
+        }
+        else{
+            alert("Either the new caption or new url has exceeded the 140 character max limit")
+        }
     }
 
     this.setupLearningResourceDisplay = function(scope){

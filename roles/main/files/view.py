@@ -148,11 +148,15 @@ def add_exercise():
     new_question = json_data.get("new_question")
     new_answer = json_data.get("new_answer")
     user_id = session.get("email")
-    model.add_exercise(new_question, new_answer, user_id)
-
-    msg = "Exercise added for user: {}".format(user_id)
-    app.logger.info(msg)
-    return jsonify({"message": "add exercise call completed"})
+    try:
+        model.add_exercise(new_question, new_answer, user_id)
+        msg = "Exercise added for user: {}".format(user_id)
+        app.logger.info(msg)
+        return jsonify({"message": "add exercise call completed"})
+    except Exception as e:
+        msg = "The question or the answer to be added has exceeded the max char limit"
+        app.logger.error(msg)
+        abort(400)
 
 
 @app.route("/deleteexercise", methods=["POST"])
@@ -223,8 +227,11 @@ def add_resource():
     new_caption = json_data["new_caption"]
     new_url = json_data["new_url"]
     exercise_id = json_data["exercise_id"]
-    model.add_resource(new_caption, new_url, user_id, exercise_id)
-    return "FINISHED"
+    try:
+        model.add_resource(new_caption, new_url, user_id, exercise_id)
+        return "FINISHED"
+    except Exception as e:
+        abort(400)
 
 if __name__ == '__main__':
     app.run(debug=False)
