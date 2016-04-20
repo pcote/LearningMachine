@@ -127,6 +127,11 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
         exerciseService.deleteLearningResource($scope, resource_id)
     }
 
+    $scope.updateCharsLeft = function(fieldName, charsLeftDisplay){
+        var charsLeft = 140 - $scope[fieldName].length
+        $scope[charsLeftDisplay] = charsLeft + " characters left."
+    }
+
 }
 
 

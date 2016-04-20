@@ -90,7 +90,8 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
-                                    <textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" />
+                                    <textarea rows="5" cols="50" id="newQuestionId" ng-model="newQuestion" ng-change="updateCharsLeft('newQuestion', 'questionCharsLeft')" /><br />
+                                    {{ questionCharsLeft }}
                                 </div>
                             </div>
                             <div class="row">
@@ -100,7 +101,8 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
-                                    <textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" />
+                                    <textarea rows="5" cols="50" id="newAnswerId" ng-model="newAnswer" ng-change="updateCharsLeft('newAnswer', 'answerCharsLeft')" /><br />
+                                    {{ answerCharsLeft }}
                                 </div>
                             </div>
                             <div class="row">
@@ -126,7 +128,8 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
-                            <textarea cols="50" rows="4" ng-model="new_caption_field"></textarea>
+                            <textarea cols="50" rows="4" ng-model="new_caption_field" ng-change="updateCharsLeft('new_caption_field', 'captionCharsLeft')"></textarea><br />
+                            {{ captionCharsLeft }}
                         </div>
                     </div>
                     <div class="row">
@@ -134,7 +137,8 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
-                            <textarea cols="50" rows="4" ng-model="new_url_field"></textarea>
+                            <textarea cols="50" rows="4" ng-model="new_url_field" ng-change="updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
+                            {{ urlCharsLeft }}
                         </div>
                     </div>
                     <div class="row">
