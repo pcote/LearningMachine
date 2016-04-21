@@ -10,10 +10,10 @@ var ExerciseService = function($http, $rootScope){
 
         // grab the exercises
         $http.get("/exercises").then(function(res){
-            scope.dataList.exercises = res.data.exercises
-        }, function(res){})
+            scope.dataList.exercises = res.data.exercises;
+        }, function(res){});
 
-    }
+    };
 
     // Take the score use submitted for the given exercise and report it to the server.
     this.submitScore = function(exercise, score){
@@ -27,14 +27,14 @@ var ExerciseService = function($http, $rootScope){
                 "exercise_id": exercise.id,
                 "score": score
             }
-        }
+        };
 
-        $http(req).then(function(res){}, function(res){})
-    }
+        $http(req).then(function(res){}, function(res){});
+    };
 
     // Take the new question and answer pertaining to some topic and store that in the system.
     this.addExercise = function(scope, newQuestion, newAnswer){
-        var MAX_CHARS = 140
+        var MAX_CHARS = 140;
 
         var req = {
             url: "/addexercise",
@@ -46,20 +46,20 @@ var ExerciseService = function($http, $rootScope){
                     "new_question": newQuestion,
                     "new_answer": newAnswer
             }
-        }
+        };
 
         if(newQuestion.length <= MAX_CHARS && newAnswer.length <= MAX_CHARS){
             $http(req).then(function(res){
-                scope.trigger = !scope.trigger
-            }, function(res){})
+                scope.trigger = !scope.trigger;
+            }, function(res){});
         }
         else{
-            alert("Either the question, answer, or both fail the 140 character max.")
+            alert("Either the question, answer, or both fail the 140 character max.");
         }
     }
 
     this.deleteExercise = function(scope, exercise_id){
-        var url = "/deleteexercise"
+        var url = "/deleteexercise";
         var req = {
             url: "/deleteexercise",
             method: "POST",
@@ -69,17 +69,17 @@ var ExerciseService = function($http, $rootScope){
             data: {
                 "exercise_id": exercise_id
             }
-        }
+        };
 
         var cbSuccess = function(res){
-            scope.trigger = !scope.trigger
-        }
+            scope.trigger = !scope.trigger;
+        };
 
         var cbFailure = function(res){
-            alert("Deletion attempt failed: " + res.data)
-        }
+            alert("Deletion attempt failed: " + res.data);
+        };
 
-        $http(req).then(cbSuccess, cbFailure)
+        $http(req).then(cbSuccess, cbFailure);
     }
 
     // Pull the data concerning a user's exercise history into a local json structure
@@ -87,31 +87,31 @@ var ExerciseService = function($http, $rootScope){
     this.getAttemptsReport = function(scope){
 
         var cbSuccess = function(res){
-            scope.report.attempts = res.data.history
-            scope.showStatus.exercises = false
-            scope.showStatus.attempts = true
-        }
+            scope.report.attempts = res.data.history;
+            scope.showStatus.exercises = false;
+            scope.showStatus.attempts = true;
+        };
 
         var cbFailure = function(res){
-            alert("attempt to get the attempt report failed")
+            alert("attempt to get the attempt report failed");
         }
 
-        $http.get("/exercisehistory").then(cbSuccess, cbFailure)
-    }
+        $http.get("/exercisehistory").then(cbSuccess, cbFailure);
+    };
 
     this.reviseLearningResourceList = function(scope, exercise_id){
-        var url = "/resourcesforexercise/" + exercise_id
+        var url = "/resourcesforexercise/" + exercise_id;
         var cbSuccess = function(res){
-            scope.dataList.resources = res.data.resources
-            $("#resourceListId").modal()
-        }
+            scope.dataList.resources = res.data.resources;
+            $("#resourceListId").modal();
+        };
 
-        var cbFailure = function(res){}
-        $http.get(url).then(cbSuccess, cbFailure)
-    }
+        var cbFailure = function(res){};
+        $http.get(url).then(cbSuccess, cbFailure);
+    };
 
     this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
-        var MAX_CHARS = 140
+        var MAX_CHARS = 140;
         
         var req = {
             url: "/addresource",
@@ -124,38 +124,41 @@ var ExerciseService = function($http, $rootScope){
                 "new_url": new_url,
                 "exercise_id": exercise_id
             }
-        }
+        };
 
         var cb_success = function(){
-            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id
+            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id;
 
             $http.get(url).then(function(res){
-                scope.dataList.resources = res.data.resources
+                scope.dataList.resources = res.data.resources;
             }, function(res){})
-        }
+        };
 
         var cb_failure = function(){
-            alert("failure in adding the resource")
-        }
+            alert("failure in adding the resource");
+        };
+
         if(new_cap.length <= MAX_CHARS && new_url.length <= MAX_CHARS){
-            $http(req).then(cb_success, cb_failure)
+            $http(req).then(cb_success, cb_failure);
         }
         else{
-            alert("Either the new caption or new url has exceeded the 140 character max limit")
+            alert("Either the new caption or new url has exceeded the 140 character max limit");
         }
-    }
+    };
 
     this.setupLearningResourceDisplay = function(scope){
-        var url = "/resourcesforexercise/" + scope.activeObject.exercise.id
+        var url = "/resourcesforexercise/" + scope.activeObject.exercise.id;
 
         var cb_success = function(res){
-            scope.dataList.resources = res.data.resources
-        }
+            scope.dataList.resources = res.data.resources;
+        };
+
         var cb_failure = function(res){
-            alert("failure at accessing resources")
-        }
-        $http.get(url).then(cb_success, cb_failure)
-    }
+            alert("failure at accessing resources");
+        };
+
+        $http.get(url).then(cb_success, cb_failure);
+    };
 
     this.deleteLearningResource = function(scope, resource_id){
         var req = {
@@ -167,21 +170,21 @@ var ExerciseService = function($http, $rootScope){
             data: {
                 "resource_id": resource_id
             }
-        }
+        };
 
         var cb_success = function(res){
-            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id
+            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id;
             $http.get(url).then(function(res){
-                scope.dataList.resources = res.data.resources
-            }, function(res){})
-        }
+                scope.dataList.resources = res.data.resources;
+            }, function(res){});
+        };
 
         var cb_failure = function(res){
-            alert("failure in deleting the resource: " + res.data)
-        }
+            alert("failure in deleting the resource: " + res.data);
+        };
 
-        $http(req).then(cb_success, cb_failure)
+        $http(req).then(cb_success, cb_failure);
 
-    }
+    };
 
-}
+};
