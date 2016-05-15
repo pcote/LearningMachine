@@ -23,17 +23,7 @@ The instructions assume you are running a modern 64-bit Linux distribution.  Bey
 * A Google account that will allow you to setup Google Oauth
 
 #### The actual setup process.
-WARNING: Current setup process is obsolete due to separation of the base server setup to it's own project called "basemachine"
-1.  Set up a home directory that you will be working out of and cd to it.
-2.  Run the command - git clone https://github.com/pcote/LearningMachine.git
-3.  Fire up the following in a separate window to get ngrok going - ngrok 8080
-4.  Open up the file "Vagrantfile" in your text editor of choice.  There you will find variables in the section called "ansible.extra_vars.  Set the following.
-    1.  root_password - Choose a secure password to act as the password for the root user of the database.
-    2.  public_password - This is a password for the database's public user account.  This account is what the user goes through to add new info to the system.
-    3.  domain - The domain name.  Your running ngrok interface will have the domain name you want.  Copy the domain name found here.  WARNING: Do not include the "http://" parrt in this field.
-    4.  session_key - Choose a secure key to represent the session_key.  This key is used by Learning Machine's Flask component to cryptographically sign user session cookies.
-5.  Save the "Vagrantfile" file with the variables that you've set.
-6.  Going back to the command line, type in "vagrant up" and hit enter.  You will now be setting up the full server running inside of Virtual Box.
+TODO
 
 #### OAuth Setup
 Logging into Learning Machine requires that the user go through the Google Oauth system.  
