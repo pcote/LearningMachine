@@ -1,0 +1,8 @@
+{
+    "server_name":"flashmark.yourdomain.com",
+    "host":"all",
+    "root_password":"rootUserPassword",
+    "public_password":"publicUserPassword",
+    "domain": "some.domain.com",
+    "session_key": "setSessionKeyHere234f4"
+}

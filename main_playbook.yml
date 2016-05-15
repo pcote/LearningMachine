@@ -1,7 +1,6 @@
 ---
-- hosts: "{{ host }}"
+- hosts: all 
   sudo: yes
   roles:
-    - common
     - main 
     
