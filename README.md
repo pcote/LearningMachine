@@ -23,6 +23,7 @@ The instructions assume you are running a modern 64-bit Linux distribution.  Bey
 * A Google account that will allow you to setup Google Oauth
 
 #### The actual setup process.
+WARNING: Current setup process is obsolete due to separation of the base server setup to it's own project called "basemachine"
 1.  Set up a home directory that you will be working out of and cd to it.
 2.  Run the command - git clone https://github.com/pcote/LearningMachine.git
 3.  Fire up the following in a separate window to get ngrok going - ngrok 8080
