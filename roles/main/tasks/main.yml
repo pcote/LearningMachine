@@ -9,6 +9,7 @@
     owner: www-data
     group: www-data
     mode: 0550
+    force: yes
   notify: restart nginx
 
 - name: set up the symlink for the learning machine nginx config.
