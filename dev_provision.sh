@@ -1,6 +1,6 @@
 #!/bin/sh
 # Set the base path to wherever you are placing the base machine here. Example below....
-basemachine=/path/to/base/machine
+basemachine=/$HOME/PycharmProjects/basemachine
 privatekey=$basemachine/.vagrant/machines/default/virtualbox/private_key
 inventory=$basemachine/.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory
 
