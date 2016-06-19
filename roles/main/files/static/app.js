@@ -30,8 +30,8 @@ var controller = function($scope, $rootScope, userService, exerciseService){
 
 
 // Initial setup upon the user having logged in and arrived at the main page.
-var UserController = function($scope, userService){
-    userService.showUserName($scope);
+var UserController = function(userService){
+    userService.showUserName(this);
 };
 
 
