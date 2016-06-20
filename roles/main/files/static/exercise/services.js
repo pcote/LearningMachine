@@ -103,20 +103,9 @@ var ExerciseService = function($http, $rootScope){
             }
         };
 
-        var cb_success = function(){
-            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id;
-
-            $http.get(url).then(function(res){
-                scope.dataList.resources = res.data.resources;
-            }, function(res){})
-        };
-
-        var cb_failure = function(){
-            alert("failure in adding the resource");
-        };
-
         if(new_cap.length <= MAX_CHARS && new_url.length <= MAX_CHARS){
-            $http(req).then(cb_success, cb_failure);
+            var promise = $http(req);
+            return promise;
         }
         else{
             alert("Either the new caption or new url has exceeded the 140 character max limit");

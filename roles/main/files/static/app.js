@@ -58,7 +58,7 @@ var AttemptsReportController = function($scope, exerciseService){
 
 // Handles the adding events for when users add exercises, click on them, and push buttons that
 // rate how they felt they did.
-var ExerciseController = function($scope, $rootScope, exerciseService){
+var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     // exercise list sentinel used to trigger refreshes of exercise list.
     $scope.trigger = true;
@@ -154,7 +154,22 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
     };
 
     $scope.addLearningResourceClick = function(new_cap, new_url){
-        exerciseService.addLearningResource($scope, new_cap, new_url, $rootScope.activeObject.exercise.id);
+
+        var successCallback = function(res){
+            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
+
+            $http.get(url).then(function(res){
+                $scope.dataList.resources = res.data.resources;
+            }, function(res){})
+        };
+
+        var failureCallback = function(res){
+            alert("failure in adding the resource");
+        };
+
+        var promise = exerciseService.addLearningResource($scope, new_cap, new_url, $rootScope.activeObject.exercise.id);
+        promise.then(successCallback, failureCallback);
+
         $scope.new_caption_field = "";
         $scope.new_url_field = "";
         $("#addResourceModal").modal("hide");
