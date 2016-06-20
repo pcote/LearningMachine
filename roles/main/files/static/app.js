@@ -13,9 +13,9 @@ var MainController = function($scope, $rootScope, userService, exerciseService){
     $rootScope.activeObject.user = {};
 
     // Controls the visibility of the topics and exercise sections
-    $scope.showStatus = {};
-    $scope.showStatus.exercises = true;
-    $scope.showStatus.attempts = false;
+    this.showStatus = {};
+    this.showStatus.exercises = true;
+    this.showStatus.attempts = false;
 
     // Item lists to display on different parts of the page
     $scope.dataList = {};
@@ -37,9 +37,9 @@ var UserController = function(userService){
 
 // Handle mouse event to ensure the user gets their attempts report to display.
 var AttemptsReportController = function($scope, exerciseService){
-    $scope.viewAttemptsClick = function(){
-        $scope.showStatus.exercises = false;
-        $scope.showStatus.attempts = true;
+    $scope.viewAttemptsClick = function(mainController){
+        mainController.showStatus.exercises = false;
+        mainController.showStatus.attempts = true;
         exerciseService.getAttemptsReport($scope);
     }
 };
@@ -82,9 +82,9 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
     };
 
     // Navigate to the exercises page
-    $scope.viewExercisesClick = function(){
-        $scope.showStatus.exercises = true;
-        $scope.showStatus.attempts = false;
+    $scope.viewExercisesClick = function(mainController){
+        mainController.showStatus.exercises = true;
+        mainController.showStatus.attempts = false;
         exerciseService.setupExerciseDisplay($scope);
     };
 
