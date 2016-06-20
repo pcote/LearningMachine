@@ -135,8 +135,17 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
     };
 
     $scope.resourceButtonClick = function(exercise){
+
+        var successCallback = function(res){
+            $scope.dataList.resources = res.data.resources;
+            $("#resourceListId").modal();
+        };
+        var failureCallback = function(res){};
+
         $scope.activeObject.exercise = exercise;
-        exerciseService.reviseLearningResourceList($scope, exercise.id);
+        var promise = exerciseService.reviseLearningResourceList($scope, exercise.id);
+        promise.then(successCallback, failureCallback);
+
     };
 
     $scope.resourceListToResourceModalClick = function(){

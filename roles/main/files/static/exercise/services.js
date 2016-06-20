@@ -83,13 +83,8 @@ var ExerciseService = function($http, $rootScope){
 
     this.reviseLearningResourceList = function(scope, exercise_id){
         var url = "/resourcesforexercise/" + exercise_id;
-        var cbSuccess = function(res){
-            scope.dataList.resources = res.data.resources;
-            $("#resourceListId").modal();
-        };
-
-        var cbFailure = function(res){};
-        $http.get(url).then(cbSuccess, cbFailure);
+        var promise = $http.get(url);
+        return promise;
     };
 
     this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
