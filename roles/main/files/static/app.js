@@ -177,7 +177,20 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     };
 
     $scope.deleteLearningResourceClick = function(resource_id){
-        exerciseService.deleteLearningResource($scope, resource_id);
+
+        var success = function(res){
+            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
+            $http.get(url).then(function(res){
+                $scope.dataList.resources = res.data.resources;
+            }, function(res){})
+        };
+
+        var failure = function(res){
+            alert("failure in deleting the resource");
+        };
+
+        var promise = exerciseService.deleteLearningResource($scope, resource_id);
+        promise.then(success, failure);
     };
 
     $scope.updateCharsLeft = function(fieldName, charsLeftDisplay){

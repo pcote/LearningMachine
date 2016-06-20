@@ -138,18 +138,8 @@ var ExerciseService = function($http, $rootScope){
             }
         };
 
-        var cb_success = function(res){
-            var url = "/resourcesforexercise/" + scope.activeObject.exercise.id;
-            $http.get(url).then(function(res){
-                scope.dataList.resources = res.data.resources;
-            }, function(res){});
-        };
-
-        var cb_failure = function(res){
-            alert("failure in deleting the resource: " + res.data);
-        };
-
-        $http(req).then(cb_success, cb_failure);
+        var promise = $http(req);
+        return promise;
 
     };
 
