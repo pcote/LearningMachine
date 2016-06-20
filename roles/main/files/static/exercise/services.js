@@ -57,7 +57,7 @@ var ExerciseService = function($http, $rootScope){
         }
     }
 
-    this.deleteExercise = function(scope, exercise_id){
+    this.deleteExercise = function(exercise_id){
         var url = "/deleteexercise";
         var req = {
             url: "/deleteexercise",
@@ -70,15 +70,8 @@ var ExerciseService = function($http, $rootScope){
             }
         };
 
-        var cbSuccess = function(res){
-            scope.trigger = !scope.trigger;
-        };
-
-        var cbFailure = function(res){
-            alert("Deletion attempt failed: " + res.data);
-        };
-
-        $http(req).then(cbSuccess, cbFailure);
+        var promise = $http(req);
+        return promise;
     }
 
     // Pull the data concerning a user's exercise history into a local json structure

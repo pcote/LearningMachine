@@ -122,7 +122,16 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
     };
 
     $scope.deleteExerciseClick = function(exercise_id){
-        exerciseService.deleteExercise($scope, exercise_id);
+        var successCallback = function(res){
+            exerciseService.setupExerciseDisplay($scope);
+        };
+
+        var failureCallback = function(res){
+            alert("Deletion attempt failed: " + res.data);
+        };
+
+        var deleteExercisePromise = exerciseService.deleteExercise(exercise_id);
+        deleteExercisePromise.then(successCallback, failureCallback)
     };
 
     $scope.resourceButtonClick = function(exercise){
