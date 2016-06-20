@@ -84,17 +84,9 @@ var ExerciseService = function($http, $rootScope){
 
     // Pull the data concerning a user's exercise history into a local json structure
     // that can be displayed in report form.  Also show it.
-    this.getAttemptsReport = function(scope){
-
-        var cbSuccess = function(res){
-            scope.report.attempts = res.data.history;
-        };
-
-        var cbFailure = function(res){
-            alert("attempt to get the attempt report failed");
-        }
-
-        $http.get("/exercisehistory").then(cbSuccess, cbFailure);
+    this.getAttemptsReport = function(){
+        var promise = $http.get("/exercisehistory")
+        return promise;
     };
 
     this.reviseLearningResourceList = function(scope, exercise_id){

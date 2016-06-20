@@ -23,8 +23,8 @@ var MainController = function($scope, $rootScope, userService, exerciseService){
     $scope.dataList.resources = [];
 
     // Exercise attempts report data.
-    $scope.report = {};
-    $scope.report.attempts = [];
+    this.report = {};
+    this.report.attempts = [];
 
 };
 
@@ -40,7 +40,16 @@ var AttemptsReportController = function($scope, exerciseService){
     $scope.viewAttemptsClick = function(mainController){
         mainController.showStatus.exercises = false;
         mainController.showStatus.attempts = true;
-        exerciseService.getAttemptsReport($scope);
+
+        var cbSuccess = function(res){
+            mainController.report.attempts = res.data.history;
+        };
+
+        var cbFailure = function(res){
+            alert("attempt to get the attempt report failed");
+        }
+
+        exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
     }
 };
 
