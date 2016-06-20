@@ -54,7 +54,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
 -->
 
 
-<div class="modal fade" id="resourceListId" ng-controller="ExerciseController">
+<div class="modal fade" id="resourceListId" ng-controller="ExerciseController as exerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -77,7 +77,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
 </div>
 
 
-<div class="modal fade" id="addExerciseModal" ng-controller="ExerciseController">
+<div class="modal fade" id="addExerciseModal" ng-controller="ExerciseController as exerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" align="center">New Exercise</div>
@@ -117,7 +117,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
 </div>
 
 
-<div class="modal fade" id="addResourceModal" ng-controller="ExerciseController">
+<div class="modal fade" id="addResourceModal" ng-controller="ExerciseController as exerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" align="center">New Learning Resource - {{ activeObject.exercise.question }}</div>
@@ -155,7 +155,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
 </div>
 
 <!-- Dialog showing the user a question -->
-<div class="modal fade" id="questionModal" ng-controller="ExerciseController">
+<div class="modal fade" id="questionModal" ng-controller="ExerciseController as exerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -175,7 +175,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
  The dialog that follows the question dialog.  Shows question, answer,
  and buttons the user can select to submit on how well they feel they did.
  -->
-<div class="modal fade" id="questionAnswerModal" ng-controller="ExerciseController">
+<div class="modal fade" id="questionAnswerModal" ng-controller="ExerciseController as exerciseController">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

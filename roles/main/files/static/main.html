@@ -21,12 +21,12 @@
 <body>
 
 <!-- The main overall page template for the main app. -->
-<div class="container" ng-app="app" ng-controller="controller">
+<div class="container" ng-app="app" ng-controller="MainController as mainController">
 
     <!-- Top row section showing user name-->
     <div class="row">
-        <div class="col-xs-12 topbar" ng-controller="UserController as uc">
-            {{uc.displayName}}
+        <div class="col-xs-12 topbar" ng-controller="UserController as userController">
+            {{userController.displayName}}
         </div>
     </div>
 

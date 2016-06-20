@@ -6,7 +6,7 @@
 
 
 (function(){
-var controller = function($scope, $rootScope, userService, exerciseService){
+var MainController = function($scope, $rootScope, userService, exerciseService){
     // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {};
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
@@ -160,7 +160,7 @@ var lmScoreWordFilter = function(){
 
 // Core Angular app initialization
 angular.module("app", [])
-    .controller("controller", controller)
+    .controller("MainController", MainController)
     .controller("ExerciseController", ExerciseController)
     .controller("AttemptsReportController", AttemptsReportController)
     .controller("UserController", UserController)
