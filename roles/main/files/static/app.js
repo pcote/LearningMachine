@@ -77,7 +77,16 @@ var ExerciseController = function($scope, $rootScope, exerciseService){
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
     // when done.
     $scope.addExerciseClick = function(newQuestion, newAnswer){
-        exerciseService.addExercise($scope, newQuestion, newAnswer);
+
+        var successCallback = function(res){
+            exerciseService.setupExerciseDisplay($scope);
+        };
+
+        var failureCallback = function(res){};
+
+        var addExercisePromise = exerciseService.addExercise($scope, newQuestion, newAnswer);
+        addExercisePromise.then(successCallback, failureCallback);
+
         $scope.newQuestion = "";
         $scope.newAnswer = "";
         $("#addExerciseModal").modal("hide");

@@ -49,9 +49,8 @@ var ExerciseService = function($http, $rootScope){
         };
 
         if(newQuestion.length <= MAX_CHARS && newAnswer.length <= MAX_CHARS){
-            $http(req).then(function(res){
-                scope.trigger = !scope.trigger;
-            }, function(res){});
+            var promise = $http(req);
+            return promise;
         }
         else{
             alert("Either the question, answer, or both fail the 140 character max.");
