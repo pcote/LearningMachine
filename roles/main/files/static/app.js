@@ -38,6 +38,8 @@ var UserController = function(userService){
 // Handle mouse event to ensure the user gets their attempts report to display.
 var AttemptsReportController = function($scope, exerciseService){
     $scope.viewAttemptsClick = function(){
+        $scope.showStatus.exercises = false;
+        $scope.showStatus.attempts = true;
         exerciseService.getAttemptsReport($scope);
     }
 };

@@ -88,8 +88,6 @@ var ExerciseService = function($http, $rootScope){
 
         var cbSuccess = function(res){
             scope.report.attempts = res.data.history;
-            scope.showStatus.exercises = false;
-            scope.showStatus.attempts = true;
         };
 
         var cbFailure = function(res){
