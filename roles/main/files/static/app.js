@@ -143,7 +143,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         };
         var failureCallback = function(res){};
 
-        $scope.activeObject.exercise = exercise;
+        $rootScope.activeObject.exercise = exercise;
         var promise = exerciseService.reviseLearningResourceList(exercise.id);
         promise.then(successCallback, failureCallback);
 
