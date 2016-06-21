@@ -33,7 +33,7 @@ var ExerciseService = function($http, $rootScope){
     };
 
     // Take the new question and answer pertaining to some topic and store that in the system.
-    this.addExercise = function(scope, newQuestion, newAnswer){
+    this.addExercise = function(newQuestion, newAnswer){
         var MAX_CHARS = 140;
 
         var req = {
@@ -81,13 +81,13 @@ var ExerciseService = function($http, $rootScope){
         return promise;
     };
 
-    this.reviseLearningResourceList = function(scope, exercise_id){
+    this.reviseLearningResourceList = function(exercise_id){
         var url = "/resourcesforexercise/" + exercise_id;
         var promise = $http.get(url);
         return promise;
     };
 
-    this.addLearningResource = function(scope, new_cap, new_url, exercise_id){
+    this.addLearningResource = function(new_cap, new_url, exercise_id){
         var MAX_CHARS = 140;
         
         var req = {
@@ -126,7 +126,7 @@ var ExerciseService = function($http, $rootScope){
         $http.get(url).then(cb_success, cb_failure);
     };
 
-    this.deleteLearningResource = function(scope, resource_id){
+    this.deleteLearningResource = function(resource_id){
         var req = {
             url: "/deleteresource",
             method: "post",

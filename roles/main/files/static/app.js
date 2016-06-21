@@ -84,7 +84,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
         var failureCallback = function(res){};
 
-        var addExercisePromise = exerciseService.addExercise($scope, newQuestion, newAnswer);
+        var addExercisePromise = exerciseService.addExercise(newQuestion, newAnswer);
         addExercisePromise.then(successCallback, failureCallback);
 
         $scope.newQuestion = "";
@@ -143,7 +143,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         var failureCallback = function(res){};
 
         $scope.activeObject.exercise = exercise;
-        var promise = exerciseService.reviseLearningResourceList($scope, exercise.id);
+        var promise = exerciseService.reviseLearningResourceList(exercise.id);
         promise.then(successCallback, failureCallback);
 
     };
@@ -167,7 +167,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
             alert("failure in adding the resource");
         };
 
-        var promise = exerciseService.addLearningResource($scope, new_cap, new_url, $rootScope.activeObject.exercise.id);
+        var promise = exerciseService.addLearningResource(new_cap, new_url, $rootScope.activeObject.exercise.id);
         promise.then(successCallback, failureCallback);
 
         $scope.new_caption_field = "";
@@ -189,7 +189,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
             alert("failure in deleting the resource");
         };
 
-        var promise = exerciseService.deleteLearningResource($scope, resource_id);
+        var promise = exerciseService.deleteLearningResource(resource_id);
         promise.then(success, failure);
     };
 
