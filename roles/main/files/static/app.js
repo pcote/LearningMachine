@@ -7,9 +7,7 @@
 
 (function(){
 var MainController = function($scope, $rootScope, userService, exerciseService){
-    // The currently "active" variables used to help set up lists, add new info, ect.
-    $rootScope.activeObject = {};
-    $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
+
 
     // Controls the visibility of the topics and exercise sections
     this.showStatus = {};
@@ -59,6 +57,9 @@ var AttemptsReportController = function($scope, exerciseService){
 // rate how they felt they did.
 var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
+    // The currently "active" variables used to help set up lists, add new info, ect.
+    $rootScope.activeObject = {};
+    $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
 
     var getExercisesSuccess = function(res){
          $scope.dataList.exercises = res.data.exercises;
