@@ -106,19 +106,6 @@ var ExerciseService = function($http, $rootScope){
         }
     };
 
-    this.setupLearningResourceDisplay = function(scope){
-        var url = "/resourcesforexercise/" + scope.activeObject.exercise.id;
-
-        var cb_success = function(res){
-            scope.dataList.resources = res.data.resources;
-        };
-
-        var cb_failure = function(res){
-            alert("failure at accessing resources");
-        };
-
-        $http.get(url).then(cb_success, cb_failure);
-    };
 
     this.deleteLearningResource = function(resource_id){
         var req = {

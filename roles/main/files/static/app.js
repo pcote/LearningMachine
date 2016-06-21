@@ -68,18 +68,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     var getExercisesFailure = function(res){
     };
 
-    // exercise list sentinel used to trigger refreshes of exercise list.
-    $scope.trigger = true;
-
-    $scope.$watch(function(){
-        return $scope.trigger;
-    }, function(newVal, oldVal){
-        if(newVal !== oldVal){
-            var promise = exerciseService.getExercises();
-            promise.then(getExercisesSuccess, getExercisesFailure);
-        }
-    });
-
 
     var promise = exerciseService.getExercises();
     promise.then(getExercisesSuccess, getExercisesFailure);
