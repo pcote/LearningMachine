@@ -10,7 +10,6 @@ var MainController = function($scope, $rootScope, userService, exerciseService){
     // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {};
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
-    $rootScope.activeObject.user = {};
 
     // Controls the visibility of the topics and exercise sections
     this.showStatus = {};
