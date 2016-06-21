@@ -60,6 +60,14 @@ var AttemptsReportController = function($scope, exerciseService){
 // rate how they felt they did.
 var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
+
+    var getExercisesSuccess = function(res){
+         $scope.dataList.exercises = res.data.exercises;
+    };
+
+    var getExercisesFailure = function(res){
+    };
+
     // exercise list sentinel used to trigger refreshes of exercise list.
     $scope.trigger = true;
 
@@ -67,11 +75,14 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         return $scope.trigger;
     }, function(newVal, oldVal){
         if(newVal !== oldVal){
-            exerciseService.setupExerciseDisplay($scope);
+            var promise = exerciseService.getExercises();
+            promise.then(getExercisesSuccess, getExercisesFailure);
         }
     });
 
-    exerciseService.setupExerciseDisplay($scope);
+
+    var promise = exerciseService.getExercises();
+    promise.then(getExercisesSuccess, getExercisesFailure);
 
 
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
@@ -79,7 +90,8 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     $scope.addExerciseClick = function(newQuestion, newAnswer){
 
         var successCallback = function(res){
-            exerciseService.setupExerciseDisplay($scope);
+            var promise = exerciseService.getExercises();
+            promise.then(getExercisesSuccess, getExercisesFailure);
         };
 
         var failureCallback = function(res){};
@@ -103,7 +115,8 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     $scope.viewExercisesClick = function(mainController){
         mainController.showStatus.exercises = true;
         mainController.showStatus.attempts = false;
-        exerciseService.setupExerciseDisplay($scope);
+        var promise = exerciseService.getExercises();
+        promise.then(getExercisesSuccess, getExercisesFailure);
     };
 
 
@@ -123,7 +136,8 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     $scope.deleteExerciseClick = function(exercise_id){
         var successCallback = function(res){
-            exerciseService.setupExerciseDisplay($scope);
+            var promise = exerciseService.getExercises();
+            promise.then(getExercisesSuccess, getExercisesFailure);
         };
 
         var failureCallback = function(res){

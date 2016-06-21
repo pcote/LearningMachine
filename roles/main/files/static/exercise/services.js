@@ -3,16 +3,10 @@
 
 var ExerciseService = function($http, $rootScope){
 
-    // Setup the display for the main body of the exercise page.
-    // Info needed here includes lists of exercises relevant
-    // to a given topic.
-    this.setupExerciseDisplay = function(scope){
-
-        // grab the exercises
-        $http.get("/exercises").then(function(res){
-            scope.dataList.exercises = res.data.exercises;
-        }, function(res){});
-
+    // Get exercise information for the current user.
+    this.getExercises = function(){
+        var promise = $http.get("/exercises");
+        return promise;
     };
 
     // Take the score use submitted for the given exercise and report it to the server.
