@@ -1,7 +1,7 @@
 // Exercise Service - Manages info concerning listing of exercises,
 // adding new ones, scoring attempts, and getting reports on those attempts.
 
-var ExerciseService = function($http, $rootScope){
+var ExerciseService = function($http){
 
     // Get exercise information for the current user.
     this.getExercises = function(){
