@@ -61,6 +61,11 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     $rootScope.activeObject = {};
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
 
+    // Item lists to display on different parts of the page
+    $scope.dataList = {};
+    $scope.dataList.exercises = [];
+    $scope.dataList.resources = [];
+
     var getExercisesSuccess = function(res){
          $scope.dataList.exercises = res.data.exercises;
     };
