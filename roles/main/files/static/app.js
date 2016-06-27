@@ -93,9 +93,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
         var addExercisePromise = exerciseService.addExercise(newQuestion, newAnswer);
         addExercisePromise.then(successCallback, failureCallback);
-
-        $scope.newQuestion = "";
-        $scope.newAnswer = "";
         $("#addExerciseModal").modal("hide");
     };
 
@@ -179,8 +176,6 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         var promise = exerciseService.addLearningResource(new_cap, new_url, $rootScope.activeObject.exercise.id);
         promise.then(successCallback, failureCallback);
 
-        $scope.new_caption_field = "";
-        $scope.new_url_field = "";
         $("#addResourceModal").modal("hide");
 
     };
