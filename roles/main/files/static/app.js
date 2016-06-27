@@ -62,11 +62,17 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     $scope.dataList.exercises = [];
     $scope.dataList.resources = [];
 
-    this.newinfo = {}
+    this.newinfo = {};
     this.newinfo.question = "";
     this.newinfo.answer = "";
     this.newinfo.caption = "";
     this.newinfo.url = "";
+
+    this.charsleft = {};
+    this.charsleft.question = "";
+    this.charsleft.answer = "";
+    this.charsleft.caption = "";
+    this.charsleft.url = "";
 
     var getExercisesSuccess = function(res){
          $scope.dataList.exercises = res.data.exercises;
@@ -216,7 +222,22 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
         message = charsLeft + " characters left";
 
-        $scope[charsLeftDisplay] = message;
+        if(charsLeftDisplay === "questionCharsLeft"){
+            this.charsleft.question = message;
+        }
+
+        else if(charsLeftDisplay === "answerCharsLeft"){
+            this.charsleft.answer = message;
+        }
+
+        else if(charsLeftDisplay === "captionCharsLeft"){
+            this.charsleft.caption = message;
+        }
+
+        else if(charsLeftDisplay === "urlCharsLeft"){
+            this.charsleft.url = message;
+        }
+
     };
 
 };

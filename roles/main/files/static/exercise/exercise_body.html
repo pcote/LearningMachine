@@ -91,7 +91,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
                                     <textarea maxlength="140" rows="5" cols="35" id="newQuestionId" ng-model="ec.newinfo.question" ng-change="ec.updateCharsLeft('newQuestion', 'questionCharsLeft')"></textarea><br />
-                                    {{ questionCharsLeft }}
+                                    {{ ec.charsleft.question }}
                                 </div>
                             </div>
                             <div class="row">
@@ -102,7 +102,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
                                     <textarea maxlength="140" rows="5" cols="35" id="newAnswerId" ng-model="ec.newinfo.answer" ng-change="ec.updateCharsLeft('newAnswer', 'answerCharsLeft')" /><br />
-                                    {{ answerCharsLeft }}
+                                    {{ ec.charsleft.answer }}
                                 </div>
                             </div>
                             <div class="row">
@@ -129,7 +129,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
                             <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.caption" ng-change="ec.updateCharsLeft('new_caption_field', 'captionCharsLeft')"></textarea><br />
-                            {{ captionCharsLeft }}
+                            {{ ec.charsleft.caption }}
                         </div>
                     </div>
                     <div class="row">
@@ -138,7 +138,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
                             <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.url" ng-change="ec.updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
-                            {{ urlCharsLeft }}
+                            {{ ec.charsleft.url }}
                         </div>
                     </div>
                     <div class="row">
