@@ -207,7 +207,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         promise.then(success, failure);
     };
 
-    $scope.updateCharsLeft = function(fieldName, charsLeftDisplay){
+    this.updateCharsLeft = function(fieldName, charsLeftDisplay){
         var charsLeft = 140;
         var message = "";
 
