@@ -87,7 +87,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
     // when done.
-    $scope.addExerciseClick = function(newQuestion, newAnswer){
+    this.addExerciseClick = function(newQuestion, newAnswer){
 
         var successCallback = function(res){
             var promise = exerciseService.getExercises();
@@ -106,7 +106,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
 
     // Make sure the right questions show up in the question box.
-    $scope.exerciseClick = function(exercise){
+    this.exerciseClick = function(exercise){
         $rootScope.activeObject.exercise = exercise;
         $("#questionModal").modal();
     };
@@ -121,7 +121,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
 
     // When user clicks "show answer" in the question box, show the answer in a display they can rate themselves on.
-    $scope.showAnswerClick = function(){
+    this.showAnswerClick = function(){
         $("#questionModal").modal("hide");
         $("#questionAnswerModal").modal();
     };
@@ -129,12 +129,12 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     // Handle a user rating themselves.  Here, just send the rating to the server
     // and make the question answer box go away.
-    $scope.scoreClick = function(score){
+    this.scoreClick = function(score){
         exerciseService.submitScore($rootScope.activeObject.exercise, score);
         $("#questionAnswerModal").modal("hide");
     };
 
-    $scope.deleteExerciseClick = function(exercise_id){
+    this.deleteExerciseClick = function(exercise_id){
         var successCallback = function(res){
             var promise = exerciseService.getExercises();
             promise.then(getExercisesSuccess, getExercisesFailure);
@@ -148,7 +148,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         deleteExercisePromise.then(successCallback, failureCallback)
     };
 
-    $scope.resourceButtonClick = function(exercise){
+    this.resourceButtonClick = function(exercise){
 
         var successCallback = function(res){
             $scope.dataList.resources = res.data.resources;
@@ -162,12 +162,12 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     };
 
-    $scope.resourceListToResourceModalClick = function(){
+    this.resourceListToResourceModalClick = function(){
         $("#resourceListId").modal("hide");
         $("#addResourceModal").modal();
     };
 
-    $scope.addLearningResourceClick = function(new_cap, new_url){
+    this.addLearningResourceClick = function(new_cap, new_url){
 
         var successCallback = function(res){
             var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
@@ -190,7 +190,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     };
 
-    $scope.deleteLearningResourceClick = function(resource_id){
+    this.deleteLearningResourceClick = function(resource_id){
 
         var success = function(res){
             var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;

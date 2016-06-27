@@ -30,9 +30,9 @@
                                 <th>&nbsp;</th>
                             </tr>
                             <tr ng-repeat="exercise in dataList.exercises | orderBy:'id':true">
-                                <td><a ng-click="deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
-                                <td><a ng-click="exerciseClick(exercise)">{{exercise.question}}</a></td>
-                                <td><a ng-click="resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
+                                <td><a ng-click="ec.deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
+                                <td><a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a></td>
+                                <td><a ng-click="ec.resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
                             </tr>
                         </table>
                     </div>
@@ -64,12 +64,12 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             <table class="table resource_data_table">
                                 <tr ng-repeat="resource in dataList.resources">
                                     <td><a href="{{resource.url}}" target="_blank">{{resource.caption}}</a></td>
-                                    <td><button class="btn btn-danger" ng-click="deleteLearningResourceClick(resource.resource_id)">delete</button></td>
+                                    <td><button class="btn btn-danger" ng-click="ec.deleteLearningResourceClick(resource.resource_id)">delete</button></td>
                                 </tr>
                             </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="resourceListToResourceModalClick()">Add Resource</button>
+                <button class="btn btn-primary" ng-click="ec.resourceListToResourceModalClick()">Add Resource</button>
                 <button class="btn btn-primary" data-target="#resourceListId" data-dismiss="modal">OK</button>
             </div>
         </div>
@@ -107,7 +107,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </div>
                             <div class="row">
                                 <button class="btn btn-primary" data-target="#addExerciseModal" data-dismiss="modal">Cancel</button>
-                                <button class="btn btn-primary" ng-click="addExerciseClick(newinfo.question, newinfo.answer)">OK</button>
+                                <button class="btn btn-primary" ng-click="ec.addExerciseClick(newinfo.question, newinfo.answer)">OK</button>
                             </div>
                         </div>
             </div>
@@ -144,7 +144,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
                             <button class="btn btn-primary" data-target="#addEResourceModal" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary" ng-click="addLearningResourceClick(newinfo.caption, newinfo.url)">OK</button>
+                            <button class="btn btn-primary" ng-click="ec.addLearningResourceClick(newinfo.caption, newinfo.url)">OK</button>
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                 {{activeObject.exercise.question}}
             </div>
             <div class="modal-footer" align="center">
-                <button class="btn btn-lg btn-primary" ng-click="showAnswerClick()">Show Answer</button>
+                <button class="btn btn-lg btn-primary" ng-click="ec.showAnswerClick()">Show Answer</button>
             </div>
         </div>
     </div>
@@ -195,13 +195,13 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
             <div class="modal-footer" align="center">
                 <div class="row">
                     <div class="col-xs-12" align="center">
-                        <button class="btn btn-lg btn-danger" ng-click="scoreClick(1)">
+                        <button class="btn btn-lg btn-danger" ng-click="ec.scoreClick(1)">
                             bad
                         </button>
-                        <button class="btn btn-lg"  ng-click="scoreClick(2)">
+                        <button class="btn btn-lg"  ng-click="ec.scoreClick(2)">
                             okay
                         </button>
-                        <button class="btn btn-lg btn-primary"  ng-click="scoreClick(3)">
+                        <button class="btn btn-lg btn-primary"  ng-click="ec.scoreClick(3)">
                             good
                         </button>
                     </div>
