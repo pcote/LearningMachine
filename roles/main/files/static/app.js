@@ -6,7 +6,7 @@
 
 
 (function(){
-var MainController = function($scope, $rootScope, userService, exerciseService){
+var MainController = function(userService, exerciseService){
 
 
     // Controls the visibility of the topics and exercise sections
@@ -15,9 +15,9 @@ var MainController = function($scope, $rootScope, userService, exerciseService){
     this.showStatus.attempts = false;
 
     // Item lists to display on different parts of the page
-    $scope.dataList = {};
-    $scope.dataList.exercises = [];
-    $scope.dataList.resources = [];
+    this.dataList = {};
+    this.dataList.exercises = [];
+    this.dataList.resources = [];
 
 
     // Exercise attempts report data.
