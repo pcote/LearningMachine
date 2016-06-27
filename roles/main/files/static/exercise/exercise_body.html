@@ -4,9 +4,9 @@
     </div>
 
     <div class="row report_button_row">
-        <div class="col-xs-12" align="center" ng-controller="AttemptsReportController">
+        <div class="col-xs-12" align="center" ng-controller="AttemptsReportController as arc">
             <a href="#" data-toggle="modal" data-target="#addExerciseModal"><button class="btn btn-primary">Add Flaskmark</button></a>
-            <a href="#" ng-click="viewAttemptsClick(mainController)"><button class="btn btn-primary">Exercise Attempts</button></a>
+            <a href="#" ng-click="arc.viewAttemptsClick(mainController)"><button class="btn btn-primary">Exercise Attempts</button></a>
         </div>
     </div>
 
