@@ -112,7 +112,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     };
 
     // Navigate to the exercises page
-    $scope.viewExercisesClick = function(mainController){
+    this.viewExercisesClick = function(mainController){
         mainController.showStatus.exercises = true;
         mainController.showStatus.attempts = false;
         var promise = exerciseService.getExercises();

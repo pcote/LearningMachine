@@ -39,7 +39,7 @@
          * exercise_body - Exercises pertaining to a user specified topic.
          * attempt_report - A report displaying the user's history regarding how they graded themselves on different exercises.
         -->
-        <div class="col-xs-9" ng-include="'exercise/exercise_body.html'" ng-show="mainController.showStatus.exercises" ng-controller="ExerciseController as exerciseController"></div>
+        <div class="col-xs-9" ng-include="'exercise/exercise_body.html'" ng-show="mainController.showStatus.exercises" ng-controller="ExerciseController as ec"></div>
         <div class="col-xs-9" ng-include="'exercise/attempt_report.html'" ng-show="mainController.showStatus.attempts"></div>
     </div>
 </div>
