@@ -14,11 +14,6 @@ var MainController = function(userService, exerciseService){
     this.showStatus.exercises = true;
     this.showStatus.attempts = false;
 
-    // Item lists to display on different parts of the page
-    this.dataList = {};
-    this.dataList.exercises = [];
-    this.dataList.resources = [];
-
 
     // Exercise attempts report data.
     this.report = {};
