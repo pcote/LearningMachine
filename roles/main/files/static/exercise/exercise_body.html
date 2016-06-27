@@ -90,7 +90,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
-                                    <textarea maxlength="140" rows="5" cols="35" id="newQuestionId" ng-model="newinfo.question" ng-change="ec.updateCharsLeft('newQuestion', 'questionCharsLeft')"></textarea><br />
+                                    <textarea maxlength="140" rows="5" cols="35" id="newQuestionId" ng-model="ec.newinfo.question" ng-change="ec.updateCharsLeft('newQuestion', 'questionCharsLeft')"></textarea><br />
                                     {{ questionCharsLeft }}
                                 </div>
                             </div>
@@ -101,13 +101,13 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
-                                    <textarea maxlength="140" rows="5" cols="35" id="newAnswerId" ng-model="newinfo.answer" ng-change="ec.updateCharsLeft('newAnswer', 'answerCharsLeft')" /><br />
+                                    <textarea maxlength="140" rows="5" cols="35" id="newAnswerId" ng-model="ec.newinfo.answer" ng-change="ec.updateCharsLeft('newAnswer', 'answerCharsLeft')" /><br />
                                     {{ answerCharsLeft }}
                                 </div>
                             </div>
                             <div class="row">
                                 <button class="btn btn-primary" data-target="#addExerciseModal" data-dismiss="modal">Cancel</button>
-                                <button class="btn btn-primary" ng-click="ec.addExerciseClick(newinfo.question, newinfo.answer)">OK</button>
+                                <button class="btn btn-primary" ng-click="ec.addExerciseClick(ec.newinfo.question, ec.newinfo.answer)">OK</button>
                             </div>
                         </div>
             </div>
@@ -128,7 +128,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
-                            <textarea maxlength="140" cols="35" rows="4" ng-model="newinfo.caption" ng-change="ec.updateCharsLeft('new_caption_field', 'captionCharsLeft')"></textarea><br />
+                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.caption" ng-change="ec.updateCharsLeft('new_caption_field', 'captionCharsLeft')"></textarea><br />
                             {{ captionCharsLeft }}
                         </div>
                     </div>
@@ -137,14 +137,14 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
-                            <textarea maxlength="140" cols="35" rows="4" ng-model="newinfo.url" ng-change="ec.updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
+                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.url" ng-change="ec.updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
                             {{ urlCharsLeft }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
                             <button class="btn btn-primary" data-target="#addEResourceModal" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary" ng-click="ec.addLearningResourceClick(newinfo.caption, newinfo.url)">OK</button>
+                            <button class="btn btn-primary" ng-click="ec.addLearningResourceClick(ec.newinfo.caption, ec.newinfo.url)">OK</button>
                         </div>
                     </div>
                 </div>

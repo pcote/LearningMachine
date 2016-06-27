@@ -67,11 +67,11 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     $scope.dataList.exercises = [];
     $scope.dataList.resources = [];
 
-    $scope.newinfo = {}
-    $scope.newinfo.question = "";
-    $scope.newinfo.answer = "";
-    $scope.newinfo.caption = "";
-    $scope.newinfo.url = "";
+    this.newinfo = {}
+    this.newinfo.question = "";
+    this.newinfo.answer = "";
+    this.newinfo.caption = "";
+    this.newinfo.url = "";
 
     var getExercisesSuccess = function(res){
          $scope.dataList.exercises = res.data.exercises;
@@ -212,16 +212,16 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         var message = "";
 
         if(fieldName === "newQuestion"){
-            charsLeft = 140 - $scope.newinfo.question.length;
+            charsLeft = 140 - this.newinfo.question.length;
         }
         else if(fieldName === "newAnswer"){
-            charsLeft = 140 - $scope.newinfo.answer.length;
+            charsLeft = 140 - this.newinfo.answer.length;
         }
         else if(fieldName === "new_caption_field"){
-            charsLeft = 140 - $scope.newinfo.caption.length;
+            charsLeft = 140 - this.newinfo.caption.length;
         }
         else if(fieldName === "new_url_field"){
-            charsLeft = 140 - $scope.newinfo.url.length;
+            charsLeft = 140 - this.newinfo.url.length;
         }
 
         message = charsLeft + " characters left";
