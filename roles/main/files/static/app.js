@@ -51,7 +51,7 @@ var AttemptsReportController = function(exerciseService){
 
 // Handles the adding events for when users add exercises, click on them, and push buttons that
 // rate how they felt they did.
-var ExerciseController = function(exerciseService, $http){
+var ExerciseController = function(exerciseService){
 
     var ec = this;
 
@@ -174,8 +174,7 @@ var ExerciseController = function(exerciseService, $http){
                 ec.dataList.resources = res.data.resources;
             }.bind(ec);
 
-            var url = "/resourcesforexercise/" + ec.activeObject.exercise.id;
-            var promise = $http.get(url);
+            var promise = exerciseService.reviseLearningResourceList(ec.activeObject.exercise.id);
             promise.then(getResourceSuccess);
         };
 
@@ -197,8 +196,7 @@ var ExerciseController = function(exerciseService, $http){
                 ec.dataList.resources = res.data.resources;
             }.bind(ec);
 
-            var url = "/resourcesforexercise/" + ec.activeObject.exercise.id;
-            var promise = $http.get(url)
+            var promise = exerciseService.reviseLearningResourceList(ec.activeObject.exercise.id);
             promise.then(resourceSuccess);
         };
 
