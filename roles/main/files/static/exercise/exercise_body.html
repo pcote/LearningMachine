@@ -58,7 +58,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                Resources - {{ activeObject.exercise.question }}
+                Resources - {{ ec.activeObject.exercise.question }}
             </div>
             <div class="modal-body">
                             <table class="table resource_data_table">
@@ -120,7 +120,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
 <div class="modal fade" id="addResourceModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" align="center">New Learning Resource - {{ activeObject.exercise.question }}</div>
+            <div class="modal-header" align="center">New Learning Resource - {{ ec.activeObject.exercise.question }}</div>
             <div class="modal-body">
                 <div class="container resource_form_container">
                     <div class="row">
@@ -162,7 +162,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                 <u><b>Question</b></u>
             </div>
             <div class="modal-body">
-                {{activeObject.exercise.question}}
+                {{ec.activeObject.exercise.question}}
             </div>
             <div class="modal-footer" align="center">
                 <button class="btn btn-lg btn-primary" ng-click="ec.showAnswerClick()">Show Answer</button>
@@ -183,13 +183,13 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xs-12"><b><u>{{activeObject.exercise.question}}</u></b></div>
+                    <div class="col-xs-12"><b><u>{{ec.activeObject.exercise.question}}</u></b></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">&nbsp;</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12"><pre>{{activeObject.exercise.answer}}</pre></div>
+                    <div class="col-xs-12"><pre>{{ec.activeObject.exercise.answer}}</pre></div>
                 </div>
             </div>
             <div class="modal-footer" align="center">

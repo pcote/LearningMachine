@@ -51,13 +51,13 @@ var AttemptsReportController = function(exerciseService){
 
 // Handles the adding events for when users add exercises, click on them, and push buttons that
 // rate how they felt they did.
-var ExerciseController = function($scope, $rootScope, exerciseService, $http){
+var ExerciseController = function(exerciseService, $http){
 
     var ec = this;
 
     // The currently "active" variables used to help set up lists, add new info, ect.
-    $rootScope.activeObject = {};
-    $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
+    ec.activeObject = {};
+    ec.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
 
     // Item lists to display on different parts of the page
     ec.dataList = {};
@@ -107,7 +107,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     // Make sure the right questions show up in the question box.
     ec.exerciseClick = function(exercise){
-        $rootScope.activeObject.exercise = exercise;
+        ec.activeObject.exercise = exercise;
         $("#questionModal").modal();
     };
 
@@ -130,7 +130,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     // Handle a user rating themselves.  Here, just send the rating to the server
     // and make the question answer box go away.
     ec.scoreClick = function(score){
-        exerciseService.submitScore($rootScope.activeObject.exercise, score);
+        exerciseService.submitScore(ec.activeObject.exercise, score);
         $("#questionAnswerModal").modal("hide");
     };
 
@@ -156,7 +156,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         }.bind(ec);
         var failureCallback = function(res){};
 
-        $rootScope.activeObject.exercise = exercise;
+        ec.activeObject.exercise = exercise;
         var promise = exerciseService.reviseLearningResourceList(exercise.id);
         promise.then(successCallback, failureCallback);
 
@@ -174,7 +174,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
                 ec.dataList.resources = res.data.resources;
             }.bind(ec);
 
-            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
+            var url = "/resourcesforexercise/" + ec.activeObject.exercise.id;
             var promise = $http.get(url);
             promise.then(getResourceSuccess);
         };
@@ -183,7 +183,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
             alert("failure in adding the resource");
         };
 
-        var promise = exerciseService.addLearningResource(new_cap, new_url, $rootScope.activeObject.exercise.id);
+        var promise = exerciseService.addLearningResource(new_cap, new_url, ec.activeObject.exercise.id);
         promise.then(successCallback, failureCallback);
 
         $("#addResourceModal").modal("hide");
@@ -197,7 +197,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
                 ec.dataList.resources = res.data.resources;
             }.bind(ec);
 
-            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
+            var url = "/resourcesforexercise/" + ec.activeObject.exercise.id;
             var promise = $http.get(url)
             promise.then(resourceSuccess);
         };
