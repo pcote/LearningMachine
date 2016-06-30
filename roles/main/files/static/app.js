@@ -170,11 +170,13 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     ec.addLearningResourceClick = function(new_cap, new_url){
 
         var successCallback = function(res){
-            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
-
-            $http.get(url).then(function(res){
+            var getResourceSuccess = function(res){
                 $scope.dataList.resources = res.data.resources;
-            }, function(res){})
+            };
+
+            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
+            var promise = $http.get(url);
+            promise.then(getResourceSuccess);
         };
 
         var failureCallback = function(res){
@@ -191,10 +193,13 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     ec.deleteLearningResourceClick = function(resource_id){
 
         var success = function(res){
-            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
-            $http.get(url).then(function(res){
+            var resourceSuccess = function(res){
                 $scope.dataList.resources = res.data.resources;
-            }, function(res){})
+            };
+
+            var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
+            var promise = $http.get(url)
+            promise.then(resourceSuccess);
         };
 
         var failure = function(res){
