@@ -101,6 +101,8 @@ var ExerciseController = function(exerciseService){
 
         var addExercisePromise = exerciseService.addExercise(newQuestion, newAnswer);
         addExercisePromise.then(successCallback, failureCallback);
+        ec.newinfo.question = "";
+        ec.newinfo.answer = "";
         $("#addExerciseModal").modal("hide");
     };
 
@@ -185,6 +187,8 @@ var ExerciseController = function(exerciseService){
         var promise = exerciseService.addLearningResource(new_cap, new_url, ec.activeObject.exercise.id);
         promise.then(successCallback, failureCallback);
 
+        ec.newinfo.caption = "";
+        ec.newinfo.url = "";
         $("#addResourceModal").modal("hide");
 
     };
