@@ -29,7 +29,7 @@
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                             </tr>
-                            <tr ng-repeat="exercise in dataList.exercises | orderBy:'id':true">
+                            <tr ng-repeat="exercise in ec.dataList.exercises | orderBy:'id':true">
                                 <td><a ng-click="ec.deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
                                 <td><a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a></td>
                                 <td><a ng-click="ec.resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
@@ -62,7 +62,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
             </div>
             <div class="modal-body">
                             <table class="table resource_data_table">
-                                <tr ng-repeat="resource in dataList.resources">
+                                <tr ng-repeat="resource in ec.dataList.resources">
                                     <td><a href="{{resource.url}}" target="_blank">{{resource.caption}}</a></td>
                                     <td><button class="btn btn-danger" ng-click="ec.deleteLearningResourceClick(resource.resource_id)">delete</button></td>
                                 </tr>

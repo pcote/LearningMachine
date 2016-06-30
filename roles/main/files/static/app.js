@@ -60,9 +60,9 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
 
     // Item lists to display on different parts of the page
-    $scope.dataList = {};
-    $scope.dataList.exercises = [];
-    $scope.dataList.resources = [];
+    ec.dataList = {};
+    ec.dataList.exercises = [];
+    ec.dataList.resources = [];
 
     ec.newinfo = {};
     ec.newinfo.question = "";
@@ -77,8 +77,8 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     ec.charsleft.url = "";
 
     var getExercisesSuccess = function(res){
-         $scope.dataList.exercises = res.data.exercises;
-    };
+         ec.dataList.exercises = res.data.exercises;
+    }.bind(ec);
 
     var getExercisesFailure = function(res){
     };
@@ -151,9 +151,9 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     ec.resourceButtonClick = function(exercise){
 
         var successCallback = function(res){
-            $scope.dataList.resources = res.data.resources;
+            ec.dataList.resources = res.data.resources;
             $("#resourceListId").modal();
-        };
+        }.bind(ec);
         var failureCallback = function(res){};
 
         $rootScope.activeObject.exercise = exercise;
@@ -171,8 +171,8 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
         var successCallback = function(res){
             var getResourceSuccess = function(res){
-                $scope.dataList.resources = res.data.resources;
-            };
+                ec.dataList.resources = res.data.resources;
+            }.bind(ec);
 
             var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
             var promise = $http.get(url);
@@ -194,8 +194,8 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
         var success = function(res){
             var resourceSuccess = function(res){
-                $scope.dataList.resources = res.data.resources;
-            };
+                ec.dataList.resources = res.data.resources;
+            }.bind(ec);
 
             var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
             var promise = $http.get(url)
