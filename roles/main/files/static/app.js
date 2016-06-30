@@ -53,6 +53,8 @@ var AttemptsReportController = function(exerciseService){
 // rate how they felt they did.
 var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
+    var ec = this;
+
     // The currently "active" variables used to help set up lists, add new info, ect.
     $rootScope.activeObject = {};
     $rootScope.activeObject.exercise = {"id": 0, "question": "blank question", "answer": "blank answer"};
@@ -62,17 +64,17 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
     $scope.dataList.exercises = [];
     $scope.dataList.resources = [];
 
-    this.newinfo = {};
-    this.newinfo.question = "";
-    this.newinfo.answer = "";
-    this.newinfo.caption = "";
-    this.newinfo.url = "";
+    ec.newinfo = {};
+    ec.newinfo.question = "";
+    ec.newinfo.answer = "";
+    ec.newinfo.caption = "";
+    ec.newinfo.url = "";
 
-    this.charsleft = {};
-    this.charsleft.question = "";
-    this.charsleft.answer = "";
-    this.charsleft.caption = "";
-    this.charsleft.url = "";
+    ec.charsleft = {};
+    ec.charsleft.question = "";
+    ec.charsleft.answer = "";
+    ec.charsleft.caption = "";
+    ec.charsleft.url = "";
 
     var getExercisesSuccess = function(res){
          $scope.dataList.exercises = res.data.exercises;
@@ -88,7 +90,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
     // when done.
-    this.addExerciseClick = function(newQuestion, newAnswer){
+    ec.addExerciseClick = function(newQuestion, newAnswer){
 
         var successCallback = function(res){
             var promise = exerciseService.getExercises();
@@ -104,13 +106,13 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
 
     // Make sure the right questions show up in the question box.
-    this.exerciseClick = function(exercise){
+    ec.exerciseClick = function(exercise){
         $rootScope.activeObject.exercise = exercise;
         $("#questionModal").modal();
     };
 
     // Navigate to the exercises page
-    this.viewExercisesClick = function(mainController){
+    ec.viewExercisesClick = function(mainController){
         mainController.showStatus.exercises = true;
         mainController.showStatus.attempts = false;
         var promise = exerciseService.getExercises();
@@ -119,7 +121,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
 
     // When user clicks "show answer" in the question box, show the answer in a display they can rate themselves on.
-    this.showAnswerClick = function(){
+    ec.showAnswerClick = function(){
         $("#questionModal").modal("hide");
         $("#questionAnswerModal").modal();
     };
@@ -127,12 +129,12 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     // Handle a user rating themselves.  Here, just send the rating to the server
     // and make the question answer box go away.
-    this.scoreClick = function(score){
+    ec.scoreClick = function(score){
         exerciseService.submitScore($rootScope.activeObject.exercise, score);
         $("#questionAnswerModal").modal("hide");
     };
 
-    this.deleteExerciseClick = function(exercise_id){
+    ec.deleteExerciseClick = function(exercise_id){
         var successCallback = function(res){
             var promise = exerciseService.getExercises();
             promise.then(getExercisesSuccess, getExercisesFailure);
@@ -146,7 +148,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         deleteExercisePromise.then(successCallback, failureCallback)
     };
 
-    this.resourceButtonClick = function(exercise){
+    ec.resourceButtonClick = function(exercise){
 
         var successCallback = function(res){
             $scope.dataList.resources = res.data.resources;
@@ -160,12 +162,12 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     };
 
-    this.resourceListToResourceModalClick = function(){
+    ec.resourceListToResourceModalClick = function(){
         $("#resourceListId").modal("hide");
         $("#addResourceModal").modal();
     };
 
-    this.addLearningResourceClick = function(new_cap, new_url){
+    ec.addLearningResourceClick = function(new_cap, new_url){
 
         var successCallback = function(res){
             var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
@@ -186,7 +188,7 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
 
     };
 
-    this.deleteLearningResourceClick = function(resource_id){
+    ec.deleteLearningResourceClick = function(resource_id){
 
         var success = function(res){
             var url = "/resourcesforexercise/" + $rootScope.activeObject.exercise.id;
@@ -203,39 +205,39 @@ var ExerciseController = function($scope, $rootScope, exerciseService, $http){
         promise.then(success, failure);
     };
 
-    this.updateCharsLeft = function(fieldName, charsLeftDisplay){
+    ec.updateCharsLeft = function(fieldName, charsLeftDisplay){
         var charsLeft = 140;
         var message = "";
 
         if(fieldName === "newQuestion"){
-            charsLeft = 140 - this.newinfo.question.length;
+            charsLeft = 140 - ec.newinfo.question.length;
         }
         else if(fieldName === "newAnswer"){
-            charsLeft = 140 - this.newinfo.answer.length;
+            charsLeft = 140 - ec.newinfo.answer.length;
         }
         else if(fieldName === "new_caption_field"){
-            charsLeft = 140 - this.newinfo.caption.length;
+            charsLeft = 140 - ec.newinfo.caption.length;
         }
         else if(fieldName === "new_url_field"){
-            charsLeft = 140 - this.newinfo.url.length;
+            charsLeft = 140 - ec.newinfo.url.length;
         }
 
         message = charsLeft + " characters left";
 
         if(charsLeftDisplay === "questionCharsLeft"){
-            this.charsleft.question = message;
+            ec.charsleft.question = message;
         }
 
         else if(charsLeftDisplay === "answerCharsLeft"){
-            this.charsleft.answer = message;
+            ec.charsleft.answer = message;
         }
 
         else if(charsLeftDisplay === "captionCharsLeft"){
-            this.charsleft.caption = message;
+            ec.charsleft.caption = message;
         }
 
         else if(charsLeftDisplay === "urlCharsLeft"){
-            this.charsleft.url = message;
+            ec.charsleft.url = message;
         }
 
     };
