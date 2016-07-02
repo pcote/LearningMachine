@@ -78,7 +78,7 @@ var ExerciseController = function(exerciseService){
 
     var getExercisesSuccess = function(res){
          ec.dataList.exercises = res.data.exercises;
-    }.bind(ec);
+    };
 
     var getExercisesFailure = function(res){
     };
@@ -155,7 +155,7 @@ var ExerciseController = function(exerciseService){
         var successCallback = function(res){
             ec.dataList.resources = res.data.resources;
             $("#resourceListId").modal();
-        }.bind(ec);
+        };
         var failureCallback = function(res){};
 
         ec.activeObject.exercise = exercise;
@@ -174,7 +174,7 @@ var ExerciseController = function(exerciseService){
         var successCallback = function(res){
             var getResourceSuccess = function(res){
                 ec.dataList.resources = res.data.resources;
-            }.bind(ec);
+            };
 
             var promise = exerciseService.reviseLearningResourceList(ec.activeObject.exercise.id);
             promise.then(getResourceSuccess);
@@ -198,7 +198,7 @@ var ExerciseController = function(exerciseService){
         var success = function(res){
             var resourceSuccess = function(res){
                 ec.dataList.resources = res.data.resources;
-            }.bind(ec);
+            };
 
             var promise = exerciseService.reviseLearningResourceList(ec.activeObject.exercise.id);
             promise.then(resourceSuccess);
