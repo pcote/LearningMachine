@@ -8,30 +8,33 @@
 (function(){
 var MainController = function(userService, exerciseService){
 
-
+    var mc = this;
     // Controls the visibility of the topics and exercise sections
-    this.showStatus = {};
-    this.showStatus.exercises = true;
-    this.showStatus.attempts = false;
-    this.showStatus.addFlashmarkButton = true;
+    mc.showStatus = {};
+    mc.showStatus.exercises = true;
+    mc.showStatus.attempts = false;
+    mc.showStatus.addFlashmarkButton = true;
 
 
     // Exercise attempts report data.
-    this.report = {};
-    this.report.attempts = [];
+    mc.report = {};
+    mc.report.attempts = [];
 
 };
 
 
 // Initial setup upon the user having logged in and arrived at the main page.
 var UserController = function(userService){
-    userService.showUserName(this);
+    var uc = this;
+    userService.showUserName(uc);
 };
 
 
 // Handle mouse event to ensure the user gets their attempts report to display.
 var AttemptsReportController = function(exerciseService){
-    this.viewAttemptsClick = function(mainController){
+    var arc = this;
+
+    arc.viewAttemptsClick = function(mainController){
         mainController.showStatus.exercises = false;
         mainController.showStatus.attempts = true;
         mainController.showStatus.addFlashmarkButton = false;
