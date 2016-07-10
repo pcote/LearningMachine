@@ -13,6 +13,7 @@ var MainController = function(userService, exerciseService){
     this.showStatus = {};
     this.showStatus.exercises = true;
     this.showStatus.attempts = false;
+    this.showStatus.addFlashmarkButton = true;
 
 
     // Exercise attempts report data.
@@ -33,6 +34,7 @@ var AttemptsReportController = function(exerciseService){
     this.viewAttemptsClick = function(mainController){
         mainController.showStatus.exercises = false;
         mainController.showStatus.attempts = true;
+        mainController.showStatus.addFlashmarkButton = false;
 
         var cbSuccess = function(res){
             mainController.report.attempts = res.data.history;
@@ -117,6 +119,7 @@ var ExerciseController = function(exerciseService){
     ec.viewExercisesClick = function(mainController){
         mainController.showStatus.exercises = true;
         mainController.showStatus.attempts = false;
+        mainController.showStatus.addFlashmarkButton = true;
         var promise = exerciseService.getExercises();
         promise.then(getExercisesSuccess, getExercisesFailure);
     };
