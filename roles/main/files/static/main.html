@@ -74,13 +74,6 @@
                     <div class="col-xs-12">&nbsp;</div>
                 </div>
 
-                <div class="row report_button_row">
-                    <div class="col-xs-12" align="center" ng-controller="AttemptsReportController as arc">
-                        <a href="#" data-toggle="modal" data-target="#addExerciseModal"><button class="btn btn-primary">Add Flaskmark</button></a>
-                        <a href="#" ng-click="arc.viewAttemptsClick(mainController)"><button class="btn btn-primary">Exercise Attempts</button></a>
-                    </div>
-                </div>
-
                 <div class="row spacer_row">
                     <div class="col-xs-12">&nbsp;</div>
                 </div>
@@ -123,11 +116,6 @@
             <!-- HTML for the display of a report on attempts at different exercises by the user -->
             <div class="row">
                 <div class="col-md-12">
-                    <!-- Link to bring the user back to the exercises -->
-                    <div ng-controller="ExerciseController as ec" align="center">
-                        <br />
-                        <a  href="#" ng-click="ec.viewExercisesClick(mainController)"><button class="btn btn-primary">Back to Exercises</button></a><br />
-                    </div>
                     <h3><span align="center">Attempts Report</span></h3><br />
                     <ul>
                         <li ng-repeat="entry in mainController.report.attempts">
