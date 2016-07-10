@@ -24,12 +24,6 @@
 <!-- The main overall page template for the main app. -->
 <div class="container" ng-app="app" ng-controller="MainController as mainController">
 
-    <!-- Top row section showing user name-->
-    <div class="row">
-        <div class="col-xs-12 topbar" ng-controller="UserController as userController">
-            {{userController.displayName}}
-        </div>
-    </div>
 
     <!-- Main body template -->
     <div class="row">
@@ -61,6 +55,13 @@
                             <a href="#" ng-click="ec.viewExercisesClick(mainController)">
                                 Exercises
                             </a>
+                        </li>
+                    </ul>
+
+                    <!-- right navbar display of user name-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-controller="UserController as userController">
+                            <a href="#"><span class="glyphicon glyphicon-user"></span> {{userController.displayName}}</a>
                         </li>
                     </ul>
                 </div>
