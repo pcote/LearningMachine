@@ -40,7 +40,7 @@
          * exercise_body - Exercises pertaining to a user specified topic.
          * attempt_report - A report displaying the user's history regarding how they graded themselves on different exercises.
         -->
-        <nav class="navbar navbar-inverse" ng-controller="AttemptsReportController as arc">
+        <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="AttemptsReportController as arc">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#fm_navbar">
@@ -75,6 +75,10 @@
                 </div>
 
                 <div class="row spacer_row">
+                    <div class="col-xs-12">&nbsp;</div>
+                </div>
+
+                 <div class="row spacer_row">
                     <div class="col-xs-12">&nbsp;</div>
                 </div>
 
@@ -114,6 +118,15 @@
         </div>
         <div class="col-xs-9" ng-show="mainController.showStatus.attempts">
             <!-- HTML for the display of a report on attempts at different exercises by the user -->
+             <div class="row spacer_row">
+                <div class="col-xs-12">&nbsp;</div>
+            </div>
+             <div class="row spacer_row">
+                <div class="col-xs-12">&nbsp;</div>
+            </div>
+             <div class="row spacer_row">
+                <div class="col-xs-12">&nbsp;</div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <h3><span align="center">Attempts Report</span></h3><br />
