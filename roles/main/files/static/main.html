@@ -57,9 +57,8 @@
                 </div>
             </div>
         </nav>
-        <div class="col-xs-9"  ng-show="mainController.showStatus.exercises" ng-controller="ExerciseController as ec">
+        <div class="col-xs-9"  ng-show="mainController.showStatus.exercises">
 
-            <div ng-include="'exercise/modals.html'"></div>
             <div class="container overall_exercise_resource_container">
                 <div class="row spacer_row">
                     <div class="col-xs-12">&nbsp;</div>
@@ -83,17 +82,20 @@
                             </div>
                             <div class="row exercise_data_table_row">
                                 <div class="col-xs-12">
-                                    <table class="table">
-                                        <tr>
-                                            <th>&nbsp;</th>
-                                            <th>&nbsp;</th>
-                                        </tr>
-                                        <tr ng-repeat="exercise in ec.dataList.exercises | orderBy:'id':true">
-                                            <td><a ng-click="ec.deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
-                                            <td><a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a></td>
-                                            <td><a ng-click="ec.resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
-                                        </tr>
-                                    </table>
+                                    <div id="exerciseList" ng-controller="ExerciseController as ec">
+                                        <div ng-include="'exercise/modals.html'"></div>
+                                        <table class="table">
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                            <tr ng-repeat="exercise in ec.dataList.exercises | orderBy:'id':true">
+                                                <td><a ng-click="ec.deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
+                                                <td><a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a></td>
+                                                <td><a ng-click="ec.resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row new_question_form_container_row">
