@@ -4,53 +4,27 @@
 
 
 (function(){
-var MainController = function(userService, exerciseService){
-
-    var mc = this;
-    // Controls the visibility of the topics and exercise sections
-    mc.showStatus = {};
-    mc.showStatus.exercises = true;
-    mc.showStatus.attempts = false;
-    mc.showStatus.addFlashmarkButton = true;
 
 
-    // Exercise attempts report data.
-    mc.report = {};
-    mc.report.attempts = [];
-
-};
-
-
-var NavbarController = function(userService, exerciseService){
-
-    var nc = this;
-    userService.showUserName(nc);
-
-    nc.viewAttemptsClick = function(mainController){
-        mainController.showStatus.exercises = false;
-        mainController.showStatus.attempts = true;
-        mainController.showStatus.addFlashmarkButton = false;
-
-        var cbSuccess = function(res){
-            mainController.report.attempts = res.data.history;
-        };
-
-        var cbFailure = function(res){
-            alert("attempt to get the attempt report failed");
+// Convert a number score value into a word (good, okay, bad) in the attempts report
+var lmScoreWordFilter = function(){
+    var filter = function(score){
+        if(score == 1 ){
+            return "Bad";
         }
-
-        exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
-    }
-
-    nc.viewExercisesClick = function(mainController){
-        mainController.showStatus.exercises = true;
-        mainController.showStatus.attempts = false;
-        mainController.showStatus.addFlashmarkButton = true;
+        else if(score == 2){
+            return "Okay";
+        }
+        else if(score == 3){
+            return "Good";
+        }
+        else{
+            return "ERROR: Bad score argument";
+        }
     };
 
+    return filter;
 };
-
-
 
 
 // Handles the adding events for when users add exercises, click on them, and push buttons that
@@ -248,27 +222,6 @@ var ExerciseController = function(exerciseService){
 };
 
 
-// Convert a number score value into a word (good, okay, bad) in the attempts report
-var lmScoreWordFilter = function(){
-    var filter = function(score){
-        if(score == 1 ){
-            return "Bad";
-        }
-        else if(score == 2){
-            return "Okay";
-        }
-        else if(score == 3){
-            return "Good";
-        }
-        else{
-            return "ERROR: Bad score argument";
-        }
-    };
-
-    return filter;
-};
-
-
 var exerciseDisplay = function(){
     var d = {};
     d.restrict = "E";
@@ -279,6 +232,53 @@ var exerciseDisplay = function(){
     return d;
 };
 
+
+
+var NavbarController = function(userService, exerciseService){
+
+    var nc = this;
+    userService.showUserName(nc);
+
+    nc.viewAttemptsClick = function(mainController){
+        mainController.showStatus.exercises = false;
+        mainController.showStatus.attempts = true;
+        mainController.showStatus.addFlashmarkButton = false;
+
+        var cbSuccess = function(res){
+            mainController.report.attempts = res.data.history;
+        };
+
+        var cbFailure = function(res){
+            alert("attempt to get the attempt report failed");
+        }
+
+        exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
+    }
+
+    nc.viewExercisesClick = function(mainController){
+        mainController.showStatus.exercises = true;
+        mainController.showStatus.attempts = false;
+        mainController.showStatus.addFlashmarkButton = true;
+    };
+
+};
+
+
+var MainController = function(userService, exerciseService){
+
+    var mc = this;
+    // Controls the visibility of the topics and exercise sections
+    mc.showStatus = {};
+    mc.showStatus.exercises = true;
+    mc.showStatus.attempts = false;
+    mc.showStatus.addFlashmarkButton = true;
+
+
+    // Exercise attempts report data.
+    mc.report = {};
+    mc.report.attempts = [];
+
+};
 
 // Core Angular app initialization
 angular.module("app", [])
