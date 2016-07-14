@@ -34,6 +34,7 @@ var UserController = function(userService){
 var AttemptsReportController = function(exerciseService){
     var arc = this;
 
+
     arc.viewAttemptsClick = function(mainController){
         mainController.showStatus.exercises = false;
         mainController.showStatus.attempts = true;
@@ -49,6 +50,12 @@ var AttemptsReportController = function(exerciseService){
 
         exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
     }
+
+    arc.viewExercisesClick = function(mainController){
+        mainController.showStatus.exercises = true;
+        mainController.showStatus.attempts = false;
+        mainController.showStatus.addFlashmarkButton = true;
+    };
 };
 
 
@@ -116,15 +123,6 @@ var ExerciseController = function(exerciseService){
     ec.exerciseClick = function(exercise){
         ec.activeObject.exercise = exercise;
         $("#questionModal").modal();
-    };
-
-    // Navigate to the exercises page
-    ec.viewExercisesClick = function(mainController){
-        mainController.showStatus.exercises = true;
-        mainController.showStatus.attempts = false;
-        mainController.showStatus.addFlashmarkButton = true;
-        var promise = exerciseService.getExercises();
-        promise.then(getExercisesSuccess, getExercisesFailure);
     };
 
 
