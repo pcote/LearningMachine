@@ -277,6 +277,17 @@ var lmScoreWordFilter = function(){
 };
 
 
+var exerciseDisplay = function(){
+    var d = {};
+    d.restrict = "E";
+    d.scope = {};
+    d.templateUrl = "exercise_list_display.html";
+    d.controller = "ExerciseController";
+    d.controllerAs = "ec";
+    return d;
+};
+
+
 // Core Angular app initialization
 angular.module("app", [])
     .controller("MainController", MainController)
@@ -286,4 +297,5 @@ angular.module("app", [])
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
+    .directive("exerciseDisplay", exerciseDisplay)
 })();
