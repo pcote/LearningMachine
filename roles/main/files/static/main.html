@@ -24,7 +24,7 @@
          * exercise_body - Exercises pertaining to a user specified topic.
          * attempt_report - A report displaying the user's history regarding how they graded themselves on different exercises.
         -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="AttemptsReportController as arc">
+        <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavbarController as nc">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#fm_navbar">
@@ -40,9 +40,9 @@
                                 Add Flashmark
                             </a>
                         </li>
-                        <li><a href="#" ng-click="arc.viewAttemptsClick(mainController)">Exercise Attempts</a></li>
+                        <li><a href="#" ng-click="nc.viewAttemptsClick(mainController)">Exercise Attempts</a></li>
                         <li>
-                            <a href="#" ng-click="arc.viewExercisesClick(mainController)">
+                            <a href="#" ng-click="nc.viewExercisesClick(mainController)">
                                 Exercises
                             </a>
                         </li>
@@ -50,8 +50,8 @@
 
                     <!-- right navbar display of user name-->
                     <ul class="nav navbar-nav navbar-right">
-                        <li ng-controller="UserController as userController">
-                            <a href="#"><span class="glyphicon glyphicon-user"></span> {{userController.displayName}}</a>
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-user"></span> {{nc.displayName}}</a>
                         </li>
                     </ul>
                 </div>

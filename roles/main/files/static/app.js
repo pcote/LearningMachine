@@ -1,8 +1,6 @@
 // The main application controller
 // Main controller is a container for shared state variables.
 
-// The sub-controllers. (UserController, AttemptReportController, ect) specialize in different parts of
-// the application functionality.
 
 
 (function(){
@@ -23,19 +21,12 @@ var MainController = function(userService, exerciseService){
 };
 
 
-// Initial setup upon the user having logged in and arrived at the main page.
-var UserController = function(userService){
-    var uc = this;
-    userService.showUserName(uc);
-};
+var NavbarController = function(userService, exerciseService){
 
+    var nc = this;
+    userService.showUserName(nc);
 
-// Handle mouse event to ensure the user gets their attempts report to display.
-var AttemptsReportController = function(exerciseService){
-    var arc = this;
-
-
-    arc.viewAttemptsClick = function(mainController){
+    nc.viewAttemptsClick = function(mainController){
         mainController.showStatus.exercises = false;
         mainController.showStatus.attempts = true;
         mainController.showStatus.addFlashmarkButton = false;
@@ -51,11 +42,12 @@ var AttemptsReportController = function(exerciseService){
         exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
     }
 
-    arc.viewExercisesClick = function(mainController){
+    nc.viewExercisesClick = function(mainController){
         mainController.showStatus.exercises = true;
         mainController.showStatus.attempts = false;
         mainController.showStatus.addFlashmarkButton = true;
     };
+
 };
 
 
@@ -292,8 +284,7 @@ var exerciseDisplay = function(){
 angular.module("app", [])
     .controller("MainController", MainController)
     .controller("ExerciseController", ExerciseController)
-    .controller("AttemptsReportController", AttemptsReportController)
-    .controller("UserController", UserController)
+    .controller("NavbarController", NavbarController)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
