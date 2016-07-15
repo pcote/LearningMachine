@@ -263,6 +263,28 @@ var NavbarController = function(userService, exerciseService){
 
 };
 
+var AttemptReportController = function(exerciseService){
+    var arc = this;
+
+    var cbSuccess = function(res){
+        arc.report = {};
+        arc.report.attempts = res.data.history;
+    };
+
+    exerciseService.getAttemptsReport().then(cbSuccess);
+
+};
+
+var attemptReport = function(){
+    var d = {};
+    d.restrict = "E";
+    d.scope = {};
+    d.templateUrl = "attempt_report.html";
+    d.controller = "AttemptReportController";
+    d.controllerAs = "arc";
+    return d;
+};
+
 
 var MainController = function(userService, exerciseService){
 
@@ -285,8 +307,10 @@ angular.module("app", [])
     .controller("MainController", MainController)
     .controller("ExerciseController", ExerciseController)
     .controller("NavbarController", NavbarController)
+    .controller("AttemptReportController", AttemptReportController)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
     .directive("exerciseDisplay", exerciseDisplay)
+    .directive("attemptReport", attemptReport);
 })();
