@@ -110,7 +110,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3><span align="center">Attempts Report</span></h3><br />
-                    <attempt-report></attempt-report>
+                    <ul>
+                        <li ng-repeat="entry in mainController.report.attempts">
+                            <b><u>Question: </u></b>{{ entry.question }}<br />
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Attempt Date</th>
+                                    <th>Score</th>
+                                </tr>
+                                <tr ng-repeat="attempt in entry.attempts">
+                                    <td>{{ attempt.when_attempted | date:'medium' }}</td>
+                                    <td>{{ attempt.score | lmScoreWord }}</td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
