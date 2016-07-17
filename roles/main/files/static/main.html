@@ -24,7 +24,7 @@
          * exercise_body - Exercises pertaining to a user specified topic.
          * attempt_report - A report displaying the user's history regarding how they graded themselves on different exercises.
         -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavbarController as nc">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#fm_navbar">
@@ -41,12 +41,12 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" ng-click="nc.viewAttemptsClick(mainController)">
+                            <a href="#" ng-click="mainController.viewAttemptsClick()">
                                 Exercise Attempts
                             </a>
                         </li>
                         <li>
-                            <a href="#" ng-click="nc.viewExercisesClick(mainController)">
+                            <a href="#" ng-click="mainController.viewExercisesClick()">
                                 Exercises
                             </a>
                         </li>
@@ -55,7 +55,7 @@
                     <!-- right navbar display of user name-->
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-user"></span> {{nc.displayName}}</a>
+                            <a href="#"><span class="glyphicon glyphicon-user"></span> {{mainController.displayName}}</a>
                         </li>
                     </ul>
                 </div>

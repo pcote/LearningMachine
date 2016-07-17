@@ -265,6 +265,48 @@ var NavbarController = function(userService, exerciseService){
 
 };
 
+
+var MainController = function(userService, exerciseService){
+
+    var mc = this;
+    userService.showUserName(mc);
+
+    // Controls the visibility of the topics and exercise sections
+    mc.showStatus = {};
+    mc.showStatus.exercises = true;
+    mc.showStatus.attempts = false;
+    mc.showStatus.addFlashmarkButton = true;
+
+
+    // Exercise attempts report data.
+    mc.report = {};
+    mc.report.attempts = [];
+
+    mc.viewAttemptsClick = function(){
+        mc.showStatus.exercises = false;
+        mc.showStatus.attempts = true;
+        mc.showStatus.addFlashmarkButton = false;
+
+        var cbSuccess = function(res){
+            mc.report.attempts = res.data.history;
+        };
+
+        var cbFailure = function(res){
+            alert("attempt to get the attempt report failed");
+        }
+
+        exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
+    };
+
+    mc.viewExercisesClick = function(){
+        mc.showStatus.exercises = true;
+        mc.showStatus.attempts = false;
+        mc.showStatus.addFlashmarkButton = true;
+    };
+
+};
+
+
 var attemptsReport = function(){
     var d = {};
     d.restrict = "E";
@@ -277,22 +319,6 @@ var attemptsReport = function(){
     return d;
 };
 
-
-var MainController = function(userService, exerciseService){
-
-    var mc = this;
-    // Controls the visibility of the topics and exercise sections
-    mc.showStatus = {};
-    mc.showStatus.exercises = true;
-    mc.showStatus.attempts = false;
-    mc.showStatus.addFlashmarkButton = true;
-
-
-    // Exercise attempts report data.
-    mc.report = {};
-    mc.report.attempts = [];
-
-};
 
 // Core Angular app initialization
 angular.module("app", [])
