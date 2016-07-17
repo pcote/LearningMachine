@@ -263,6 +263,17 @@ var NavbarController = function(userService, exerciseService){
 
 };
 
+var attemptsReport = function(){
+    var d = {};
+    d.restrict = "E";
+    d.scope = {
+        attempts: "="
+    };
+
+    d.templateUrl = "attempts_report.html"
+    return d;
+};
+
 
 var MainController = function(userService, exerciseService){
 
@@ -289,4 +300,5 @@ angular.module("app", [])
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
     .directive("exerciseDisplay", exerciseDisplay)
+    .directive("attemptsReport", attemptsReport);
 })();
