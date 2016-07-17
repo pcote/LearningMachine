@@ -33,14 +33,18 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                <div class="collapse navbar-collapse" id="fm_navbar">
+                <div class="collapse navbar-collapse" id="fm_navbar" ng-controller="NavbarController as nc">
                     <ul class="nav navbar-nav">
                         <li>
                             <a href="#" data-toggle="modal" data-target="#addExerciseModal" ng-show="mainController.showStatus.addFlashmarkButton">
                                 Add Flashmark
                             </a>
                         </li>
-                        <li><a href="#" ng-click="nc.viewAttemptsClick(mainController)">Exercise Attempts</a></li>
+                        <li>
+                            <a href="#" ng-click="nc.viewAttemptsClick(mainController)">
+                                Exercise Attempts
+                            </a>
+                        </li>
                         <li>
                             <a href="#" ng-click="nc.viewExercisesClick(mainController)">
                                 Exercises
