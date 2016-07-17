@@ -61,44 +61,8 @@
                 </div>
             </div>
         </nav>
-        <div class="col-xs-9"  ng-show="mainController.showStatus.exercises">
-
-            <div class="container overall_exercise_resource_container">
-                <div class="row spacer_row">
-                    <div class="col-xs-12">&nbsp;</div>
-                </div>
-
-                <div class="row spacer_row">
-                    <div class="col-xs-12">&nbsp;</div>
-                </div>
-
-                 <div class="row spacer_row">
-                    <div class="col-xs-12">&nbsp;</div>
-                </div>
-
-                <div class="row exercise_resource_containers_row">
-                    <div class="col-xs-12 exercise_container_column">
-                        <div class="container exercise_container">
-                            <div class="row exercise_title_row">
-                                <div class="col-xs-12" align="center">
-                                    <u><b>Exercises</b></u>
-                                </div>
-                            </div>
-                            <div class="row exercise_data_table_row">
-                                <div class="col-xs-12">
-                                    <exercise-display></exercise-display>
-                                </div>
-                            </div>
-                            <div class="row new_question_form_container_row">
-                                <div class="col-xs-12">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+        <div class="col-xs-9">
+            <exercise-display show="mainController.showStatus.exercises"></exercise-display>
         </div>
         <div class="col-xs-9" ng-show="mainController.showStatus.attempts">
             <!-- HTML for the display of a report on attempts at different exercises by the user -->

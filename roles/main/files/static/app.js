@@ -225,7 +225,9 @@ var ExerciseController = function(exerciseService){
 var exerciseDisplay = function(){
     var d = {};
     d.restrict = "E";
-    d.scope = {};
+    d.scope = {
+        show: "="
+    };
     d.templateUrl = "exercise_list_display.html";
     d.controller = "ExerciseController";
     d.controllerAs = "ec";
