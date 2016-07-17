@@ -269,7 +269,8 @@ var attemptsReport = function(){
     var d = {};
     d.restrict = "E";
     d.scope = {
-        attempts: "="
+        attempts: "=",
+        show: "="
     };
 
     d.templateUrl = "attempts_report.html"

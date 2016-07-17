@@ -64,22 +64,8 @@
         <div class="col-xs-9">
             <exercise-display show="mainController.showStatus.exercises"></exercise-display>
         </div>
-        <div class="col-xs-9" ng-show="mainController.showStatus.attempts">
-            <!-- HTML for the display of a report on attempts at different exercises by the user -->
-             <div class="row spacer_row">
-                <div class="col-xs-12">&nbsp;</div>
-            </div>
-             <div class="row spacer_row">
-                <div class="col-xs-12">&nbsp;</div>
-            </div>
-             <div class="row spacer_row">
-                <div class="col-xs-12">&nbsp;</div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <attempts-report attempts="mainController.report.attempts"></attempts-report>
-                </div>
-            </div>
+        <div class="col-xs-9">
+            <attempts-report attempts="mainController.report.attempts" show="mainController.showStatus.attempts"></attempts-report>
         </div>
     </div>
 </div>
