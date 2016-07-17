@@ -235,37 +235,6 @@ var exerciseDisplay = function(){
 };
 
 
-
-var NavbarController = function(userService, exerciseService){
-
-    var nc = this;
-    userService.showUserName(nc);
-
-    nc.viewAttemptsClick = function(mainController){
-        mainController.showStatus.exercises = false;
-        mainController.showStatus.attempts = true;
-        mainController.showStatus.addFlashmarkButton = false;
-
-        var cbSuccess = function(res){
-            mainController.report.attempts = res.data.history;
-        };
-
-        var cbFailure = function(res){
-            alert("attempt to get the attempt report failed");
-        }
-
-        exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
-    }
-
-    nc.viewExercisesClick = function(mainController){
-        mainController.showStatus.exercises = true;
-        mainController.showStatus.attempts = false;
-        mainController.showStatus.addFlashmarkButton = true;
-    };
-
-};
-
-
 var MainController = function(userService, exerciseService){
 
     var mc = this;
@@ -324,7 +293,6 @@ var attemptsReport = function(){
 angular.module("app", [])
     .controller("MainController", MainController)
     .controller("ExerciseController", ExerciseController)
-    .controller("NavbarController", NavbarController)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
