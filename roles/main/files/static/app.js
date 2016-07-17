@@ -288,6 +288,16 @@ var attemptsReport = function(){
     return d;
 };
 
+var flashmarkApp = function(){
+    var d = {};
+    d.restrict = "A";
+    d.scope = {};
+    d.templateUrl = "flashmark_main.html";
+    d.controller = "MainController";
+    d.controllerAs = "mc";
+    return d;
+};
+
 
 // Core Angular app initialization
 angular.module("app", [])
@@ -297,5 +307,6 @@ angular.module("app", [])
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
     .directive("exerciseDisplay", exerciseDisplay)
-    .directive("attemptsReport", attemptsReport);
+    .directive("attemptsReport", attemptsReport)
+    .directive("flashmarkApp", flashmarkApp);
 })();

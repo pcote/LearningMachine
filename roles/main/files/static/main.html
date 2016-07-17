@@ -9,66 +9,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </head>
-<body>
+<body ng-app="app">
 
-<!-- The main overall page template for the main app. -->
-<div class="container" ng-app="app" ng-controller="MainController as mainController">
-
-
-    <!-- Main body template -->
-    <div class="row">
-
-
-        <!--
-         The two types of content that can show up in the central part of the application itself.
-         * exercise_body - Exercises pertaining to a user specified topic.
-         * attempt_report - A report displaying the user's history regarding how they graded themselves on different exercises.
-        -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#fm_navbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="fm_navbar">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#addExerciseModal" ng-show="mainController.showStatus.addFlashmarkButton">
-                                Add Flashmark
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" ng-click="mainController.viewAttemptsClick()">
-                                Exercise Attempts
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" ng-click="mainController.viewExercisesClick()">
-                                Exercises
-                            </a>
-                        </li>
-                    </ul>
-
-                    <!-- right navbar display of user name-->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-user"></span> {{mainController.displayName}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="col-xs-9">
-            <exercise-display show="mainController.showStatus.exercises"></exercise-display>
-        </div>
-        <div class="col-xs-9">
-            <attempts-report attempts="mainController.report.attempts" show="mainController.showStatus.attempts"></attempts-report>
-        </div>
-    </div>
-</div>
+<div flashmark-app></div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
 <script src="user/services.js"></script>
