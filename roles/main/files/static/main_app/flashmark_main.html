@@ -1,0 +1,48 @@
+<!-- The main overall page template for the main app. -->
+<div class="container">
+
+    <div class="row">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#fm_navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="fm_navbar">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#addExerciseModal" ng-show="mc.showStatus.addFlashmarkButton">
+                                Add Flashmark
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="mc.viewAttemptsClick()">
+                                Exercise Attempts
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="mc.viewExercisesClick()">
+                                Exercises
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-user"></span> {{mc.displayName}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="col-xs-9">
+            <exercise-display show="mc.showStatus.exercises"></exercise-display>
+        </div>
+        <div class="col-xs-9">
+            <attempts-report attempts="mc.report.attempts" show="mc.showStatus.attempts"></attempts-report>
+        </div>
+    </div>
+</div>
