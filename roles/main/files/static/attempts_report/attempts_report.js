@@ -25,6 +25,6 @@ var attemptsReport = function(){
         show: "="
     };
 
-    d.templateUrl = "attempts_report.html"
+    d.templateUrl = "/static/attempts_report/attempts_report.html"
     return d;
 };
