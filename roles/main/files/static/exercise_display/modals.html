@@ -39,7 +39,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
-                                    <textarea maxlength="140" rows="5" cols="35" id="newQuestionId" ng-model="ec.newinfo.question" ng-change="ec.updateCharsLeft('newQuestion', 'questionCharsLeft')"></textarea><br />
+                                    <textarea maxlength="140" rows="5" cols="35" id="newQuestionId" ng-model="ec.newinfo.question" ng-trim="false" ng-change="ec.updateCharsLeft('newQuestion', 'questionCharsLeft')"></textarea><br />
                                     {{ ec.charsleft.question }}
                                 </div>
                             </div>
@@ -50,7 +50,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
-                                    <textarea maxlength="140" rows="5" cols="35" id="newAnswerId" ng-model="ec.newinfo.answer" ng-change="ec.updateCharsLeft('newAnswer', 'answerCharsLeft')" /><br />
+                                    <textarea maxlength="140" rows="5" cols="35" id="newAnswerId" ng-model="ec.newinfo.answer" ng-trim="false" ng-change="ec.updateCharsLeft('newAnswer', 'answerCharsLeft')" /><br />
                                     {{ ec.charsleft.answer }}
                                 </div>
                             </div>
@@ -77,7 +77,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
-                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.caption" ng-change="ec.updateCharsLeft('new_caption_field', 'captionCharsLeft')"></textarea><br />
+                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.caption" ng-trim="false" ng-change="ec.updateCharsLeft('new_caption_field', 'captionCharsLeft')"></textarea><br />
                             {{ ec.charsleft.caption }}
                         </div>
                     </div>
@@ -86,7 +86,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
-                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.url" ng-change="ec.updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
+                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.url" ng-trim="false" ng-change="ec.updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
                             {{ ec.charsleft.url }}
                         </div>
                     </div>
