@@ -10,6 +10,7 @@ exercise_table = Table("exercises", meta,
                        Column("id", Integer, primary_key=True, autoincrement=True),
                        Column("question", Text),
                        Column("answer", Text),
+                       Column("difficulty", Integer, default=0),
                        Column("user_id", ForeignKey("users.email")))
 
 
