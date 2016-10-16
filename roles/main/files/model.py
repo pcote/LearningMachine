@@ -294,6 +294,13 @@ def get_resources_for_exercise(exercise_id, user_id):
     return resources
 
 
+def get_highest_difficulty(user_id):
+    query = text("select max(difficulty) from exercises where user_id = :uid")
+    conn = eng.connect()
+    diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
+    return diff
+
+
 if __name__ == '__main__':
     test_exercise_id = 40
     res = get_resources_for_exercise(test_exercise_id, "cotejrp@gmail.com")
