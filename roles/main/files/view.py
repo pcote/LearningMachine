@@ -128,7 +128,8 @@ def add_score():
     json_data = request.get_json()
     exercise_id = json_data.get("exercise_id")
     score = json_data.get("score")
-    model.add_attempt(exercise_id, score)
+    user_id =  session.get("email")
+    model.add_attempt(exercise_id, score, user_id)
 
     msg = "Attempt added.  Exercise ID: {} Score: {}"\
             .format(exercise_id, score)

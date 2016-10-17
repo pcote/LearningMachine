@@ -95,7 +95,7 @@ def get_all_exercises(user_id):
     return exercise_list
 
 
-def add_attempt(exercise_id, score):
+def add_attempt(exercise_id, score, user_id):
     """
     Record how well the user did in attempting an exercise
     :param exercise_id: The ID of the exercise being attempted
