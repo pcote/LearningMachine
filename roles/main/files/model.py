@@ -68,11 +68,12 @@ def add_exercise(question, answer, user_id):
         raise Exception(msg)
 
     conn = eng.connect()
-
-    query = exercise_table.insert()\
-                          .values(question=question, answer=answer, user_id=user_id)
-
-    result = conn.execute(query)
+    with conn.begin() as trans:
+        diff = get_new_difficulty(conn, user_id)
+        query = exercise_table.insert()\
+                          .values(question=question, answer=answer, difficulty=diff, user_id=user_id)
+        result = conn.execute(query)
+        trans.commit()
     conn.close()
 
 
@@ -293,14 +294,18 @@ def get_resources_for_exercise(exercise_id, user_id):
 
     return resources
 
+def get_new_difficulty(conn, user_id):
+        query = text("select max(difficulty) from exercises where user_id = :uid")
+        diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
+        diff += 1
+        return diff
+
 
 def set_exercise_most_difficult(exercise_id, user_id):
 
     conn = eng.connect()
     with conn.begin() as trans:
-        query = text("select max(difficulty) from exercises where user_id = :uid")
-        diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
-        diff += 1
+        diff = get_new_difficulty(conn, user_id)
         query = text("update exercises set difficulty = :d where user_id = :uid and id = :eid")
         conn.execute(query, d=diff, uid=user_id, eid=exercise_id)
         trans.commit()
