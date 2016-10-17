@@ -14,7 +14,7 @@
     login_password: "{{ mysql_root_password }}"
     name: public
     password: "{{ public_user_password }}"
-    priv: "learningmachine.*:SELECT,INSERT/learningmachine.exercises:DELETE/learningmachine.resources:DELETE/learningmachine.attempts:DELETE/learningmachine.exercises:DELETE/learningmachine.resources_by_exercise:DELETE"
+    priv: "learningmachine.*:SELECT,INSERT/learningmachine.exercises:DELETE,UPDATE/learningmachine.resources:DELETE/learningmachine.attempts:DELETE/learningmachine.exercises:DELETE/learningmachine.resources_by_exercise:DELETE"
   notify: restart learningmachine
 
 
