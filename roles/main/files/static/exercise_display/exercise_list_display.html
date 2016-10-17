@@ -28,7 +28,7 @@
                                     <th>&nbsp;</th>
                                     <th>&nbsp;</th>
                                 </tr>
-                                <tr ng-repeat="exercise in ec.dataList.exercises | orderBy:'id':true">
+                                <tr ng-repeat="exercise in ec.dataList.exercises | orderBy:'difficulty':true">
                                     <td class="visible-lg"><a ng-click="ec.deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
                                     <td class="visible-lg"><a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a></td>
                                     <td class="visible-lg"><a ng-click="ec.resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>

@@ -23,7 +23,8 @@ var ExerciseService = function($http){
             }
         };
 
-        $http(req).then(function(res){}, function(res){});
+        var promise = $http(req);
+        return promise;
     };
 
     // Take the new question and answer pertaining to some topic and store that in the system.

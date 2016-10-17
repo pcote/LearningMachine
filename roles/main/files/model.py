@@ -86,11 +86,12 @@ def get_all_exercises(user_id):
     conn = eng.connect()
 
     user_parm = bindparam("user_id")
-    query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer])\
-            .where(exercise_table.c.user_id == user_parm)
+    query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer, exercise_table.c.difficulty])\
+            .where(exercise_table.c.user_id == user_parm)\
+            .order_by(exercise_table.c.difficulty.desc())
 
     result_set = conn.execute(query, user_id=user_id).fetchall()
-    exercise_list = [dict(id=id, question=question, answer=answer) for id, question, answer in result_set]
+    exercise_list = [dict(id=id, question=question, answer=answer, difficulty=difficulty) for id, question, answer, difficulty in result_set]
     conn.close()
     return exercise_list
 

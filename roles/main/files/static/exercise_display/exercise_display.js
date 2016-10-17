@@ -73,8 +73,14 @@ var ExerciseController = function(exerciseService){
     // Handle a user rating themselves.  Here, just send the rating to the server
     // and make the question answer box go away.
     ec.scoreClick = function(score){
-        exerciseService.submitScore(ec.activeObject.exercise, score);
+        var scoreSubmissionPromise = exerciseService.submitScore(ec.activeObject.exercise, score);
         $("#questionAnswerModal").modal("hide");
+
+        scoreSubmissionPromise.then(function(res){
+            var promise = exerciseService.getExercises();
+            promise.then(getExercisesSuccess);
+        });
+
     };
 
     ec.deleteExerciseClick = function(exercise_id){
