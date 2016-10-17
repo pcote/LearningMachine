@@ -294,11 +294,16 @@ def get_resources_for_exercise(exercise_id, user_id):
     return resources
 
 
-def get_highest_difficulty(user_id):
-    query = text("select max(difficulty) from exercises where user_id = :uid")
+def set_exercise_most_difficult(exercise_id, user_id):
+
     conn = eng.connect()
-    diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
-    return diff
+    with conn.begin() as trans:
+        query = text("select max(difficulty) from exercises where user_id = :uid")
+        diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
+        diff += 1
+        query = text("update exercises set difficulty = :d where user_id = :uid and id = :eid")
+        conn.execute(query, d=diff, uid=user_id, eid=exercise_id)
+        trans.commit()
 
 
 if __name__ == '__main__':
