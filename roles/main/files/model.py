@@ -102,15 +102,25 @@ def add_attempt(exercise_id, score, user_id):
     :param score: Score the user gave themselves
     :return: Nothing
     """
+    BAD, OKAY, GOOD = 1, 2, 3
     conn = eng.connect()
     from datetime import datetime
     now = datetime.now()
     exercise_parm = bindparam("exercise_id", type_=Integer)
     score_parm = bindparam("score", type_=Integer)
 
-    query = attempt_table.insert()\
-                         .values(exercise_id=exercise_parm, score=score_parm, when_attempted=now)
-    conn.execute(query, exercise_id=exercise_id, score=score)
+    with conn.begin() as trans:
+        query = attempt_table.insert()\
+                             .values(exercise_id=exercise_parm, score=score_parm, when_attempted=now)
+        conn.execute(query, exercise_id=exercise_id, score=score)
+
+        if score == BAD:
+            diff = get_new_difficulty(conn, user_id)
+            query = text("update exercises set difficulty = :d where user_id = :uid and id = :eid")
+            conn.execute(query, d=diff, uid=user_id, eid=exercise_id)
+
+        trans.commit()
+
     conn.close()
 
 
