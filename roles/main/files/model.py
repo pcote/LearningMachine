@@ -308,7 +308,10 @@ def get_resources_for_exercise(exercise_id, user_id):
 def get_new_difficulty(conn, user_id):
         query = text("select max(difficulty) from exercises where user_id = :uid")
         diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
-        diff += 1
+        if diff:
+            diff += 1
+        else:
+            diff = 1
         return diff
 
 
