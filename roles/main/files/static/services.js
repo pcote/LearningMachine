@@ -82,6 +82,12 @@ var ExerciseService = function($http){
         return promise;
     };
 
+    this.getAllLearningResources = function(){
+        var url = "/resources";
+        var promise = $http.get(url);
+        return promise;
+    };
+
     this.addLearningResource = function(new_cap, new_url, exercise_id){
         var MAX_CHARS = 140;
 

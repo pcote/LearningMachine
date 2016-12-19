@@ -40,10 +40,22 @@ var MainController = function(userService, exerciseService){
     };
 
     mc.viewLearningResourcesClick = function(){
+        var getResourcesSuccess = function(res){
+            alert("success in getting all learning resources for the user");
+            var data = res.data;
+            console.log(res);
+        };
+
+        var getResourcesFailure = function(res){
+            alert("failed to access all learning resources for this user");
+        };
+
         mc.showStatus.exercises = false;
         mc.showStatus.attempts = false;
         mc.showStatus.learningResource = true;
         mc.showStatus.addFlashmarkButton = false;
+        var promise = exerciseService.getAllLearningResources();
+        promise.then(getResourcesSuccess, getResourcesFailure);
     };
 
 };
