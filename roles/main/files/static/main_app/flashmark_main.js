@@ -36,6 +36,13 @@ var MainController = function(userService, exerciseService){
         mc.showStatus.addFlashmarkButton = true;
     };
 
+    mc.viewLearningResourcesClick = function(){
+        mc.showStatus.exercises = false;
+        mc.showStatus.attempts = false;
+        mc.showStatus.addFlashmarkButton = false;
+        alert("view learning resources click stub");
+    };
+
 };
 
 var flashmarkApp = function(){
