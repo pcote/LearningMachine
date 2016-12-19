@@ -7,6 +7,7 @@ var MainController = function(userService, exerciseService){
     mc.showStatus = {};
     mc.showStatus.exercises = true;
     mc.showStatus.attempts = false;
+    mc.showStatus.learningResource = false;
     mc.showStatus.addFlashmarkButton = true;
 
 
@@ -17,6 +18,7 @@ var MainController = function(userService, exerciseService){
     mc.viewAttemptsClick = function(){
         mc.showStatus.exercises = false;
         mc.showStatus.attempts = true;
+        mc.showStatus.learningResource = false;
         mc.showStatus.addFlashmarkButton = false;
 
         var cbSuccess = function(res){
@@ -34,13 +36,14 @@ var MainController = function(userService, exerciseService){
         mc.showStatus.exercises = true;
         mc.showStatus.attempts = false;
         mc.showStatus.addFlashmarkButton = true;
+        mc.showStatus.learningResource = false;
     };
 
     mc.viewLearningResourcesClick = function(){
         mc.showStatus.exercises = false;
         mc.showStatus.attempts = false;
+        mc.showStatus.learningResource = true;
         mc.showStatus.addFlashmarkButton = false;
-        alert("view learning resources click stub");
     };
 
 };
