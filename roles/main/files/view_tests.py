@@ -56,7 +56,7 @@ class ViewTestCase(unittest.TestCase):
             headers = {"Content-type": "application/json"}
             data = self.make_json_text(test_dict)
             client.post("/addscore", headers=headers, data=data)
-            mock.assert_called_with(test_exercise_id, test_score)
+            mock.assert_called_with(test_exercise_id, test_score, self.test_user_id)
 
     def test_add_exercise(self):
         import model
