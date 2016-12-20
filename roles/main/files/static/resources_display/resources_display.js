@@ -6,6 +6,6 @@ var learningResourceDisplay = function(){
         resources: "=resources"
     };
 
-    d.templateUrl = "/static/resources_display/resource_list_display.html";
+    d.templateUrl = "/static/resources_display/resources_display.html";
     return d;
 };
