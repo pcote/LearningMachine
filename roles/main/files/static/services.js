@@ -72,7 +72,7 @@ var ExerciseService = function($http){
     // Pull the data concerning a user's exercise history into a local json structure
     // that can be displayed in report form.  Also show it.
     this.getAttemptsReport = function(){
-        var promise = $http.get("/exercisehistory")
+        var promise = $http.get("/exercisehistory");
         return promise;
     };
 
@@ -144,4 +144,4 @@ var UserService = function($http, $rootScope){
 
         })
     }
-}
+};
