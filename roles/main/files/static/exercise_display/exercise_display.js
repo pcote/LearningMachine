@@ -205,7 +205,7 @@ var exerciseDisplay = function(){
     d.scope = {
         show: "="
     };
-    d.templateUrl = "/static/exercise_display/exercise_list_display.html";
+    d.templateUrl = "/static/exercise_display/exercise_display.html";
     d.controller = "ExerciseController";
     d.controllerAs = "ec";
     return d;

@@ -66,7 +66,7 @@ var flashmarkApp = function(){
     var d = {};
     d.restrict = "A";
     d.scope = {};
-    d.templateUrl = "/static/main_app/flashmark_main.html";
+    d.templateUrl = "/static/flashmark_main/flashmark_main.html";
     d.controller = "MainController";
     d.controllerAs = "mc";
     return d;
