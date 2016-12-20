@@ -5,7 +5,8 @@ var LearningResourceController = function(){
 var learningResourceDisplay = function(){
     var d = {};
     d.scope = {
-        show: "=show"
+        show: "=show",
+        resources: "=resources"
     };
 
     //d.template = " <h1>arg show: {{show}} controller show: {{lrc.testShow}}</h1></div>";

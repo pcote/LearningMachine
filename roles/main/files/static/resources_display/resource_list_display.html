@@ -10,5 +10,14 @@
      <div class="row spacer_row">
         <div class="col-xs-12">&nbsp;</div>
     </div>
-    <h1>resource list display stub</h1>
+    <h1 align="center">Resources</h1>
+    <div class="row">
+        <table class="table">
+            <tr ng-repeat="resource in resources">
+                <td>
+                    <a href="{{resource.url}}">{{resource.caption}}</a>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

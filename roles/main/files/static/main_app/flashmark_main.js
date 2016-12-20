@@ -15,6 +15,9 @@ var MainController = function(userService, exerciseService){
     mc.report = {};
     mc.report.attempts = [];
 
+    // Every resource for a given user.
+    mc.allResources = [];
+
     mc.viewAttemptsClick = function(){
         mc.showStatus.exercises = false;
         mc.showStatus.attempts = true;
@@ -44,6 +47,8 @@ var MainController = function(userService, exerciseService){
             alert("success in getting all learning resources for the user");
             var data = res.data;
             console.log(res);
+            mc.allResources = res.data.resources;
+
         };
 
         var getResourcesFailure = function(res){
