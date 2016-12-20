@@ -44,11 +44,8 @@ var MainController = function(userService, exerciseService){
 
     mc.viewLearningResourcesClick = function(){
         var getResourcesSuccess = function(res){
-            alert("success in getting all learning resources for the user");
             var data = res.data;
-            console.log(res);
             mc.allResources = res.data.resources;
-
         };
 
         var getResourcesFailure = function(res){
