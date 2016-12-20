@@ -9,7 +9,6 @@
 angular.module("app", [])
     .controller("MainController", MainController)
     .controller("ExerciseController", ExerciseController)
-    .controller("LearningResourceController", LearningResourceController)
     .service("userService", UserService)
     .service("exerciseService", ExerciseService)
     .filter("lmScoreWord", lmScoreWordFilter)
