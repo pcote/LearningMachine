@@ -342,6 +342,17 @@ def get_stored_tags(user_id=None, exercise_id=None):
     return tag_list
 
 
+def get_tags_to_add(tag_list, exercise_id):
+    stored_tags = get_stored_tags(exercise_id=exercise_id)
+    return list(set(tag_list).difference(set(stored_tags)))
+
+
+def get_tags_to_remove(tag_list, exercise_id):
+    stored_tags = get_stored_tags(exercise_id=exercise_id)
+    return list(set(stored_tags).difference(set(tag_list)))
+
+
+
 if __name__ == '__main__':
     test_exercise_id = 40
     res = get_resources_for_exercise(test_exercise_id, "cotejrp@gmail.com")
