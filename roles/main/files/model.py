@@ -325,7 +325,10 @@ def set_exercise_most_difficult(exercise_id, user_id):
         trans.commit()
 
 
-def get_stored_tags(user_id, exercise_id=None):
+def get_stored_tags(user_id=None, exercise_id=None):
+    if user_id is None and exercise_id is None:
+        raise Exception("Getting stored tags requires either a user or an exercise. Neither were given.")
+
     conn = eng.connect()
     user_tags_query = text("select name from exercise_tags where user_id = :uid")
     exercise_tags_query = text("select tag_name from exercises_by_exercise_tags where exercise_id = :eid")
@@ -337,7 +340,6 @@ def get_stored_tags(user_id, exercise_id=None):
 
     tag_list = [t for t, *_ in res]
     return tag_list
-
 
 
 if __name__ == '__main__':
