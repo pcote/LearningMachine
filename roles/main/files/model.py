@@ -342,6 +342,17 @@ def get_stored_tags(user_id=None, exercise_id=None):
     return tag_list
 
 
+def should_add_tag(tag_name, user_id):
+    conn = eng.connect()
+    query = text("select name from exercise_tags where user_id = :uid")
+    res = conn.execute(query, uid=user_id)
+    stored_tag_list = [tag for tag, *_ in res.fetchall()]
+    if tag_name in stored_tag_list:
+        return False
+    else:
+        return True
+
+
 def get_tags_to_add(tag_list, exercise_id):
     stored_tags = get_stored_tags(exercise_id=exercise_id)
     return list(set(tag_list).difference(set(stored_tags)))
