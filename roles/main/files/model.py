@@ -325,6 +325,21 @@ def set_exercise_most_difficult(exercise_id, user_id):
         trans.commit()
 
 
+def get_stored_tags(user_id, exercise_id=None):
+    conn = eng.connect()
+    user_tags_query = text("select name from exercise_tags where user_id = :uid")
+    exercise_tags_query = text("select tag_name from exercises_by_exercise_tags where exercise_id = :eid")
+
+    if exercise_id:
+        res = conn.execute(exercise_tags_query, eid=exercise_id)
+    else:
+        res = conn.execute(user_tags_query, uid=user_id)
+
+    tag_list = [t for t, *_ in res]
+    return tag_list
+
+
+
 if __name__ == '__main__':
     test_exercise_id = 40
     res = get_resources_for_exercise(test_exercise_id, "cotejrp@gmail.com")
