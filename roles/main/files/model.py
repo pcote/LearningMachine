@@ -353,12 +353,12 @@ def should_add_tag(tag_name, user_id):
         return True
 
 
-def get_tags_to_add(tag_list, exercise_id):
+def get_tags_to_connect(tag_list, exercise_id):
     stored_tags = get_stored_tags(exercise_id=exercise_id)
     return list(set(tag_list).difference(set(stored_tags)))
 
 
-def get_tags_to_remove(tag_list, exercise_id):
+def get_tags_to_disconnect(tag_list, exercise_id):
     stored_tags = get_stored_tags(exercise_id=exercise_id)
     return list(set(stored_tags).difference(set(tag_list)))
 
