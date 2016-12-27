@@ -325,11 +325,10 @@ def set_exercise_most_difficult(exercise_id, user_id):
         trans.commit()
 
 
-def get_stored_tags(user_id=None, exercise_id=None):
+def __get_stored_tags(conn, user_id=None, exercise_id=None):
     if user_id is None and exercise_id is None:
         raise Exception("Getting stored tags requires either a user or an exercise. Neither were given.")
 
-    conn = eng.connect()
     user_tags_query = text("select name from exercise_tags where user_id = :uid")
     exercise_tags_query = text("select tag_name from exercises_by_exercise_tags where exercise_id = :eid")
 
@@ -342,8 +341,7 @@ def get_stored_tags(user_id=None, exercise_id=None):
     return tag_list
 
 
-def should_add_tag(tag_name, user_id):
-    conn = eng.connect()
+def __should_add_tag(conn, tag_name, user_id):
     query = text("select name from exercise_tags where user_id = :uid")
     res = conn.execute(query, uid=user_id)
     stored_tag_list = [tag for tag, *_ in res.fetchall()]
@@ -353,8 +351,8 @@ def should_add_tag(tag_name, user_id):
         return True
 
 
-def get_tags_to_change(tag_list, exercise_id):
-    stored_tags = get_stored_tags(exercise_id=exercise_id)
+def __get_tags_to_change(conn, tag_list, exercise_id):
+    stored_tags = __get_stored_tags(conn, exercise_id=exercise_id)
     tags_to_connect = list(set(tag_list).difference(set(stored_tags)))
     tags_to_disconnect = list(set(stored_tags).difference(set(tag_list)))
     TagsToChange = namedtuple("TagsToChange", ["tags_to_connect", "tags_to_disconnect"])
@@ -365,22 +363,23 @@ def change_tags(tag_list, user_id, exercise_id):
     tags = tag_list.split()
     conn = eng.connect()
 
-    # TODO: Refactor to make it more transactional. (...)
+    with conn.begin() as trans:
+        for tag in tags:
+            if __should_add_tag(conn, tag, user_id):
+                query = text("insert into exercise_tags values(:new_tag, :uid)")
+                conn.execute(query, new_tag=tag, uid=user_id)
 
-    for tag in tags:
-        if should_add_tag(tag, user_id):
-            query = text("insert into exercise_tags values(:new_tag, :uid)")
-            conn.execute(query, new_tag=tag, uid=user_id)
+        tags_to_connect, tags_to_disconnect = __get_tags_to_change(conn, tags, exercise_id)
 
-    tags_to_connect, tags_to_disconnect = get_tags_to_change(tags, exercise_id)
+        for tag in tags_to_connect:
+            query = text("insert into exercises_by_exercise_tags values( :eid, :tag, :uid)")
+            conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
-    for tag in tags_to_connect:
-        query = text("insert into exercises_by_exercise_tags values( :eid, :tag, :uid)")
-        conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
+        for tag in tags_to_disconnect:
+            query = text("delete from exercises_by_exercise_tags where exercise_id = :eid and tag_name = :tag and user_id = :uid")
+            conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
-    for tag in tags_to_disconnect:
-        query = text("delete from exercises_by_exercise_tags where exercise_id = :eid and tag_name = :tag and user_id = :uid")
-        conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
+        trans.commit()
 
 
 
