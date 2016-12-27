@@ -363,8 +363,27 @@ def get_tags_to_disconnect(tag_list, exercise_id):
     return list(set(stored_tags).difference(set(tag_list)))
 
 
+def change_tags(tag_list, user_id, exercise_id):
+    tags = tag_list.split()
+    conn = eng.connect()
+
+    # TODO: Refactor to make it more transactional. (...)
+
+    for tag in tags:
+        if should_add_tag(tag, user_id):
+            query = text("insert into exercise_tags values(:new_tag, :uid)")
+            conn.execute(query, new_tag=tag, uid=user_id)
+
+    for tag in get_tags_to_connect(tags, exercise_id):
+        query = text("insert into exercises_by_exercise_tags values( :eid, :tag, :uid)")
+        conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
+
+    for tag in get_tags_to_disconnect(tags, exercise_id):
+        query = text("delete from exercises_by_exercise_tags where exercise_id = :eid and tag_name = :tag and user_id = :uid")
+        conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
+
+
 
 if __name__ == '__main__':
-    test_exercise_id = 40
-    res = get_resources_for_exercise(test_exercise_id, "cotejrp@gmail.com")
-    print(res)
+    tag_list, user_id, exercise_id = "chemistry", "cotejrp@gmail.com", 14
+    change_tags(tag_list, user_id, exercise_id)
