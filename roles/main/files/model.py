@@ -353,14 +353,12 @@ def should_add_tag(tag_name, user_id):
         return True
 
 
-def get_tags_to_connect(tag_list, exercise_id):
+def get_tags_to_change(tag_list, exercise_id):
     stored_tags = get_stored_tags(exercise_id=exercise_id)
-    return list(set(tag_list).difference(set(stored_tags)))
-
-
-def get_tags_to_disconnect(tag_list, exercise_id):
-    stored_tags = get_stored_tags(exercise_id=exercise_id)
-    return list(set(stored_tags).difference(set(tag_list)))
+    tags_to_connect = list(set(tag_list).difference(set(stored_tags)))
+    tags_to_disconnect = list(set(stored_tags).difference(set(tag_list)))
+    TagsToChange = namedtuple("TagsToChange", ["tags_to_connect", "tags_to_disconnect"])
+    return TagsToChange(tags_to_connect, tags_to_disconnect)
 
 
 def change_tags(tag_list, user_id, exercise_id):
@@ -374,16 +372,17 @@ def change_tags(tag_list, user_id, exercise_id):
             query = text("insert into exercise_tags values(:new_tag, :uid)")
             conn.execute(query, new_tag=tag, uid=user_id)
 
-    for tag in get_tags_to_connect(tags, exercise_id):
+    tags_to_connect, tags_to_disconnect = get_tags_to_change(tags, exercise_id)
+
+    for tag in tags_to_connect:
         query = text("insert into exercises_by_exercise_tags values( :eid, :tag, :uid)")
         conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
-    for tag in get_tags_to_disconnect(tags, exercise_id):
+    for tag in tags_to_disconnect:
         query = text("delete from exercises_by_exercise_tags where exercise_id = :eid and tag_name = :tag and user_id = :uid")
         conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
 
 
 if __name__ == '__main__':
-    tag_list, user_id, exercise_id = "chemistry", "cotejrp@gmail.com", 14
-    change_tags(tag_list, user_id, exercise_id)
+    pass
