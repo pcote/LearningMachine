@@ -77,7 +77,7 @@ def add_exercise(question, answer, user_id):
     conn.close()
 
 
-def get_all_exercises(user_id):
+def get_all_exercises(user_id, tag_arg=None):
     """
     Get all the exercises along with the thing tags that are associated with them.
     :param user_id: The ID of the user we're looking up exercises for.
@@ -102,6 +102,8 @@ def get_all_exercises(user_id):
         exercise = dict(id=id, question=question, answer=answer, difficulty=difficulty, tags=tags)
         exercise_list.append(exercise)
 
+    if tag_arg:
+        exercise_list = [exercise for exercise in exercise_list if tag_arg in exercise["tags"]]
     return exercise_list
 
 

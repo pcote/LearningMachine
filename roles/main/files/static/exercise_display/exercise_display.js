@@ -205,7 +205,8 @@ var ExerciseController = function(exerciseService){
     };
 
     ec.tagNameClick = function(exerciseID, tagName){
-        alert("tag name click stub.  exercise: " + exerciseID + " tag name: " + tagName);
+        var promise = exerciseService.getExercisesByTag(tagName);
+        promise.then(getExercisesSuccess, getExercisesFailure);
     };
 
 

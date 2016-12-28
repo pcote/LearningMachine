@@ -111,7 +111,8 @@ def get_exercises():
     :return: A JSON list of the exercises for this user.
     """
     email = session.get("email")
-    exercises = model.get_all_exercises(email)
+    tag_arg = request.args.get("tag")
+    exercises = model.get_all_exercises(email, tag_arg)
     msg = "Found {} exercises for {}".format(len(exercises), email)
     app.logger.info(msg)
     return jsonify(dict(exercises=exercises))

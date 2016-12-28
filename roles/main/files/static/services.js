@@ -9,6 +9,13 @@ var ExerciseService = function($http){
         return promise;
     };
 
+    // Get exercise information for current user that is connected to a specific tag.
+    this.getExercisesByTag = function(tagName){
+        var url = "/exercises?tag=" + tagName;
+        var promise = $http.get(url);
+        return promise;
+    };
+
     // Take the score use submitted for the given exercise and report it to the server.
     this.submitScore = function(exercise, score){
         var req = {
