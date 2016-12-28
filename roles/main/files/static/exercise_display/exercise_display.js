@@ -197,7 +197,8 @@ var ExerciseController = function(exerciseService){
     };
 
     ec.allTagsClick = function(){
-        alert("all tags click exercise controller stub");
+        var promise = exerciseService.getExercises();
+        promise.then(getExercisesSuccess, getExercisesFailure);
     };
 
     ec.changeTagsClick = function(exerciseID){
