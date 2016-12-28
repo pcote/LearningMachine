@@ -79,20 +79,29 @@ def add_exercise(question, answer, user_id):
 
 def get_all_exercises(user_id):
     """
-    Get every exercise for a specified user
-    :param user_id: The user id of the user to get exercises for
-    :return: a list of all exercises for a given user.
+    Get all the exercises along with the thing tags that are associated with them.
+    :param user_id: The ID of the user we're looking up exercises for.
+    :return:: A list of exercise info including all the tags that this exercise is connected to.
     """
+    from itertools import groupby, tee
+
+    query_str = """select e.id, e.question, e.answer, e.difficulty, group_concat(ebet.tag_name)
+                    from exercises as e
+                    left join exercises_by_exercise_tags as ebet
+                    on e.id = ebet.exercise_id
+                    where e.user_id = :uid
+                    group by e.id
+                    order by e.id"""
+    query = text(query_str)
     conn = eng.connect()
+    record_set = conn.execute(query, uid=user_id).fetchall()
 
-    user_parm = bindparam("user_id")
-    query = select([exercise_table.c.id, exercise_table.c.question, exercise_table.c.answer, exercise_table.c.difficulty])\
-            .where(exercise_table.c.user_id == user_parm)\
-            .order_by(exercise_table.c.difficulty.desc())
+    exercise_list = []
+    for id, question, answer, difficulty, tag_group in record_set:
+        tags = tag_group.split(",") if tag_group else []
+        exercise = dict(id=id, question=question, answer=answer, difficulty=difficulty, tags=tags)
+        exercise_list.append(exercise)
 
-    result_set = conn.execute(query, user_id=user_id).fetchall()
-    exercise_list = [dict(id=id, question=question, answer=answer, difficulty=difficulty) for id, question, answer, difficulty in result_set]
-    conn.close()
     return exercise_list
 
 
@@ -413,6 +422,7 @@ def change_tags(tag_list, user_id, exercise_id):
             conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
         trans.commit()
+
 
 
 
