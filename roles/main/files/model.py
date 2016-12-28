@@ -306,17 +306,28 @@ def get_resources_for_exercise(exercise_id, user_id):
     return resources
 
 def get_new_difficulty(conn, user_id):
-        query = text("select max(difficulty) from exercises where user_id = :uid")
-        diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
-        if diff:
-            diff += 1
-        else:
-            diff = 1
-        return diff
+    """
+    Support function that comes up with a number higher than any difficulty rating on any question the user has.
+    :param conn: The database connection.
+    :param user_id: ID of the user
+    :return:
+    """
+    query = text("select max(difficulty) from exercises where user_id = :uid")
+    diff, *_ = conn.execute(query, uid=user_id).fetchall()[0]
+    if diff:
+        diff += 1
+    else:
+        diff = 1
+    return diff
 
 
 def set_exercise_most_difficult(exercise_id, user_id):
-
+    """
+    Designate this exercise as the one with the highest difficulty rating of all exercises the user has.
+    :param exercise_id: Number of the exercise in question.
+    :param user_id: The ID of the user.
+    :return: Nothing.
+    """
     conn = eng.connect()
     with conn.begin() as trans:
         diff = get_new_difficulty(conn, user_id)
@@ -342,6 +353,13 @@ def __get_stored_tags(conn, user_id=None, exercise_id=None):
 
 
 def __should_add_tag(conn, tag_name, user_id):
+    """
+    Determined whether to add the tag to the system based on whether or not it's already there.
+    :param conn: The database connection.
+    :param tag_name: The tag to look up.
+    :param user_id: The ID of the user that we're looking up stored tags for.
+    :return: True if the tag needs to be added or False if it's already in there.
+    """
     query = text("select name from exercise_tags where user_id = :uid")
     res = conn.execute(query, uid=user_id)
     stored_tag_list = [tag for tag, *_ in res.fetchall()]
@@ -352,14 +370,29 @@ def __should_add_tag(conn, tag_name, user_id):
 
 
 def __get_tags_to_change(conn, tag_list, exercise_id):
+    """
+    Gets tags to be removed and tags to be added for the exercise.
+    :param conn: Database connection.
+    :param tag_list: List of tags in list format.
+    :param exercise_id: ID of the exercise in question.
+    :return: 2 named tuples, one for tags to associate with the exercise and the other to un-associate.
+    """
     stored_tags = __get_stored_tags(conn, exercise_id=exercise_id)
     tags_to_connect = list(set(tag_list).difference(set(stored_tags)))
     tags_to_disconnect = list(set(stored_tags).difference(set(tag_list)))
+
     TagsToChange = namedtuple("TagsToChange", ["tags_to_connect", "tags_to_disconnect"])
     return TagsToChange(tags_to_connect, tags_to_disconnect)
 
 
 def change_tags(tag_list, user_id, exercise_id):
+    """
+    Change the tags that are to be associated with this exercise.
+    :param tag_list: The new list of tags to be associated with the exercise.  Passed in in string format, NOT list.
+    :param user_id: ID of the user that owns the exercise.
+    :param exercise_id: ID of the exercise to have it's tag associations updated.
+    :return: Nothing.
+    """
     tags = tag_list.split()
     conn = eng.connect()
 
