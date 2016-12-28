@@ -204,6 +204,10 @@ var ExerciseController = function(exerciseService){
         alert("change tags click exercise controller stub.  exercise: " + exerciseID);
     };
 
+    ec.tagNameClick = function(exerciseID, tagName){
+        alert("tag name click stub.  exercise: " + exerciseID + " tag name: " + tagName);
+    };
+
 
 };
 
