@@ -196,6 +196,15 @@ var ExerciseController = function(exerciseService){
 
     };
 
+    ec.allTagsClick = function(){
+        alert("all tags click exercise controller stub");
+    };
+
+    ec.changeTagsClick = function(exerciseID){
+        alert("change tags click exercise controller stub.  exercise: " + exerciseID);
+    };
+
+
 };
 
 
