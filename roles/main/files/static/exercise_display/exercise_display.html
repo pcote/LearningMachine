@@ -38,10 +38,22 @@
                                         <a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a>
                                     </td>
                                     <td class="visible-lg"><a ng-click="ec.resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
+
+
+
+
+
                                     <td class="visible-xs">
                                         <table>
                                             <tr>
-                                                <td colspan="3"><a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a></td>
+                                                <td colspan="3">
+                                                    <br />
+                                                    <a ng-repeat="tag in exercise.tags" href="#" class="badge" ng-click="ec.tagNameClick(exercise.id, tag)">{{tag}}</a>
+                                                    <a href="#" class="badge" ng-click="ec.allTagsClick()">All Tags</a>
+                                                    <a href="#" class="badge" ng-click="ec.changeTagsClick(exercise)">Change Tags</a>
+                                                    <br /><br />
+                                                    <a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
