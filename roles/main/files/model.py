@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey, Integer, VARCHAR, Text, TIMESTAMP, String, bindparam, DateTime
 from sqlalchemy.sql import select, and_, text
-from tabledefs import user_table, exercise_table, attempt_table, resource_table, resource_by_exercise_table, meta
+from tabledefs import user_table, exercise_table, attempt_table, resource_table, resource_by_exercise_table, exercise_by_exercise_tags_table, meta
 from configparser import ConfigParser
 from collections import namedtuple
 
@@ -197,6 +197,9 @@ def delete_exercise(user_id, exercise_id):
 
     if is_valid_user:
         with conn.begin() as trans:
+            query = exercise_by_exercise_tags_table.delete().where(exercise_by_exercise_tags_table.c.exercise_id == exercise_parm)
+            conn.execute(query, exercise_id=exercise_id)
+
             query = attempt_table.delete().where(attempt_table.c.exercise_id == exercise_parm)
             conn.execute(query, exercise_id=exercise_id)
 
