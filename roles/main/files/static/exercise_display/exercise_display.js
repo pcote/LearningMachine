@@ -211,7 +211,8 @@ var ExerciseController = function(exerciseService){
     ec.commitTagChanges = function(exercise, tagChanges){
 
         var success = function(res){
-            alert("changeTags call succeeded");
+            var promise = exerciseService.getExercises();
+            promise.then(getExercisesSuccess, getExercisesFailure);
         };
 
         var failure = function(res){
@@ -220,6 +221,7 @@ var ExerciseController = function(exerciseService){
 
 
         var promise = exerciseService.changeTags(exercise.id, tagChanges);
+        $("#changeTagsModal").modal("hide");
         promise.then(success, failure);
     };
 
