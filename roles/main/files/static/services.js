@@ -16,6 +16,24 @@ var ExerciseService = function($http){
         return promise;
     };
 
+    this.changeTags = function(exerciseID, tagChanges){
+
+
+        var req = {
+            url: "/changetags",
+            method: "post",
+            headers: {
+                "Content-type": "application/json"
+            },
+            data: {
+                "tag_changes": tagChanges,
+                "exercise_id": exerciseID
+            }
+        };
+        var promise = $http(req);
+        return promise;
+    };
+
     // Take the score use submitted for the given exercise and report it to the server.
     this.submitScore = function(exercise, score){
         var req = {

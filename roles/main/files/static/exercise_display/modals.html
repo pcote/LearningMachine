@@ -120,6 +120,8 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
     </div>
 </div>
 
+
+
  <!--
  The dialog that follows the question dialog.  Shows question, answer,
  and buttons the user can select to submit on how well they feel they did.
@@ -155,6 +157,32 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+The dialog that lets you change the tags for a given exercise
+-->
+<div class="modal fade" id="changeTagsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Change Tags</div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">{{ec.activeObject.exercise.question}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                                <input type="text" name="tfChangeTags" ng-model="ec.newinfo.tagChanges" id="tfChangeTags" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ig="btnOkay" class="btn btn-primary btn-lg" ng-click="ec.commitTagChanges(ec.activeObject.exercise, ec.newinfo.tagChanges)">OK</button>
             </div>
         </div>
     </div>

@@ -201,8 +201,26 @@ var ExerciseController = function(exerciseService){
         promise.then(getExercisesSuccess, getExercisesFailure);
     };
 
-    ec.changeTagsClick = function(exerciseID){
-        alert("change tags click exercise controller stub.  exercise: " + exerciseID);
+    ec.changeTagsClick = function(exercise){
+        ec.activeObject.exercise = exercise;
+        var tagsAsString = exercise.tags.join(" ");
+        $("#tfChangeTags").val(tagsAsString);
+        $("#changeTagsModal").modal();
+    };
+
+    ec.commitTagChanges = function(exercise, tagChanges){
+
+        var success = function(res){
+            alert("changeTags call succeeded");
+        };
+
+        var failure = function(res){
+            alert("changeTags call failed");
+        };
+
+
+        var promise = exerciseService.changeTags(exercise.id, tagChanges);
+        promise.then(success, failure);
     };
 
     ec.tagNameClick = function(exerciseID, tagName){

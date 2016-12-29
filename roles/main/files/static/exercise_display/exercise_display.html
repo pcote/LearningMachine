@@ -33,7 +33,7 @@
                                     <td class="visible-lg">
                                         <a ng-repeat="tag in exercise.tags" href="#" class="badge" ng-click="ec.tagNameClick(exercise.id, tag)">{{tag}}</a>
                                         <a href="#" class="badge" ng-click="ec.allTagsClick()">All Tags</a>
-                                        <a href="#" class="badge" ng-click="ec.changeTagsClick(exercise.id)">Change Tags</a>
+                                        <a href="#" class="badge" ng-click="ec.changeTagsClick(exercise)">Change Tags</a>
                                         <br />
                                         <a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a>
                                     </td>
@@ -68,6 +68,8 @@
             </div>
         </div>
 
+    </div>
+    <div class="tooltip">
     </div>
 
 
