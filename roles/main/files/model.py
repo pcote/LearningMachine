@@ -404,7 +404,18 @@ def change_tags(tag_list, user_id, exercise_id):
     :param exercise_id: ID of the exercise to have it's tag associations updated.
     :return: Nothing.
     """
+
+    def __all_tags_valid(tag_candidates):
+        import re
+        patt = r"^\w+$"
+        for tag in tag_candidates:
+            if not re.match(patt, tag):
+                return False
+        return True
+
     tags = tag_list.split()
+    if not __all_tags_valid(tags):
+        raise Exception("Tags are supposed to be made up of only numbers, letters, and underscores")
     conn = eng.connect()
 
     with conn.begin() as trans:
@@ -424,7 +435,6 @@ def change_tags(tag_list, user_id, exercise_id):
             conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
         trans.commit()
-
 
 
 
