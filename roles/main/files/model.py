@@ -419,6 +419,8 @@ def change_tags(tag_list, user_id, exercise_id):
     tags = tag_list.split()
     if not __all_tags_valid(tags):
         raise Exception("Tags are supposed to be made up of only numbers, letters, and underscores")
+
+    tags = [tag.lower() for tag in tags]
     conn = eng.connect()
 
     with conn.begin() as trans:
