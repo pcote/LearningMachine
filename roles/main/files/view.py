@@ -235,5 +235,13 @@ def add_resource():
     except Exception as e:
         abort(400)
 
+@app.route("/changetags", methods=["POST"])
+def change_tags():
+    user_id = session["email"]
+    json_data = request.get_json()
+    tag_list, exercise_id = json_data["tag_changes"], json_data["exercise_id"]
+    model.change_tags(tag_list, user_id, exercise_id)
+    return "tag changes done."
+
 if __name__ == '__main__':
     app.run(debug=False)
