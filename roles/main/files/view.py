@@ -237,17 +237,26 @@ def add_resource():
 
 @app.route("/changetags", methods=["POST"])
 def change_tags():
-    user_id = session["email"]
-    json_data = request.get_json()
-    tag_list, exercise_id = json_data["tag_changes"], json_data["exercise_id"]
     try:
+        user_id = session.get("email")
+        json_data = request.get_json()
+        if None in [user_id, json_data]:
+            raise Exception("user id and/or json data required when changing tags.  One of these is missing")
+
+        tag_list, exercise_id = json_data.get("tag_changes"), json_data.get("exercise_id")
+        tag_list = tag_list if tag_list else ""
+
+        if exercise_id == None:
+            raise Exception("I find your lack of exercise id when trying to change tags disturbing!")
+
         model.change_tags(tag_list, user_id, exercise_id)
+        return "tag changes done."
     except Exception as e:
         reason, *_ = e.args
         response_400 = make_response(reason, 400)
         return response_400
 
-    return "tag changes done."
+
 
 if __name__ == '__main__':
     app.run(debug=False)
