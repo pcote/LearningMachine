@@ -216,8 +216,7 @@ var ExerciseController = function(exerciseService){
         };
 
         var failure = function(res){
-            var msg = "Attempt at tag change failed.  Did you make sure all tags were letter, numbers, and underscores?";
-            alert(msg);
+            alert(res.data);
         };
 
 

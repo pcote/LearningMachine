@@ -1,4 +1,4 @@
-from flask import Flask, session, request, redirect, jsonify, abort
+from flask import Flask, session, request, redirect, jsonify, abort, make_response
 from configparser import ConfigParser
 import logging
 from login import LoginHandler
@@ -240,7 +240,13 @@ def change_tags():
     user_id = session["email"]
     json_data = request.get_json()
     tag_list, exercise_id = json_data["tag_changes"], json_data["exercise_id"]
-    model.change_tags(tag_list, user_id, exercise_id)
+    try:
+        model.change_tags(tag_list, user_id, exercise_id)
+    except Exception as e:
+        reason, *_ = e.args
+        response_400 = make_response(reason, 400)
+        return response_400
+
     return "tag changes done."
 
 if __name__ == '__main__':
