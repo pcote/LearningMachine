@@ -6,7 +6,7 @@
 
 - name: update tables
   command: /var/app/learningmachine/make_tables.py
-  notify: setup public user
+  notify: restart learningmachine
 
 - name: setup public user
   mysql_user:
@@ -22,3 +22,4 @@
   service:
     name: learningmachine
     state: restarted
+  notify: setup public user
