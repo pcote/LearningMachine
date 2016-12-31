@@ -97,6 +97,7 @@ class ViewTestCase(unittest.TestCase):
         empty_list = []
         mock = MagicMock(return_value=empty_list)
         model.get_all_exercises = mock
+        tag_arg = None
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -104,7 +105,7 @@ class ViewTestCase(unittest.TestCase):
 
             result = client.get("/exercises")
             json_data = self.get_json(result)
-            mock.assert_called_with(self.test_user_id)
+            mock.assert_called_with(self.test_user_id, tag_arg)
             self.assertTrue("exercises" in json_data)
 
     def test_exercise_history(self):
