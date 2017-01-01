@@ -31,10 +31,16 @@
                                 <tr ng-repeat="exercise in ec.dataList.exercises | orderBy:'difficulty':true">
                                     <td class="visible-lg"><a ng-click="ec.deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
                                     <td class="visible-lg">
-                                        <a ng-repeat="tag in exercise.tags" href="#" class="badge" ng-click="ec.tagNameClick(exercise.id, tag)">{{tag}}</a>
+                                        <span ng-repeat="tag in exercise.tags" >
+                                            <a href="#" class="badge" ng-click="ec.tagNameClick(exercise.id, tag)">{{tag}}</a>
+                                            &nbsp;
+                                        </span>
+
+                                        &nbsp;
                                         <a href="#" class="badge" ng-click="ec.allTagsClick()">All Tags</a>
+                                        &nbsp;
                                         <a href="#" class="badge" ng-click="ec.changeTagsClick(exercise)">Change Tags</a>
-                                        <br />
+                                        <br /><br />
                                         <a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a>
                                     </td>
                                     <td class="visible-lg"><a ng-click="ec.resourceButtonClick(exercise)"><button class="btn btn-info">resources</button></a></td>
@@ -48,8 +54,14 @@
                                             <tr class="row">
                                                 <td colspan="3" class="col-xs-12">
                                                     <br />
+                                                    <span ng-repeat="tag in exercise.tags">
+                                                        <a href="#" class="badge" ng-click="ec.tagNameClick(exercise.id, tag)">{{tag}}</a>
+                                                        &nbsp;
+                                                    </span>
                                                     <a ng-repeat="tag in exercise.tags" href="#" class="badge" ng-click="ec.tagNameClick(exercise.id, tag)">{{tag}}</a>
+                                                    &nbsp;
                                                     <a href="#" class="badge" ng-click="ec.allTagsClick()">All Tags</a>
+                                                    &nbsp;
                                                     <a href="#" class="badge" ng-click="ec.changeTagsClick(exercise)">Change Tags</a>
                                                     <br /><br />
                                                     <a ng-click="ec.exerciseClick(exercise)">{{exercise.question}}</a>
