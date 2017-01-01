@@ -66,6 +66,12 @@ Exercises will let you quiz yourself and rate your own knowledge.  For these exe
 3.  Fill out the answer field with the answer to this question.
 4.  Finally, click the "Add Exercise" button that appears below the answer field in the dialog box.  This will add your exercise to the list of exercises.
 
+#### Tagging Exercises
+As your exercise list grows, you'll want to place tags on your questions to keep them organized.  Here are some of the things you can do with tags.
+
+* Change your tags by clicking on "Change Tags" and making a space separated list of tag terms made up of numbers and letters.
+* Click on one of your exercise's created tags to focus in on your growing list of exercises by topic.
+* Click on "All Tags" to expand out to your full list of questions.
 
 #### Drilling Yourself on Exercises
 
