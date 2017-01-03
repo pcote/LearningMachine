@@ -22,6 +22,7 @@ app.logger.setLevel(logging.INFO)
 app.logger.addHandler(logging.StreamHandler(stream=sys.stdout))
 app.secret_key = parser["learningmachine"]["session_key"]
 
+
 def validate_json(*expected_args):
     """
     Decorator function to validate
@@ -129,7 +130,7 @@ def add_score():
     json_data = request.get_json()
     exercise_id = json_data.get("exercise_id")
     score = json_data.get("score")
-    user_id =  session.get("email")
+    user_id = session.get("email")
     model.add_attempt(exercise_id, score, user_id)
 
     msg = "Attempt added.  Exercise ID: {} Score: {}"\
@@ -193,7 +194,7 @@ def get_exercise_history():
     msg = "Attempt history found for user: {}.  {} records."\
             .format(user_id, len(history))
     app.logger.info(msg)
-    return jsonify({"history":history})
+    return jsonify({"history": history})
 
 
 @app.route("/resources")
@@ -221,7 +222,6 @@ def get_resources_for_exercise(exercise_id):
     return jsonify(returned_val)
 
 
-
 @app.route("/addresource", methods=["POST"])
 def add_resource():
     user_id = session["email"]
@@ -235,6 +235,7 @@ def add_resource():
     except Exception as e:
         abort(400)
 
+
 @app.route("/changetags", methods=["POST"])
 def change_tags():
     try:
@@ -246,7 +247,7 @@ def change_tags():
         tag_list, exercise_id = json_data.get("tag_changes"), json_data.get("exercise_id")
         tag_list = tag_list if tag_list else ""
 
-        if exercise_id == None:
+        if exercise_id is None:
             raise Exception("I find your lack of exercise id when trying to change tags disturbing!")
 
         model.change_tags(tag_list, user_id, exercise_id)
@@ -255,7 +256,6 @@ def change_tags():
         reason, *_ = e.args
         response_400 = make_response(reason, 400)
         return response_400
-
 
 
 if __name__ == '__main__':

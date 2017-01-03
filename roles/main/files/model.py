@@ -148,7 +148,7 @@ def get_attempts(exercise_id):
             .where(attempt_table.c.exercise_id == bindparam("exercise_id", type_=Integer))
 
     result_records = conn.execute(query, exercise_id=exercise_id).fetchall()
-    attempts = [{"score": score, "when_attempted":when_attempted.isoformat()}
+    attempts = [{"score": score, "when_attempted": when_attempted.isoformat()}
                     for score, when_attempted in result_records]
     conn.close()
     return attempts
@@ -243,6 +243,7 @@ def delete_resource(user_id, resource_id):
     conn.close()
     return "FINISHED"
 
+
 def add_resource(caption, url, user_id, exercise_id=None):
     """
     Add a clickable resource to the data store
@@ -277,6 +278,7 @@ def add_resource(caption, url, user_id, exercise_id=None):
     msg = ""
     return msg
 
+
 def get_resources(user_id):
     """
     Get all resources connected to a specific user
@@ -295,6 +297,7 @@ def get_resources(user_id):
 
     return resources
 
+
 def get_resources_for_exercise(exercise_id, user_id):
     """
     Get all resources connected to the given exercise
@@ -308,7 +311,7 @@ def get_resources_for_exercise(exercise_id, user_id):
     exercise_parm = bindparam("exercise_id")
 
     query = select([resource_table.c.id, resource_table.c.caption, resource_table.c.url, resource_table.c.user_id])\
-                .select_from(resource_table.join(resource_by_exercise_table ))\
+                .select_from(resource_table.join(resource_by_exercise_table))\
                 .where(and_(resource_table.c.user_id == user_id_parm,
                             resource_by_exercise_table.c.exercise_id == exercise_parm))
 
@@ -318,6 +321,7 @@ def get_resources_for_exercise(exercise_id, user_id):
     conn.close()
 
     return resources
+
 
 def get_new_difficulty(conn, user_id):
     """
@@ -440,7 +444,6 @@ def change_tags(tag_list, user_id, exercise_id):
             conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
         trans.commit()
-
 
 
 if __name__ == '__main__':

@@ -166,7 +166,7 @@ class ViewTestCase(unittest.TestCase):
 
             test_dict = dict(resource_id=test_resource_id)
             data = self.make_json_text(test_dict)
-            headers={"Content-type":"application/json"}
+            headers = {"Content-type": "application/json"}
             res = client.post("/deleteresource", headers=headers, data=data)
             mock.assert_called_with(self.test_user_id, test_resource_id)
 
@@ -183,10 +183,9 @@ class ViewTestCase(unittest.TestCase):
 
             test_dict = dict(tag_changes=test_tag_list, exercise_id=test_exercise_id)
             json_data = self.make_json_text(test_dict)
-            headers={"Content-type":"application/json"}
+            headers = {"Content-type": "application/json"}
             res = client.post("/changetags", headers=headers, data=json_data)
-            mock.assert_called_with(test_tag_list, self.test_user_id, test_exercise_id )
-
+            mock.assert_called_with(test_tag_list, self.test_user_id, test_exercise_id)
 
 
 if __name__ == '__main__':
