@@ -83,27 +83,34 @@ def get_all_exercises(user_id, tag_arg=None):
     :param user_id: The ID of the user we're looking up exercises for.
     :return:: A list of exercise info including all the tags that this exercise is connected to.
     """
-    from itertools import groupby, tee
+    from itertools import groupby
+    query_str = """
+    select e.id, e.question, e.answer, e.difficulty, ebet.tag_name
+    from exercises as e
+    left join exercises_by_exercise_tags as ebet
+    on e.id = ebet.exercise_id
+    where e.user_id = :uid
+    order by e.id"""
 
-    query_str = """select e.id, e.question, e.answer, e.difficulty, group_concat(ebet.tag_name)
-                    from exercises as e
-                    left join exercises_by_exercise_tags as ebet
-                    on e.id = ebet.exercise_id
-                    where e.user_id = :uid
-                    group by e.id
-                    order by e.id"""
     query = text(query_str)
     conn = eng.connect()
     record_set = conn.execute(query, uid=user_id).fetchall()
+    exercise_id_key = lambda rec: list(rec)[0]
 
     exercise_list = []
-    for id, question, answer, difficulty, tag_group in record_set:
-        tags = tag_group.split(",") if tag_group else []
-        exercise = dict(id=id, question=question, answer=answer, difficulty=difficulty, tags=tags)
-        exercise_list.append(exercise)
 
-    if tag_arg:
-        exercise_list = [exercise for exercise in exercise_list if tag_arg in exercise["tags"]]
+    for group_name, group in groupby(record_set, key=exercise_id_key):
+
+        dict_rec = None
+
+        for eid, question, answer, diff, tag in group:
+            if not dict_rec:
+                dict_rec = dict(id=eid, question=question, answer=answer, difficulty=diff, tags=[])
+            if tag:
+                dict_rec["tags"].append(tag)
+
+        exercise_list.append(dict_rec)
+
     return exercise_list
 
 
