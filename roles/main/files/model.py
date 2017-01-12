@@ -15,7 +15,7 @@ db_section = cp["learningmachine"]
 user, password = db_section.get("user"), db_section.get("password")
 host, db = db_section.get("host"), db_section.get("db")
 db_url = "mysql+pymysql://{}:{}@{}/{}".format(user, password, host, db)
-eng = create_engine(db_url, pool_recycle=14400)
+eng = create_engine(db_url, pool_recycle=14400, echo=False)
 
 
 meta.create_all(bind=eng)
@@ -92,9 +92,30 @@ def get_all_exercises(user_id, tag_arg=None):
     where e.user_id = :uid
     order by e.id"""
 
-    query = text(query_str)
+    query_str_with_tag = """
+    select e.id, e.question, e.answer, e.difficulty, ebet.tag_name
+    from exercises as e
+    left join exercises_by_exercise_tags as ebet
+    on e.id = ebet.exercise_id
+    where e.user_id = :uid
+    and exists (
+        select *
+        from exercises_by_exercise_tags ebet_inner
+        where ebet_inner.exercise_id = e.id
+        and ebet_inner.user_id = :uid
+        and ebet_inner.tag_name = :tag
+    )
+    order by e.id;
+    """
+
     conn = eng.connect()
-    record_set = conn.execute(query, uid=user_id).fetchall()
+    if tag_arg:
+        query = text(query_str_with_tag)
+        record_set = conn.execute(query, uid=user_id, tag=tag_arg)
+    else:
+        query = text(query_str)
+        record_set = conn.execute(query, uid=user_id).fetchall()
+
     exercise_id_key = lambda rec: list(rec)[0]
 
     exercise_list = []
