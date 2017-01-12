@@ -84,6 +84,8 @@ def get_all_exercises(user_id, tag_arg=None):
     :return:: A list of exercise info including all the tags that this exercise is connected to.
     """
     from itertools import groupby
+
+    # Give me all the exercise recs along with the tags associated with them.
     query_str = """
     select e.id, e.question, e.answer, e.difficulty, ebet.tag_name
     from exercises as e
@@ -92,6 +94,8 @@ def get_all_exercises(user_id, tag_arg=None):
     where e.user_id = :uid
     order by e.id"""
 
+    # Give me exercise recs along with the ALL tags associated with them
+    # if and only if ONE of the tags is 'tag_arg'
     query_str_with_tag = """
     select e.id, e.question, e.answer, e.difficulty, ebet.tag_name
     from exercises as e
