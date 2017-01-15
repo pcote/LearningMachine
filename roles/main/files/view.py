@@ -258,5 +258,16 @@ def change_tags():
         return response_400
 
 
+@app.route("/suggestname", methods=["GET"])
+def suggest_name():
+    learning_resource_url = request.args.get("url")
+    if learning_resource_url:
+        suggested_name = model.suggest_name(learning_resource_url)
+        return suggested_name
+    else:
+        err_msg = "A URL argument was not passed to the /suggestname endpoint in the address args."
+        res = make_response(err_msg, 400)
+        return res
+
 if __name__ == '__main__':
     app.run(debug=False)
