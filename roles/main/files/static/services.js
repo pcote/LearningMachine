@@ -156,6 +156,12 @@ var ExerciseService = function($http){
 
     };
 
+    this.getSuggestedTitle = function(urlArg){
+        var url = "/suggestname?url=" + encodeURI(urlArg);
+        var promise = $http.get(url);
+        return promise;
+    };
+
 };
 
 // Service for grabbing relevant information about the user for sake of display purposes.

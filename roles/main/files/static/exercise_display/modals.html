@@ -86,7 +86,7 @@ Modal dialogs for asking questions, seeing answers, and sending score submission
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
-                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.url" ng-trim="false" ng-change="ec.updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
+                            <textarea maxlength="140" cols="35" rows="4" ng-model="ec.newinfo.url" ng-paste="ec.pasteUrlHandler($event)" ng-trim="false" ng-change="ec.updateCharsLeft('new_url_field', 'urlCharsLeft')"></textarea><br />
                             {{ ec.charsleft.url }}
                         </div>
                     </div>

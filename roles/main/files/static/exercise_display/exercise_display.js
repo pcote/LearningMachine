@@ -230,6 +230,21 @@ var ExerciseController = function(exerciseService){
         promise.then(getExercisesSuccess, getExercisesFailure);
     };
 
+    ec.pasteUrlHandler = function(evt){
+        var suggestionSuccess = function(res){
+            var suggestedTitle = res.data;
+            ec.newinfo.caption = suggestedTitle;
+        };
+        var suggestionFailure = function(res){
+            alert("Sorry, could not come up with a suggestion for that URL resource.");
+        };
+        var clipboardData = evt.originalEvent.clipboardData;
+        var data = clipboardData.getData("text/plain");
+        data = data.trim();
+        var promise = exerciseService.getSuggestedTitle(data);
+        promise.then(suggestionSuccess, suggestionFailure);
+    };
+
 
 };
 
