@@ -3,6 +3,8 @@ from sqlalchemy.sql import select, and_, text
 from tabledefs import user_table, exercise_table, attempt_table, resource_table, resource_by_exercise_table, exercise_by_exercise_tags_table, meta
 from configparser import ConfigParser
 from collections import namedtuple
+from bs4 import BeautifulSoup
+import requests
 
 CHARACTER_LIMIT = 140
 
@@ -476,6 +478,19 @@ def change_tags(tag_list, user_id, exercise_id):
             conn.execute(query, eid=exercise_id, tag=tag, uid=user_id)
 
         trans.commit()
+
+
+def suggest_name(url):
+    """
+    Suggest a name for the resource url by grabbing the text from the title tag
+    :param url: The URL for the learning resource in question.
+    :return: A text string representing the title name for the learning resource
+    """
+    raw_html_text = requests.get(url).text
+    soup = BeautifulSoup(raw_html_text, "lxml")
+    titles = soup("title")
+    title_text = titles[0].text if titles else ""
+    return title_text.strip()
 
 
 if __name__ == '__main__':

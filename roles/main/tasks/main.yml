@@ -1,6 +1,9 @@
 ---
 
-
+- name: install python3-xml via apt package repos (not pip)
+  apt:
+    package: python3-lxml
+    state: present
 
 - name: copy over nginx configuration
   template:
