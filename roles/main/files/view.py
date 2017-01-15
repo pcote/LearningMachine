@@ -260,12 +260,13 @@ def change_tags():
 
 @app.route("/suggestname", methods=["GET"])
 def suggest_name():
-    learning_resource_url = request.args.get("url")
-    if learning_resource_url:
+    try:
+        learning_resource_url = request.args.get("url")
         suggested_name = model.suggest_name(learning_resource_url)
         return suggested_name
-    else:
-        err_msg = "A URL argument was not passed to the /suggestname endpoint in the address args."
+    except Exception as e:
+        err_reason, *_ = e.args
+        err_msg = "/suggestname failed. reason: {}".format(err_reason)
         res = make_response(err_msg, 400)
         return res
 

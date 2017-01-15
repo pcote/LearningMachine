@@ -235,9 +235,11 @@ var ExerciseController = function(exerciseService){
             var suggestedTitle = res.data;
             ec.newinfo.caption = suggestedTitle;
         };
+
         var suggestionFailure = function(res){
-            alert("Sorry, could not come up with a suggestion for that URL resource.");
+            alert(res.data);
         };
+
         var clipboardData = evt.originalEvent.clipboardData;
         var data = clipboardData.getData("text/plain");
         data = data.trim();

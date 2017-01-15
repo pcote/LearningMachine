@@ -5,6 +5,7 @@ from configparser import ConfigParser
 from collections import namedtuple
 from bs4 import BeautifulSoup
 import requests
+from requests.exceptions import MissingSchema, ConnectionError
 
 CHARACTER_LIMIT = 140
 
@@ -486,11 +487,18 @@ def suggest_name(url):
     :param url: The URL for the learning resource in question.
     :return: A text string representing the title name for the learning resource
     """
-    raw_html_text = requests.get(url).text
-    soup = BeautifulSoup(raw_html_text, "lxml")
-    titles = soup("title")
-    title_text = titles[0].text if titles else ""
-    return title_text.strip()
+    try:
+        if url is None:
+            raise Exception("You didn't pass me a URL to look up.")
+        raw_html_text = requests.get(url).text
+        soup = BeautifulSoup(raw_html_text, "lxml")
+        titles = soup("title")
+        title_text = titles[0].text if titles else ""
+        return title_text.strip()
+    except MissingSchema as ms:
+        raise Exception("You need an http or https at the start of the URL you're passing.")
+    except ConnectionError as ce:
+        raise Exception("I can't get at the page you're trying to point me towards.")
 
 
 if __name__ == '__main__':
