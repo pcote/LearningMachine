@@ -37,6 +37,8 @@ var ExerciseController = function(exerciseService){
     promise.then(getExercisesSuccess, getExercisesFailure);
 
 
+
+
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
     // when done.
     ec.addExerciseClick = function(newQuestion, newAnswer){
@@ -114,6 +116,13 @@ var ExerciseController = function(exerciseService){
     ec.resourceListToResourceModalClick = function(){
         $("#resourceListId").modal("hide");
         $("#addResourceModal").modal();
+
+        var hideAddResourceModal = function(evt){
+            ec.newinfo.caption = "";
+            ec.newinfo.url = "";
+        };
+
+        $("#addResourceModal").on("hide.bs.modal", hideAddResourceModal);
     };
 
     ec.addLearningResourceClick = function(new_cap, new_url){
