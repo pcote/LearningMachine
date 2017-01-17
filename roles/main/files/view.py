@@ -15,10 +15,12 @@ parser.read(config_file_name)
 
 nudir = lambda mod: [x for x in dir(mod) if not x.startswith("_")]
 
+debug_mode = parser.getboolean("learningmachine", "debug_mode")
+log_level = logging.DEBUG if debug_mode else logging.INFO
 
 app = Flask(__name__)
-app.debug = False
-app.logger.setLevel(logging.INFO)
+app.debug = debug_mode
+app.logger.setLevel(log_level)
 app.logger.addHandler(logging.StreamHandler(stream=sys.stdout))
 app.secret_key = parser["learningmachine"]["session_key"]
 
@@ -271,4 +273,5 @@ def suggest_name():
         return res
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    pass
+    #app.run(debug=False)

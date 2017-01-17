@@ -6,3 +6,4 @@ host=localhost
 db=learningmachine
 session_key={{session_key}}
 domain={{domain}}
+debug_mode=False
