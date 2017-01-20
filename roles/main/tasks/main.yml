@@ -47,22 +47,20 @@
     executable: pip3
     state: present
 
+- name: Transfer over the requirements file to set up virtualenv libraries
+  copy:
+    src: lm_requirements.txt
+    dest: /var/app/learningmachine/lm_requirements.txt
+    mode: 0660
+    owner: www-data
+    group: www-data
+
 - name: Install the pip packages needed for this project to this venv
   pip:
-    name: "{{item}}"
     virtualenv: /var/app/learningmachine/venv/
     executable: pip3.4
     state: present
-  with_items:
-    - sqlalchemy
-    - PyMySQL
-    - flask
-    - requests
-    - google-api-python-client
-    - oauth2client
-    - beautifulsoup4
-    - lxml
-
+    requirements: /var/app/learningmachine/lm_requirements.txt
 
 - name: Copy over the source and config files for the learning machine app
   copy:

@@ -1,0 +1,9 @@
+# pip virtual env requirements for flashmark
+sqlalchemy
+PyMySQL
+flask
+requests
+google-api-python-client
+oauth2client
+beautifulsoup4
+lxml
