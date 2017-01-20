@@ -41,6 +41,29 @@
     - /var/log/learningmachine/
     - /var/www/learningmachine/
 
+- name: Global installation of virtualenv
+  pip:
+    name: virtualenv
+    executable: pip3
+    state: present
+
+- name: Install the pip packages needed for this project to this venv
+  pip:
+    name: "{{item}}"
+    virtualenv: /var/app/learningmachine/venv/
+    executable: pip3.4
+    state: present
+  with_items:
+    - sqlalchemy
+    - PyMySQL
+    - flask
+    - requests
+    - google-api-python-client
+    - oauth2client
+    - beautifulsoup4
+    - lxml
+
+
 - name: Copy over the source and config files for the learning machine app
   copy:
     src: "{{item}}"

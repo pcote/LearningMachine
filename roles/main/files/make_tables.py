@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/var/app/learningmachine/venv/bin/python3.4
 """
 Ensures that the tables that need to exist do exist.
 """
