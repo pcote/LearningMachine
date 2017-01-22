@@ -1,3 +1,4 @@
+// Manage event handling for the top bar features of the main flashmark app.
 var MainController = function(userService, exerciseService){
 
     var mc = this;
@@ -18,6 +19,8 @@ var MainController = function(userService, exerciseService){
     // Every resource for a given user.
     mc.allResources = [];
 
+    // When user clicks the 'Exercise Attempts' link at top bar,
+    // show the view of the exercise attempts report.
     mc.viewAttemptsClick = function(){
         mc.showStatus.exercises = false;
         mc.showStatus.attempts = true;
@@ -35,6 +38,8 @@ var MainController = function(userService, exerciseService){
         exerciseService.getAttemptsReport().then(cbSuccess, cbFailure);
     };
 
+    // When user clicks the 'Exercises' link in the top bar, switch to a view of
+    // the exercise list.
     mc.viewExercisesClick = function(){
         mc.showStatus.exercises = true;
         mc.showStatus.attempts = false;
@@ -42,6 +47,8 @@ var MainController = function(userService, exerciseService){
         mc.showStatus.learningResource = false;
     };
 
+    // When user clicks a the 'All Learning Resources' link on the top bar,
+    // switch the view to the list of all learning resources.
     mc.viewLearningResourcesClick = function(){
         var getResourcesSuccess = function(res){
             var data = res.data;
@@ -62,6 +69,7 @@ var MainController = function(userService, exerciseService){
 
 };
 
+// Top level directive for the overall flashmark app
 var flashmarkApp = function(){
     var d = {};
     d.restrict = "A";

@@ -1,6 +1,5 @@
 // Exercise Service - Manages info concerning listing of exercises,
-// adding new ones, scoring attempts, and getting reports on those attempts.
-
+// adding new ones, manage tag info, scoring attempts, and getting reports on those attempts.
 var ExerciseService = function($http){
 
     // Get exercise information for the current user.
@@ -16,8 +15,8 @@ var ExerciseService = function($http){
         return promise;
     };
 
+    // Send a new set of tags to the back end to be connected to a given exercise.
     this.changeTags = function(exerciseID, tagChanges){
-
 
         var req = {
             url: "/changetags",
@@ -77,6 +76,7 @@ var ExerciseService = function($http){
         }
     }
 
+    // Delete a user's exercise from the back end.
     this.deleteExercise = function(exercise_id){
         var url = "/deleteexercise";
         var req = {
@@ -101,18 +101,23 @@ var ExerciseService = function($http){
         return promise;
     };
 
+    // Get a fresh list of learning resources that are tied to
+    // a specific exercise.
     this.reviseLearningResourceList = function(exercise_id){
         var url = "/resourcesforexercise/" + exercise_id;
         var promise = $http.get(url);
         return promise;
     };
 
+    // Query the back end for all learning resources for a user.
+    // note: use info based on session info.
     this.getAllLearningResources = function(){
         var url = "/resources";
         var promise = $http.get(url);
         return promise;
     };
 
+    // Add a new learning resource to the back end.
     this.addLearningResource = function(new_cap, new_url, exercise_id){
         var MAX_CHARS = 140;
 
@@ -139,6 +144,7 @@ var ExerciseService = function($http){
     };
 
 
+    // Delete a learning resource from the back end.
     this.deleteLearningResource = function(resource_id){
         var req = {
             url: "/deleteresource",
@@ -156,6 +162,7 @@ var ExerciseService = function($http){
 
     };
 
+    // Finds a title to suggest based on the URL of a learning resource.
     this.getSuggestedTitle = function(urlArg){
         var url = "/suggestname?url=" + encodeURI(urlArg);
         var promise = $http.get(url);
@@ -164,8 +171,7 @@ var ExerciseService = function($http){
 
 };
 
-// Service for grabbing relevant information about the user for sake of display purposes.
-
+// Service for grabbing relevant information about the user for sake of display purposes.=
 var UserService = function($http, $rootScope){
 
         // Grab the user data from server and set it to where it can be grabbed by the template and displayed.

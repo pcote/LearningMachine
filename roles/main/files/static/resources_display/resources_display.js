@@ -1,4 +1,4 @@
-
+// Directive component for handling the display of all learning resources.
 var learningResourceDisplay = function(){
     var d = {};
     d.scope = {
