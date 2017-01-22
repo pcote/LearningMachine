@@ -1,3 +1,8 @@
+"""
+tabledefs.py
+
+Collection of SQLAlchemy table definitions for database tables supporting Flashmark.
+"""
 from sqlalchemy import Column, Text, Integer, ForeignKey, TIMESTAMP, VARCHAR, Table, MetaData, ForeignKeyConstraint
 meta = MetaData()
 
