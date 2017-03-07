@@ -6,6 +6,7 @@ from collections import namedtuple
 from bs4 import BeautifulSoup
 import requests
 from requests.exceptions import MissingSchema, ConnectionError
+import re
 
 CHARACTER_LIMIT = 140
 
@@ -490,11 +491,22 @@ def suggest_name(url):
     try:
         if url is None:
             raise Exception("You didn't pass me a URL to look up.")
+
+        # title part
         raw_html_text = requests.get(url).text
         soup = BeautifulSoup(raw_html_text, "lxml")
         titles = soup("title")
         title_text = titles[0].text if titles else ""
-        return title_text.strip()
+        title_text = title_text.strip()
+
+        # domain name part
+        match = re.search(r"/.+?/", url)
+        domain_part = match.group()
+        domain_part = domain_part.replace("/", "")
+
+        full_suggestion = "{} - {}".format(title_text, domain_part)
+        return full_suggestion
+
     except MissingSchema as ms:
         raise Exception("You need an http or https at the start of the URL you're passing.")
     except ConnectionError as ce:
