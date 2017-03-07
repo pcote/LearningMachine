@@ -2,8 +2,29 @@
 
 - name: install python3-xml via apt package repos (not pip)
   apt:
-    package: python3-lxml
+    package: "{{item}}"
     state: present
+  with_items:
+    - python3-lxml
+    - python3-dev
+    - nginx
+    - python-mysqldb
+
+- name: set up the pip installation via the shell
+  shell: curl https://bootstrap.pypa.io/get-pip.py | sudo python3
+  ignore_errors: yes
+
+
+- name: copy the requirements file over
+  copy:
+    src: global_requirements.txt
+    dest: /tmp/global_requirements.txt
+
+- name: pip install the required python3 libs (including uwsgi)
+  pip:
+    executable: pip3.4
+    requirements: /tmp/global_requirements.txt
+
 
 - name: copy over nginx configuration
   template:
@@ -44,7 +65,7 @@
 - name: Global installation of virtualenv
   pip:
     name: virtualenv
-    executable: pip3
+    executable: pip3.4
     state: present
 
 - name: Transfer over the requirements file to set up virtualenv libraries
