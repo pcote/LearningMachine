@@ -18,7 +18,7 @@ cp.read(config_file_name)
 db_section = cp["learningmachine"]
 user, password = db_section.get("user"), db_section.get("password")
 host, db = db_section.get("host"), db_section.get("db")
-db_url = "mysql+pymysql://{}:{}@{}/{}".format(user, password, host, db)
+db_url = "mysql+pymysql://{}:{}@{}/{}?charset=utf8".format(user, password, host, db)
 eng = create_engine(db_url, pool_recycle=14400, echo=False)
 
 
