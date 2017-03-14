@@ -113,12 +113,15 @@
 
 - name: Copy over the html and javascript static assets
   copy:
-    src: static
+    src: "{{item}}"
     dest: /var/www/learningmachine/
-    mode: 0660
+    mode: 0664
     owner: www-data
     group: www-data
-
+  with_items:
+    - static
+    - robots.txt
+    - favicon.ico
 
 - name: set up the config template
   template:
