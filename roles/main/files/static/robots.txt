@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /static/attempts_report/
+Disallow: /static/exercise_display/
+Disallow: /static/flashmark_main/
+Disallow: /static/resources_display/
+Disallow: /static/favicon.ico
+Disallow: /static/main.html
+Disallow: /static/app.js
+Disallow: /static/services.js
