@@ -121,7 +121,7 @@
   with_items:
     - static
     - robots.txt
-    - favicon.ico
+    - myfavicon.ico
 
 - name: set up the config template
   template:
