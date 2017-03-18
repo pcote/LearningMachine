@@ -7,6 +7,68 @@ from bs4 import BeautifulSoup
 import requests
 from requests.exceptions import MissingSchema, ConnectionError
 import re
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+class FlashmarkModel():
+    def __init__(self, app=None):
+        self.app = app if app else Flask(__name__)
+
+        # setup a database url from out of the config file
+        # NOTE: This could well be a perfect setup for a
+        cp = ConfigParser()
+        dir_path = __file__.rsplit("/", maxsplit=1)[0]
+        config_file_name = "{}/{}".format(dir_path, "config.ini")
+        cp.read(config_file_name)
+        db_section = cp["learningmachine"]
+        user, password = db_section.get("user"), db_section.get("password")
+        host, db = db_section.get("host"), db_section.get("db")
+        db_url = "mysql+pymysql://{}:{}@{}/{}?charset=utf8".format(user, password, host, db)
+        self.app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+        self.db = SQLAlchemy(self.app)
+        self.eng = create_engine(db_url, pool_recycle=14400, echo=False)
+
+        db = self.db
+        self.user_table = db.Table("users",
+                           db.Column("email", db.VARCHAR(255), primary_key=True),
+                           db.Column("display_name", Text))
+
+        self.exercise_table = db.Table("exercises",
+                       db.Column("id", db.Integer, primary_key=True, autoincrement=True),
+                       db.Column("question", db.Text),
+                       db.Column("answer", db.Text),
+                       db.Column("difficulty", db.Integer, default=0),
+                       db.Column("user_id", db.ForeignKey("users.email")))
+
+        self.attempt_table = db.Table("attempts",
+                              db.Column("id", db.Integer, primary_key=True, autoincrement=True),
+                              db.Column("score", db.Integer),
+                              db.Column("when_attempted", db.TIMESTAMP),
+                              db.Column("exercise_id", db.ForeignKey("exercises.id")))
+
+        self.resource_table = db.Table("resources",
+                               db.Column("id", db.Integer, primary_key=True, autoincrement=True),
+                               db.Column("caption", db.Text),
+                               db.Column("url", db.Text),
+                               db.Column("user_id", db.ForeignKey("users.email")))
+
+        self.resource_by_exercise_table = db.Table("resources_by_exercise",
+                                   db.Column("resource_id", db.Integer, db.ForeignKey("resources.id"), primary_key=True),
+                                   db.Column("exercise_id", db.Integer, db.ForeignKey("exercises.id"), primary_key=True))
+
+        self.exercise_tag_table = db.Table("exercise_tags",
+                                   db.Column("name", db.VARCHAR(255), primary_key=True),
+                                   db.Column("user_id", db.ForeignKey("users.email"), primary_key=True))
+
+        self.exercise_by_exercise_tags_table = db.Table("exercises_by_exercise_tags",
+                                                db.Column("exercise_id", db.ForeignKey("exercises.id"), primary_key=True),
+                                                db.Column("tag_name", db.VARCHAR(255), primary_key=True),
+                                                db.Column("user_id", db.VARCHAR(255), primary_key=True),
+                                                db.ForeignKeyConstraint(["tag_name", "user_id"], ["exercise_tags.name", "exercise_tags.user_id"]))
+
+        self.db.create_all()
+
+
 
 CHARACTER_LIMIT = 140
 
