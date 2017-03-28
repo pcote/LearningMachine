@@ -92,7 +92,6 @@ class FlashmarkModel():
         :return: Nothing
         """
         conn = self.db.engine.connect()
-        conn = eng.connect()
 
         query = self.user_table.insert()\
                           .values(email=email, display_name=display_name)
