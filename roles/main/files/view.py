@@ -23,7 +23,7 @@ app.debug = debug_mode
 app.logger.setLevel(log_level)
 app.logger.addHandler(logging.StreamHandler(stream=sys.stdout))
 app.secret_key = parser["learningmachine"]["session_key"]
-
+fm = model.FlashmarkModel(app)
 
 def validate_json(*expected_args):
     """
@@ -75,10 +75,10 @@ def login():
         session["email"] = login_handler.email
         session["display_name"] = login_handler.display_name
 
-        if not model.user_exists(login_handler.email):
+        if not fm.user_exists(login_handler.email):
             msg = "Adding user: {} with ID of {} to the database."\
                 .format(login_handler.email, login_handler.display_name)
-            model.add_user(login_handler.email, login_handler.display_name)
+            fm.add_user(login_handler.email, login_handler.display_name)
 
         msg = "Sending user: {} to main page".format(login_handler.email)
         app.logger.info(msg)
@@ -115,7 +115,7 @@ def get_exercises():
     """
     email = session.get("email")
     tag_arg = request.args.get("tag")
-    exercises = model.get_all_exercises(email, tag_arg)
+    exercises = fm.get_all_exercises(email, tag_arg)
     msg = "Found {} exercises for {}".format(len(exercises), email)
     app.logger.info(msg)
     return jsonify(dict(exercises=exercises))
@@ -133,7 +133,7 @@ def add_score():
     exercise_id = json_data.get("exercise_id")
     score = json_data.get("score")
     user_id = session.get("email")
-    model.add_attempt(exercise_id, score, user_id)
+    fm.add_attempt(exercise_id, score, user_id)
 
     msg = "Attempt added.  Exercise ID: {} Score: {}"\
             .format(exercise_id, score)
@@ -154,7 +154,7 @@ def add_exercise():
     new_answer = json_data.get("new_answer")
     user_id = session.get("email")
     try:
-        model.add_exercise(new_question, new_answer, user_id)
+        fm.add_exercise(new_question, new_answer, user_id)
         msg = "Exercise added for user: {}".format(user_id)
         app.logger.info(msg)
         return jsonify({"message": "add exercise call completed"})
@@ -169,7 +169,7 @@ def delete_exercise():
     json_ob = request.get_json()
     exercise_id = json_ob.get("exercise_id")
     user_id = session.get("email")
-    msg = model.delete_exercise(user_id, exercise_id)
+    msg = fm.delete_exercise(user_id, exercise_id)
     app.logger.info(msg)
     return ""
 
@@ -179,7 +179,7 @@ def delete_resource():
     json_ob = request.get_json()
     resource_id = json_ob.get("resource_id")
     user_id = session.get("email")
-    msg = model.delete_resource(user_id, resource_id)
+    msg = fm.delete_resource(user_id, resource_id)
     return ""
 
 
@@ -191,7 +191,7 @@ def get_exercise_history():
     """
     user_id = session.get("email")
 
-    history = model.full_attempt_history(user_id)
+    history = fm.full_attempt_history(user_id)
 
     msg = "Attempt history found for user: {}.  {} records."\
             .format(user_id, len(history))
@@ -206,7 +206,7 @@ def get_resources():
     :return: A json list of resources
     """
     user_id = session["email"]
-    resources = model.get_resources(user_id)
+    resources = fm.get_resources(user_id)
     returned_val = dict(resources=resources)
     return jsonify(returned_val)
 
@@ -219,7 +219,7 @@ def get_resources_for_exercise(exercise_id):
     :return: list of resources associated to the given exercise.
     """
     user_id = session.get("email")
-    resources = model.get_resources_for_exercise(exercise_id, user_id)
+    resources = fm.get_resources_for_exercise(exercise_id, user_id)
     returned_val = dict(resources=resources)
     return jsonify(returned_val)
 
@@ -232,7 +232,7 @@ def add_resource():
     new_url = json_data["new_url"]
     exercise_id = json_data["exercise_id"]
     try:
-        model.add_resource(new_caption, new_url, user_id, exercise_id)
+        fm.add_resource(new_caption, new_url, user_id, exercise_id)
         return "FINISHED"
     except Exception as e:
         abort(400)
@@ -252,7 +252,7 @@ def change_tags():
         if exercise_id is None:
             raise Exception("I find your lack of exercise id when trying to change tags disturbing!")
 
-        model.change_tags(tag_list, user_id, exercise_id)
+        fm.change_tags(tag_list, user_id, exercise_id)
         return "tag changes done."
     except Exception as e:
         reason, *_ = e.args

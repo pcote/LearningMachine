@@ -1,5 +1,6 @@
 # pip virtual env requirements for flashmark
 sqlalchemy
+flask-sqlalchemy
 PyMySQL
 flask
 requests

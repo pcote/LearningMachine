@@ -41,12 +41,11 @@ class ViewTestCase(unittest.TestCase):
             self.assertEqual(self.test_display_name, json_data["displayName"])
 
     def test_add_score(self):
-        import model
         test_exercise_id = 1
         test_score = 1
         test_dict = dict(exercise_id=test_exercise_id, score=test_score)
         mock = MagicMock(return_value=dict(result="success"))
-        model.add_attempt = mock
+        self.fm.add_attempt = mock
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -59,13 +58,12 @@ class ViewTestCase(unittest.TestCase):
             mock.assert_called_with(test_exercise_id, test_score, self.test_user_id)
 
     def test_add_exercise(self):
-        import model
         test_question = "Test Question?"
         test_answer = "Test Answer"
         test_dict = dict(new_question=test_question, new_answer=test_answer)
 
         mock = MagicMock()
-        model.add_exercise = mock
+        self.fm.add_exercise = mock
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -77,11 +75,10 @@ class ViewTestCase(unittest.TestCase):
             mock.assert_called_with(test_question, test_answer, self.test_user_id)
 
     def test_delete_exercise(self):
-        import model
         test_exercise_id = 1
         test_dict = dict(exercise_id=test_exercise_id)
         mock = MagicMock()
-        model.delete_exercise = mock
+        self.fm.delete_exercise = mock
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -93,10 +90,9 @@ class ViewTestCase(unittest.TestCase):
             mock.assert_called_with(self.test_user_id, test_exercise_id)
 
     def test_get_exercises(self):
-        import model
         empty_list = []
         mock = MagicMock(return_value=empty_list)
-        model.get_all_exercises = mock
+        self.fm.get_all_exercises = mock
         tag_arg = None
 
         with app.test_client() as client:
@@ -120,10 +116,9 @@ class ViewTestCase(unittest.TestCase):
             self.assertTrue("history" in json_data, "There should be a history key in the json")
 
     def test_get_resources(self):
-        import model
         empty_list = []
         mock = MagicMock(return_value=empty_list)
-        model.get_resources_for_exercise = mock
+        self.fm.get_resources_for_exercise = mock
         test_exercise_id = "40"
 
         with app.test_client() as client:
@@ -141,8 +136,7 @@ class ViewTestCase(unittest.TestCase):
         test_url = "http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/"
         test_exercise_id = 11
         mock = MagicMock()
-        import model
-        model.add_resource = mock
+        self.fm.add_resource = mock
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -157,8 +151,7 @@ class ViewTestCase(unittest.TestCase):
     def test_delete_resource(self):
         test_resource_id = 1
         mock = MagicMock(return_value="FINISHED")
-        import model
-        model.delete_resource = mock
+        self.fm.delete_resource = mock
 
         with app.test_client() as client:
             with client.session_transaction() as sess:
@@ -172,8 +165,7 @@ class ViewTestCase(unittest.TestCase):
 
     def test_change_tags(self):
         mock = MagicMock(return_value=None)
-        import model
-        model.change_tags = mock
+        self.fm.change_tags = mock
         test_tag_list = "python"
         test_exercise_id = 42
 
