@@ -345,6 +345,8 @@ class FlashmarkModel():
         :return: Nothing.
         """
 
+        db = self.db
+
         if len(caption) > CHARACTER_LIMIT or len(url) > CHARACTER_LIMIT:
             msg = "Either new caption or new url exceeded char limit of {} chars".format(CHARACTER_LIMIT)
             raise Exception(msg)
@@ -354,7 +356,7 @@ class FlashmarkModel():
         user_parm = self.db.bindparam("user_id", type_=self.db.String)
         exercise_parm = self.db.bindparam("exercise_id", type_=self.db.Integer)
 
-        conn = eng.connect()
+        conn = db.engine.connect()
 
         with conn.begin() as trans:
             query = self.resource_table.insert().values(caption=caption_parm, url=url_parm, user_id=user_parm)
