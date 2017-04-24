@@ -222,6 +222,17 @@ class FlashmarkModel():
                 query = self.db.text("update exercises set difficulty = :d where user_id = :uid and id = :eid")
                 conn.execute(query, d=diff, uid=user_id, eid=exercise_id)
 
+            elif score == GOOD:
+                query_text = "select difficulty from exercises where id = :eid"
+                query = self.db.text(query_text)
+                res = conn.execute(query, eid=exercise_id)
+                difficulty, *_ = res.fetchall()[0]
+                difficulty -= 1
+                query_text = "update exercises set difficulty = :d where user_id = :uid and id = :eid"
+                query = self.db.text(query_text)
+                conn.execute(query, d=difficulty, uid=user_id, eid=exercise_id)
+
+
             trans.commit()
 
         conn.close()
