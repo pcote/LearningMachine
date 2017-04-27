@@ -304,9 +304,21 @@ var exerciseDisplay = function(){
 };
 
 var lmSearchFilter = function() {
-    var search = function(exerciseList, dummyarg){
-        console.log("okay so far");
-        console.log("filter arg is: " + dummyarg);
+    var search = function(exerciseList, searchArg){
+        var exercise;
+
+        if(searchArg && searchArg.length >= 3){
+            var filteredList = [];
+            for(var i in exerciseList){
+                exercise = exerciseList[i];
+                if(exercise.question.search(searchArg) >= 0 || exercise.answer.search(searchArg) >= 0){
+                    filteredList = filteredList.concat(exercise);
+                }
+            }
+
+            return filteredList;
+        }
+
         return exerciseList;
     };
 
