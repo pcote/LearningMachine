@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-xs-12 form-group">
             <label for="searchTerm">Search</label>
-            <input id="searchTerm" ng-model="ec.searchTerm" class="input-lg form-control" type="text" />
+            <input id="searchTerm" ng-model="ec.searchTerm" class="input-lg form-control" type="text" ng-change="ec.filterExercises()" />
         </div>
     </div>
 
@@ -39,7 +39,7 @@
                                     <th>&nbsp;</th>
                                     <th>&nbsp;</th>
                                 </tr>
-                                <tr ng-repeat="exercise in ec.dataList.exercises | orderBy:'difficulty':true">
+                                <tr ng-repeat="exercise in ec.dataList.exercises | lmSearch: ec.searchTerm | orderBy:'difficulty':true">
                                     <td class="hidden-xs"><a ng-click="ec.deleteExerciseClick(exercise.id)"><button class="btn btn-danger">delete</button></a></td>
                                     <td class="hidden-xs">
                                         <span ng-repeat="tag in exercise.tags" >

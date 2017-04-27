@@ -29,6 +29,8 @@ var ExerciseController = function(exerciseService){
     ec.charsleft.caption = "";
     ec.charsleft.url = "";
 
+
+
     // Callback function for populating the exercise list in response to a promise
     // for getting said exercises being fullfilled.
     var getExercisesSuccess = function(res){
@@ -41,6 +43,7 @@ var ExerciseController = function(exerciseService){
 
     var promise = exerciseService.getExercises();
     promise.then(getExercisesSuccess, getExercisesFailure);
+
 
 
     // add an exercise and update exercise display.  Clear out the exercise addition form and show the latest questions
@@ -299,3 +302,13 @@ var exerciseDisplay = function(){
     d.controllerAs = "ec";
     return d;
 };
+
+var lmSearchFilter = function() {
+    var search = function(exerciseList, dummyarg){
+        console.log("okay so far");
+        console.log("filter arg is: " + dummyarg);
+        return exerciseList;
+    };
+
+    return search;
+}
