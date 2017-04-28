@@ -322,6 +322,7 @@ var lmSearchFilter = function() {
                 answer = exercise.answer.toLowerCase();
                 tags = exercise.tags;
                 tags = tags.join(" ");
+                tags = tags.toLowerCase();
 
                 if(question.search(searchArg) >= 0 || answer.search(searchArg) >= 0 || tags.search(searchArg) >= 0){
                     filteredList = filteredList.concat(exercise);
