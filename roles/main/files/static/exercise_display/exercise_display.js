@@ -306,12 +306,21 @@ var exerciseDisplay = function(){
 var lmSearchFilter = function() {
     var search = function(exerciseList, searchArg){
         var exercise;
+        var question;
+        var answer;
+        var filteredList = [];
+
 
         if(searchArg && searchArg.length >= 3){
-            var filteredList = [];
+            searchArg = searchArg.toLowerCase();
+            filteredList = [];
+
             for(var i in exerciseList){
                 exercise = exerciseList[i];
-                if(exercise.question.search(searchArg) >= 0 || exercise.answer.search(searchArg) >= 0){
+                question = exercise.question.toLowerCase();
+                answer = exercise.answer.toLowerCase();
+
+                if(question.search(searchArg) >= 0 || answer.search(searchArg) >= 0){
                     filteredList = filteredList.concat(exercise);
                 }
             }
