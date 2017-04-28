@@ -308,6 +308,7 @@ var lmSearchFilter = function() {
         var exercise;
         var question;
         var answer;
+        var tags;
         var filteredList = [];
 
 
@@ -319,8 +320,10 @@ var lmSearchFilter = function() {
                 exercise = exerciseList[i];
                 question = exercise.question.toLowerCase();
                 answer = exercise.answer.toLowerCase();
+                tags = exercise.tags;
+                tags = tags.join(" ");
 
-                if(question.search(searchArg) >= 0 || answer.search(searchArg) >= 0){
+                if(question.search(searchArg) >= 0 || answer.search(searchArg) >= 0 || tags.search(searchArg) >= 0){
                     filteredList = filteredList.concat(exercise);
                 }
             }
