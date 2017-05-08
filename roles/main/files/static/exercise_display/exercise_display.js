@@ -69,6 +69,12 @@ var ExerciseController = function(exerciseService){
     ec.exerciseClick = function(exercise){
         ec.activeObject.exercise = exercise;
         $("#questionModal").modal();
+
+        var focusButton = function(){
+            $("#showAnswerButton").focus();
+        };
+
+        $("#questionModal").on("shown.bs.modal", focusButton);
     };
 
 
