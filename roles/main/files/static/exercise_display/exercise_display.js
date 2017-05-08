@@ -142,6 +142,12 @@ var ExerciseController = function(exerciseService){
         };
 
         $("#addResourceModal").on("hide.bs.modal", hideAddResourceModal);
+
+        var focusUrlArea = function(){
+            $("#newInfoUrl").focus();
+        };
+
+        $("#addResourceModal").on("shown.bs.modal", focusUrlArea);
     };
 
     // In the 'learning resources' box for a new exercise, user hits the okay button and
